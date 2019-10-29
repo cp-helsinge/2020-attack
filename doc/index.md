@@ -5,7 +5,7 @@
 ###obj: spil objecter
 Dette spil er skruet sammen, så det egner sig til samarbejde, gennem gidhub.
 
-Vi følger PEP8 [https://www.python.org/dev/peps/pep-0008/] i videst muligt omfang. (Ret gerne ind, hvis du finder uinkonsistens) dog med den undtagelse at vi har opdelt programmet, så de fleste objekter, der indgår i spilet, er i deres eget modul (Som man gør i mange andre sprog, men altså normalt ikke i python) 
+Vi følger [PEP8](https://www.python.org/dev/peps/pep-0008/) i videst muligt omfang. (Ret gerne ind, hvis du finder uinkonsistens) dog med den undtagelse at vi har opdelt programmet, så de fleste objekter, der indgår i spilet, er i deres eget modul (Som man gør i mange andre sprog, men altså normalt ikke i python) 
 Dette har vi gjort, for at gøre det lettere at arbejde mange sammen, på det samme program, gennem github.
 
 For atgøre det lettere at importere alle klasser, er der indført følgende regler:
