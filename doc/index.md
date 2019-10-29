@@ -1,8 +1,8 @@
-#2020 Attack
+# 2020 Attack
 
-##Mapper
+## Mapper
 
-###obj: spil objecter
+###o bj: spil objecter
 Dette spil er skruet sammen, så det egner sig til samarbejde, gennem gidhub.
 
 Vi følger [PEP8](https://www.python.org/dev/peps/pep-0008/) i videst muligt omfang. (Ret gerne ind, hvis du finder uinkonsistens) dog med den undtagelse at vi har opdelt programmet, så de fleste objekter, der indgår i spilet, er i deres eget modul (Som man gør i mange andre sprog, men altså normalt ikke i python) 
