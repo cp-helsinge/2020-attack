@@ -36,9 +36,9 @@ class PlayerInput:
 
 class Player:
     def __init__(self, city):
-        self.playerImage = pygame.image.load("player.png").convert_alpha()
-        self.playerShotImage = pygame.image.load("shot.png").convert_alpha()
-        self.crosshairImage = pygame.image.load("crosshair.png").convert_alpha()
+        self.playerImage = pygame.image.load("gfx/player.png").convert_alpha()
+        self.playerShotImage = pygame.image.load("gfx/shot.png").convert_alpha()
+        self.crosshairImage = pygame.image.load("gfx/crosshair.png").convert_alpha()
         self.rect = self.playerImage.get_rect(bottomleft=(0, window.get_height() - city.get_height()))
         self.alive = True 
         self.shots = []
@@ -77,9 +77,9 @@ class Shot:
 
 class Alien:
     def __init__(self, speed_x):
-        self.alienImage = pygame.image.load("alien.png").convert_alpha()
-        self.alienShotImage = pygame.image.load("alien_shot.png").convert_alpha()
-        self.crash_sound = pygame.mixer.Sound("Flashbang-Kibblesbob-899170896.wav")
+        self.alienImage = pygame.image.load("gfx/alien.png").convert_alpha()
+        self.alienShotImage = pygame.image.load("gfx/alien_shot.png").convert_alpha()
+        self.crash_sound = pygame.mixer.Sound("sound/Flashbang-Kibblesbob-899170896.wav")
         self.rect = self.alienImage.get_rect(topright=(0,0))
         self.x = self.rect.x
         self.speed_x = speed_x
@@ -115,14 +115,14 @@ class Alien:
 
 class City:
     def __init__(self):
-        self.cityImage = pygame.image.load("grey_city.png").convert_alpha()
+        self.cityImage = pygame.image.load("gfx/grey_city.png").convert_alpha()
 
     def set_rect(self, rect):
         self.rect = rect
 
 class Bomb:
     def __init__(self, pos, x_speed, y_speed):
-        self.enemyBomb = pygame.image.load("enemy_bomb.png").convert_alpha()
+        self.enemyBomb = pygame.image.load("gfx/enemy_bomb.png").convert_alpha()
         self.rect = self.enemyBomb.get_rect(center=pos)
         self.x = self.rect.x
         self.y = self.rect.y
