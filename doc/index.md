@@ -13,10 +13,10 @@ For atgøre det lettere at importere alle klasser, er der indført følgende reg
 - Hver af disse klasser, er i hver sin fil, i obj mappen
 - Filnavnen definerer klassen, men selve klasse hedder "Create" i alle disse filer. På den måde referes til klassen som: obj.<navn>.Create(<parametre>) (navn er med småt)
 - obj klasserne skal som minimum følgende:
--- __init__()
--- draw()
--- tick_advance()
--- rect
+    - __init__()
+    - draw()
+    - tick_advance()
+    - rect
 
 ### gfx: grafik filer
 
