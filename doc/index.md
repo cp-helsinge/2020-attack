@@ -2,7 +2,7 @@
 
 ## Mapper
 
-###o bj: spil objecter
+### obj: spil objecter
 Dette spil er skruet sammen, så det egner sig til samarbejde, gennem gidhub.
 
 Vi følger [PEP8](https://www.python.org/dev/peps/pep-0008/) i videst muligt omfang. (Ret gerne ind, hvis du finder uinkonsistens) dog med den undtagelse at vi har opdelt programmet, så de fleste objekter, der indgår i spilet, er i deres eget modul (Som man gør i mange andre sprog, men altså normalt ikke i python) 
@@ -14,10 +14,13 @@ For atgøre det lettere at importere alle klasser, er der indført følgende reg
 - Filnavnen definerer klassen, men selve klasse hedder "Create" i alle disse filer. På den måde referes til klassen som: obj.<navn>.Create(<parametre>) (navn er med småt)
 - obj klasserne skal som minimum følgende:
     - __init__()
-    - draw()
+    - paint()
     - tick_advance()
+    - hit(<list of objects>)
     - rect
-
+- it uses:
+    - update_score
+    - action()
 ### gfx: grafik filer
 
 ### sound: lydfiler
