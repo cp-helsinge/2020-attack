@@ -20,6 +20,7 @@ import time
 # Import game classes
 from include import alien
 from include import bomb
+from include import background
 from include import city
 from include import common
 from include import player
@@ -31,12 +32,24 @@ setting = setting.Setting()
 
 class Game:
   def __init__(self):
+    # Game objects
     self.cities = []
     self.bombs = []
     self.player_shots = []
     self.alien_shots = []
+    self.aliens = []
+    self.background = []
+    self.all_objects = dict(
+      background = self.background,  
+      city = self.cities, 
+      bomb = self.bombs, 
+      playser_shot = self.player_shots, 
+      alien_shot = self.alien_shots, 
+      alien = self.aliens 
+    )
+
     self.max_duration = 0
-    self.window = None
+    self.player_input = player_input.PlayerInput()
 
   def new(self):
     self.window = pygame.display.set_mode(
@@ -46,20 +59,14 @@ class Game:
       )
     )
     pygame.init()
+    pygame.mouse.set_visible(False)
     pygame.display.set_caption('Alien Attack')
 
-    self.player_input = player_input.PlayerInput()
-    #self.game_state = GameState()
-    pygame.mouse.set_visible(False)
-    self.speed = 1
-
-    self.cities = []
-    self.bombs = []
-    self.player_shots = []
-    self.alien_shots = []
-    self.max_duration = 0
-
     # Create all game objects that are active when the game starts
+    self.background = background.Background()
+    self.player = player.Player(setting.player_start_position)
+
+    print("self.all_objects",self.all_objects)
     city_distance = self.window.get_width() // (setting.number_of_cities + 1)
     for city_number in range(setting.number_of_cities):
       new_city = city.City()
@@ -68,7 +75,6 @@ class Game:
       new_city.set_rect(rect)
       self.cities.append(new_city)
 
-    self.player = player.Player((0, game.window.get_height() - new_city.cityImage.get_height()))
     self.alien = alien.Alien(1.0)
 
     # yt
@@ -133,13 +139,30 @@ def paint_screen(window, start_ticks):
 def main_loop():
   while not game.player_input.stop:
     pygame.time.delay(5)
+
+    # Get player input
     game.player_input.update()
-    #game_state.update(player_input)
-    #if game_state.alien.has_been_hit and not game_state.alien.stone_dead:
-      #pygame.mixer.Sound.play(game_state.alien.crash_sound)
+    print("game.all_objects",game.all_objects)
+
+    # move all objects
+    # claculate collissions
+    # paint background
+    # paint all objects
+    for category in game.all_objects:
+      print("testing", category);
+      for obj in game.all_objects[category]:
+        print("Testing",category, obj)
+        if callable(getattr(obj, 'paint', None)):
+          print("Painting",category, obj);
+          obj.paint()
+
+    # paint dashboard
+
     start_ticks=pygame.time.get_ticks()
-      #game_state.alien.stone_dead = True
-    paint_screen(game.window,start_ticks)
+    #game_state.alien.stone_dead = True
+    pygame.display.flip()
+    pygame.time.delay(5000)
+    break
 
 game = Game()
 game.new()

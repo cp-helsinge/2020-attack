@@ -11,5 +11,6 @@ class Setting:
     self.screen_height = 600
     self.start_ticks = 10000000
     self.game_speed = 1
+    self.player_start_position = (0,50)
     
 
