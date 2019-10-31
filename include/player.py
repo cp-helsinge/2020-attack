@@ -4,6 +4,7 @@
 
 ============================================================================"""
 import pygame
+from include import globals
 
 class Player:
     def __init__(self, position):
@@ -15,10 +16,10 @@ class Player:
         self.shots = []
         self.player_has_fired = False
 
-    def move(self, player_input):
-        if player_input.left and self.rect.left > window.get_rect().left:
+    def move(self):
+        if globals.game.player_input.left and self.rect.left > window.get_rect().left:
             self.rect.x = self.rect.x - 2
-        if player_input.right and self.rect.right < window.get_rect().right:
+        if globals.game.player_input.right and self.rect.right < window.get_rect().right:
             self.rect.x = self.rect.x + 2
 
         for shot in list(self.shots):
@@ -26,7 +27,7 @@ class Player:
             if not shot.rect.colliderect(window.get_rect()):
                 self.shots.remove(shot)
 
-        if not player_input.fire:
+        if not globals.game.player_input.fire:
             self.player_has_fired = False
 
     def hit(self):

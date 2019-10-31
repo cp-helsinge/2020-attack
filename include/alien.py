@@ -5,6 +5,7 @@
 ============================================================================"""
 import pygame
 import random
+from include import globals
 
 class Alien:
   def __init__(self, speed_x):
@@ -21,7 +22,7 @@ class Alien:
     self.time_to_shoot = random.randint(100, 1000)
 
   def move(self):
-    self.bounds = game.window.get_rect()
+    self.bounds = globals.game.window.get_rect()
     self.x = self.x + self.direction * self.speed_x
     self.rect.x = self.x
     if self.rect.right > self.bounds.right:
@@ -34,7 +35,7 @@ class Alien:
     self.has_been_hit = True
 
   def paint(self):
-    game.window.blit(self.alienImage, self.alien.rect)
+    globals.game.window.blit(self.alienImage, self.rect)
 
 
   def maybe_shoot(self, player, shot_list):

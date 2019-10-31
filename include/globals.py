@@ -1,13 +1,9 @@
 """============================================================================
 
-  Background
+  Global variables
 
 ============================================================================"""
-import pygame
-from include import globals
 
-class Background:
+game          = None
+setting       = None
 
-  def paint(self):
-    globals.game.window.fill((0,0,128))
-    
