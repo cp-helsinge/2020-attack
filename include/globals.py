@@ -6,4 +6,7 @@
 
 game          = None
 setting       = None
+gfx_path      = "gfx_path not set for "
 
+tst = None
+tst2 = None

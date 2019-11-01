@@ -4,10 +4,14 @@
 
 ============================================================================"""
 import pygame
+from include import globals
+from include import common
+
 
 class City:
-  def __init__(self):
-    self.cityImage = pygame.image.load("gfx/grey_city.png").convert_alpha()
-
-  def set_rect(self, rect):
+  def __init__(self, rect):
+    self.city_image = common.load_image("grey_city.png",rect)
     self.rect = rect
+
+  def paint(self):
+    globals.game.window.blit(self.city_image,self.rect)

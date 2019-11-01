@@ -7,15 +7,28 @@ import pygame
 import random
 from include import globals
 
+
 class Alien:
-  def __init__(self, speed_x):
-    self.alienImage = pygame.image.load("gfx/alien.png").convert_alpha()
-    self.alienShotImage = pygame.image.load("gfx/alien_shot.png").convert_alpha()
+  def __init__(self, position, direction = 1, speed=1):
+    self.alien_image = pygame.image.load(globals.gfx_path + "alien.png").convert_alpha()
+    self.position = position
+
+  def paint(self):
+    globals.game.window.blit(self.alien_image,self.position)
+
+
+"""
+class Alien:
+  def __init__(self, position, direction=1, speed=1):
+    self.alienImage = pygame.image.load(globals.gfx_path + "alien.png").convert_alpha()
+    self.alienShotImage = pygame.image.load(globals.gfx_path + "alien_shot.png").convert_alpha()
     self.crash_sound = pygame.mixer.Sound("sound/Flashbang-Kibblesbob-899170896.wav")
     self.rect = self.alienImage.get_rect(topright=(0,0))
     self.x = self.rect.x
-    self.speed_x = speed_x
-    self.direction = 1
+    self.position = position
+    self.speed = speed
+    self.speed_x = 1
+    self.direction = direction
     self.has_been_hit = False
     self.alive = True
     self.stone_dead = False
@@ -35,7 +48,7 @@ class Alien:
     self.has_been_hit = True
 
   def paint(self):
-    globals.game.window.blit(self.alienImage, self.rect)
+    globals.game.window.blit(self.alienImage, self.position)
 
 
   def maybe_shoot(self, player, shot_list):
@@ -48,3 +61,5 @@ class Alien:
       y_speed = calculate_y_velocity(self.rect.midbottom, player.rect.center, speed)
       shot = Shot(rect, x_speed, y_speed)
       shot_list.append(shot)   
+
+"""
