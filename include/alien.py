@@ -12,8 +12,10 @@
 
 ============================================================================"""
 import pygame
-import random
+import random 
 from include import globals
+from include import setting
+from include import common
 
 
 class Alien:
@@ -21,10 +23,12 @@ class Alien:
     rect, 
     image='player.png', 
     crosshair_image='crosshair.png', 
-    boundary = globals.game.rect, 
+    boundary = False, 
     direction = 0, 
     speed = 1, 
-    axix = 'x'):
+    axix = 'x',
+    sound = False,
+    shoot_sound = False):
 
     self.image       = common.load_image(image, rect )
     self.rect       = rect 
@@ -34,7 +38,10 @@ class Alien:
     self.axix       = axix
     self.dead       = False
 
-  def draw(self, surface = globals.game.window ):
+  def draw(self, surface = False ):
+    if( not surface ):
+      surface = globals.game.window
+
     surface.blit(self.image,self.rect)
 
 """

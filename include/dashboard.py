@@ -17,7 +17,10 @@ class Dashboard:
     ) 
     self.rect = pygame.Rect(setting.dashboard_rectangle)
 
-  def draw(self, surface = globals.game.window ):
+  def draw(self, surface = False ):
+    if( not surface ):
+      surface = globals.game.window
+
     # Paint background
     surface.fill(
       setting.dashboard_background_color,
@@ -52,7 +55,7 @@ class Dashboard:
     )
     text_rect = text.get_rect()
     text_rect.midright = self.rect.midright 
-    surfaceblit( text, text_rect )
+    surface.blit( text, text_rect )
 
 
    

@@ -16,6 +16,9 @@ class PlayerInput:
       pygame.K_a  : 'left',      # A
       pygame.K_d  : 'right',     # D
     }
+    self.mouse_bind = {
+      pygame.LEFT : 'fire',
+    }
     self.do = {}
     self.mouse = ( 0,0 )
     self.stop = False

@@ -54,15 +54,15 @@ class Game:
       (
         setting.screen_width,
         setting.screen_height
-      ) , pygame.SCALED | pygame.RESIZABLE
-       #, FULLSCREEN
+      ) , RESIZABLE
+       # | SCALED | FULLSCREEN
     )
     pygame.display.set_caption('Alien Attack')
     pygame.mouse.set_visible(False)
 
     # Game objects
     self.dashboard = dashboard.Dashboard()
-    self.rect = pygame.Rect(0,0,setting.screen_width,setting.screen_height) - dashboard.rect
+    self.rect = pygame.Rect(0,0,setting.screen_width,setting.screen_height - self.dashboard.rect[3]) 
     self.game_objects = []
     self.player_input = player_input.PlayerInput()
     self.level = 1
@@ -112,7 +112,7 @@ class Game:
     while not self.player_input.stop:
       # Get player input
       self.player_input.update()
-
+      # pygame.display.toggle_fullscreen()
       # move all objects
       #for category in game.all_objects:
        # for obj in self.all_objects[category]:
@@ -130,7 +130,7 @@ class Game:
         print("game_obj",game_obj)
         if callable(getattr(game_obj['obj'], 'draw', None)):
           print("Drawing",game_obj['type'])
-          game_obj['obj'].paint()
+          game_obj['obj'].draw()
 
       game.dashboard.draw()
 

@@ -13,5 +13,7 @@ class City:
     self.image = common.load_image(image, rect)
     self.rect = rect
 
-  def draw(self, surface = globals.game.window ):
+  def draw(self, surface = False ):
+    if( not surface ):
+      surface = globals.game.window
     surface.blit(self.image,self.rect)
