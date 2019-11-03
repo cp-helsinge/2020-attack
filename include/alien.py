@@ -2,6 +2,14 @@
 
   Alien space ship
 
+  parameters:
+    rect      : Start position and size 
+    image     : Image
+    boundery  : boundary of movement
+    speed     : 2
+    direction : in degrees 0-359 counting counter clockwise and 0 = right
+    axix      : x, y or xy
+
 ============================================================================"""
 import pygame
 import random
@@ -9,13 +17,25 @@ from include import globals
 
 
 class Alien:
-  def __init__(self, position, direction = 1, speed=1):
-    self.alien_image = pygame.image.load(globals.gfx_path + "alien.png").convert_alpha()
-    self.position = position
+  def __init__(self, 
+    rect, 
+    image='player.png', 
+    crosshair_image='crosshair.png', 
+    boundary = globals.game.rect, 
+    direction = 0, 
+    speed = 1, 
+    axix = 'x'):
 
-  def paint(self):
-    globals.game.window.blit(self.alien_image,self.position)
+    self.image       = common.load_image(image, rect )
+    self.rect       = rect 
+    self.boundary   = boundary 
+    self.speed      = speed
+    self.direction  = direction
+    self.axix       = axix
+    self.dead       = False
 
+  def draw(self, surface = globals.game.window ):
+    surface.blit(self.image,self.rect)
 
 """
 class Alien:

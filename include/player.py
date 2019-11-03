@@ -2,24 +2,44 @@
 
   Player
 
+
+  parameters:
+    rect      : Start position and size 
+    image     : Image
+    boundery  : boundary of movement
+    speed     : 2
+    direction : in degrees 0-359 counting counter clockwise and 0 = right
+    axix      : x, y or xy
+    
 ============================================================================"""
 import pygame
 from include import globals
 from include import common
 
 class Player:
-  def __init__(self, position, boundry, direction = 0, speed = 1):
+  def __init__(self, 
+    rect, 
+    image='player.png', 
+    crosshair_image='crosshair.png', 
+    boundary = globals.game.rect, 
+    direction = 0, 
+    speed = 1, 
+    axix = 'x',
+    sound = False,
+    hit_sound = False):
+    
     # load image, convert alpha channel (transparrent areas) and resize image
-    self.player_image       = common.load_image("player.png", position )
-    self.player_shot_image  = common.load_image("shot.png")
+    self.image       = common.load_image(image, rect )
     self.crosshair_image    = common.load_image("crosshair.png")
-    self.position = position # Rectangle
-    self.boundry  = boundry  # Rectangle
-    self.speed    = speed
-    self.dead     = False
+    self.rect       = rect 
+    self.boundary   = boundary 
+    self.speed      = speed
+    self.direction  = direction
+    self.axix       = axix
+    self.dead       = False
 
-  def paint(self):
-    globals.game.window.blit(self.player_image,self.position)
+ def draw(self, surface = globals.game.window ):
+    surface.blit(self.image,self.rect)
 
 """
 class Player:

@@ -17,9 +17,9 @@ class Dashboard:
     ) 
     self.rect = pygame.Rect(setting.dashboard_rectangle)
 
-  def paint(self):
+  def draw(self, surface = globals.game.window ):
     # Paint background
-    globals.game.window.fill(
+    surface.fill(
       setting.dashboard_background_color,
       self.rect
     )
@@ -32,7 +32,7 @@ class Dashboard:
     )
     text_rect = text.get_rect()
     text_rect.midleft = self.rect.midleft 
-    globals.game.window.blit( text, text_rect )
+    surface.blit( text, text_rect )
 
     # Paint health in the center of the dashboard
     text = self.font.render(
@@ -42,7 +42,7 @@ class Dashboard:
     )
     text_rect = text.get_rect()
     text_rect.center = pygame.Rect(setting.dashboard_rectangle).center
-    globals.game.window.blit( text, text_rect )
+    surface.blit( text, text_rect )
 
     # Paint level middle right of dashboard
     text = self.font.render(
@@ -52,7 +52,7 @@ class Dashboard:
     )
     text_rect = text.get_rect()
     text_rect.midright = self.rect.midright 
-    globals.game.window.blit( text, text_rect )
+    surfaceblit( text, text_rect )
 
 
    

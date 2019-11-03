@@ -12,17 +12,40 @@ from pygame.locals import *
 board = [
   [], # Level 0 not used
   [ # Level 1
-    {'background' : [pygame.Color('dodgerblue1')]},
-    {'player'     : [(200,150,50,50),(0,150,800,100),0]},
-    {'city'       : [(30,700,50,50)]},
-    {'city'       : [(130,700,50,50)]},
-    {'city'       : [(230,700,50,50)]},
-    {'city'       : [(330,700,50,50)]},
-    {'city'       : [(430,700,50,50)]},
-    {'alien'      : [(0,50),1]},
+    {'background' : {
+      'color' : pygame.Color('dodgerblue1'),
+      'image' : 'sky32.jpg'
+    }},
+    {'player'     : {
+      'rect': (200,150,50,50),
+      'image' : 'player.png',
+      'crosshair_image.png' : 'crosshair.png'
+      'boundary' : (0,550,800,100),
+      'speed':    :2,
+      'axix' :    : 'x',
+      'sound' : 'big_bang.wav'
+      'shoot_sound' : 'shoot_sound.wav'
+    }},
+    {'city'       : { 'rect' : (30,700,50,50), 'image' : 'city.png'  }},
+    {'city'       : { 'rect' : (130,700,50,50), 'image' : 'city.png' }},
+    {'city'       : { 'rect' : (230,700,50,50), 'image' : 'city.png' }},
+    {'city'       : { 'rect' : (330,700,50,50), 'image' : 'city.png' }},
+    {'city'       : { 'rect' : (430,700,50,50), 'image' : 'city.png' }},
+    {'city'       : { 'rect' : (530,700,50,50), 'image' : 'city.png' }},
+    {'alien'      : {
+      'rect': (750,0,50,50),
+      'image' : 'alien.png',
+      'boundary' : (0,0,800,100),
+      'speed':    :2,
+      'direction' : (-1,0),
+      'axix' :    : 'x',
+      'sound' : 'small_bang.wav'
+      'shoot_sound' : 'small_shoot_sound.wav'
+
+    }},
   ],  
   [ # Level 2
-    {'background' : [pygame.Color('darkblue')]},
+    {'background' : ['sky1.jpg']},
     {'player'     : [(200,150),0]},
     {'city'       : [(30,700)]},
     {'city'       : [(130,700)]},

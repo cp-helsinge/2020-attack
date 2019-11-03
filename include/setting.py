@@ -8,6 +8,7 @@ Rect(left, top, width, height)
 number_of_cities = 5
 screen_width = 800
 screen_height = 600
+screen_rect = (0 , 0, screen_width, screen_height)
 frame_rate = 10
 game_speed = 1
 

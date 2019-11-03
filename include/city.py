@@ -9,9 +9,9 @@ from include import common
 
 
 class City:
-  def __init__(self, rect):
-    self.city_image = common.load_image("grey_city.png",rect)
+  def __init__(self, rect, image = 'city.png', sound = ''):
+    self.image = common.load_image(image, rect)
     self.rect = rect
 
-  def paint(self):
-    globals.game.window.blit(self.city_image,self.rect)
+  def draw(self, surface = globals.game.window ):
+    surface.blit(self.image,self.rect)

@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 """============================================================================
 Sideways arcade space game
 
@@ -46,18 +47,22 @@ game_object_type = dict(
 
 class Game:
   def __init__(self):
+    globals.game = self
+    globals.sessing = setting
     pygame.init()
     self.window = pygame.display.set_mode(
       (
         setting.screen_width,
         setting.screen_height
-      ) #, FULLSCREEN
+      ) , pygame.SCALED | pygame.RESIZABLE
+       #, FULLSCREEN
     )
     pygame.display.set_caption('Alien Attack')
     pygame.mouse.set_visible(False)
 
     # Game objects
     self.dashboard = dashboard.Dashboard()
+    self.rect = pygame.Rect(0,0,setting.screen_width,setting.screen_height) - dashboard.rect
     self.game_objects = []
     self.player_input = player_input.PlayerInput()
     self.level = 1
@@ -86,7 +91,7 @@ class Game:
         try:
           self.game_objects.append( {
               'type' : obj_type,
-              'obj'  : game_object_type[obj_type](*parameters) 
+              'obj'  : game_object_type[obj_type](**parameters) 
             }
           )
         except Exception as err:
@@ -101,7 +106,9 @@ class Game:
 
   # This is the main game loop
   def loop(self):
+    # Start using pygame loop timing (Frame rate)
     clock = pygame.time.Clock()
+
     while not self.player_input.stop:
       # Get player input
       self.player_input.update()
@@ -121,22 +128,20 @@ class Game:
       # Paint all objects
       for game_obj in self.game_objects:
         print("game_obj",game_obj)
-        if callable(getattr(game_obj['obj'], 'paint', None)):
-          print("Painting ",game_obj['type'])
+        if callable(getattr(game_obj['obj'], 'draw', None)):
+          print("Drawing",game_obj['type'])
           game_obj['obj'].paint()
 
-      game.dashboard.paint()
+      game.dashboard.draw()
 
       pygame.display.flip()
 
       # Calculate timing and wait until frame rate is right
       clock.tick( setting.frame_rate * game.game_speed )
       
-
-
 # Start a new game
 globals.gfx_path = os.path.join(os.path.dirname(__file__), "gfx", "")
-globals.game = game = Game()
+game = Game()
 game.loop()
 del game
 
