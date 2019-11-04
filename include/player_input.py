@@ -9,15 +9,18 @@
 ============================================================================"""
 import pygame
 from pygame import *
+from include import globals
+from include import setting
 
 class PlayerInput:
   def __init__(self):
     self.key_bind =  {
       pygame.K_a  : 'left',      # A
       pygame.K_d  : 'right',     # D
+      pygame.K_LEFT : 'left'
     }
     self.mouse_bind = {
-      pygame.LEFT : 'fire',
+      setting.MOUSE_LEFT : 'fire',
     }
     self.do = {}
     self.mouse = ( 0,0 )
@@ -26,7 +29,7 @@ class PlayerInput:
   def update(self):
     events = pygame.event.get()
     for e in events:
-      if e.type == pygame.QUIT:
+      if e.type == pygame.QUIT or e.key == pygame.K_ESCAPE:
         self.stop = True
 
       elif e.type == pygame.MOUSEMOTION :
