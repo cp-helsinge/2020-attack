@@ -24,54 +24,32 @@ class Player:
     boundary = False, 
     direction = 0, 
     speed = 1, 
-    axix = 'x',
     sound = False,
     shoot_sound = False):
     
     # load image, convert alpha channel (transparrent areas) and resize image
     self.image       = common.load_image(image, rect )
     self.crosshair_image    = common.load_image("crosshair.png")
-    self.rect       = rect 
+    self.rect       = pygame.Rect(rect)
     self.boundary   = boundary 
+    if not boundary:
+      self.boundary = globals.game.rect
     self.speed      = speed
-    self.direction  = direction
-    self.axix       = axix
     self.dead       = False
 
-  def draw(self, surface = False ):
-    if( not surface ):
-      surface = globals.game.window
-    surface.blit(self.image,self.rect)
+  def draw(self):
+    print("Player rect",self.rect)
+    globals.game.window.blit(self.image,self.rect)
 
-"""
-class Player:
-  def __init__(self, position):
-    self.playerImage = pygame.image.load(globals.gfx_path + "player.png").convert_alpha()
-    self.playerShotImage = pygame.image.load(globals.gfx_path + "shot.png").convert_alpha()
-    self.crosshairImage = pygame.image.load(globals.gfx_path + "crosshair.png").convert_alpha()
-    self.position = position
-    self.rect = self.playerImage.get_rect(bottomleft=(position))
-    self.alive = True 
-    self.shots = []
-    self.player_has_fired = False
+  def update(self):
+    key = globals.game.player_input.key
 
-  def move(self):
-    if globals.game.player_input.left and self.rect.left > window.get_rect().left:
-        self.rect.x = self.rect.x - 2
-    if globals.game.player_input.right and self.rect.right < window.get_rect().right:
-        self.rect.x = self.rect.x + 2
+    if key['left']:
+      self.rect = common.move_rect(self.rect, 180, self.speed, self.boundary)
+    if key['right']:
+      self.rect = common.move_rect(self.rect, 0, self.speed, self.boundary)
+    if key['up']:
+      self.rect = common.move_rect(self.rect, 90, self.speed, self.boundary)
+    if key['down']:
+      self.rect = common.move_rect(self.rect, -90, self.speed, self.boundary)
 
-    for shot in list(self.shots):
-        shot.move()
-        if not shot.rect.colliderect(window.get_rect()):
-            self.shots.remove(shot)
-
-    if not globals.game.player_input.fire:
-        self.player_has_fired = False
-
-  def hit(self):
-    self.alive = False
-
-  def pain(self):
-    globals.game.window.blit(self.playerImage, self.position)
-"""

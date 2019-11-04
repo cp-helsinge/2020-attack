@@ -26,23 +26,28 @@ class Alien:
     boundary = False, 
     direction = 0, 
     speed = 1, 
-    axix = 'x',
     sound = False,
     shoot_sound = False):
 
-    self.image       = common.load_image(image, rect )
-    self.rect       = rect 
+    self.image      = common.load_image(image, rect )
+    self.rect       = pygame.Rect(rect)
     self.boundary   = boundary 
     self.speed      = speed
     self.direction  = direction
-    self.axix       = axix
+    if not boundary:
+      self.boundary = globals.game.rect
     self.dead       = False
 
-  def draw(self, surface = False ):
-    if( not surface ):
-      surface = globals.game.window
+  def draw(self):
+    globals.game.window.blit(self.image,self.rect)
 
-    surface.blit(self.image,self.rect)
+  def update(self):
+    if self.rect.left <= globals.game.rect.left:
+      self.direction = 0
+    elif self.rect.right >= globals.game.rect.right:
+      self.direction = 180
+
+    self.rect = common.move_rect(self.rect, self.direction , self.speed, self.boundary)  
 
 """
 class Alien:

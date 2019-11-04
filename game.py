@@ -54,8 +54,8 @@ class Game:
       (
         setting.screen_width,
         setting.screen_height
-      ) , RESIZABLE
-       # | SCALED | FULLSCREEN
+      ) 
+       #, RESIZABLE | SCALED | FULLSCREEN
     )
     pygame.display.set_caption('Alien Attack')
     pygame.mouse.set_visible(False)
@@ -114,11 +114,9 @@ class Game:
       self.player_input.update()
       # pygame.display.toggle_fullscreen()
       # move all objects
-      #for category in game.all_objects:
-       # for obj in self.all_objects[category]:
-        #  if callable(getattr(obj, 'move', None)):
-         #   print("moving ",category)
-          #  obj.move()
+      for game_obj in self.game_objects:
+        if callable(getattr(game_obj['obj'], 'update', None)):
+          game_obj['obj'].update()
 
       # claculate collissions
       #    if getattr(obj, 'dead', False) and obj.dead :
@@ -127,9 +125,9 @@ class Game:
 
       # Paint all objects
       for game_obj in self.game_objects:
-        print("game_obj",game_obj)
+        #print("game_obj",game_obj)
         if callable(getattr(game_obj['obj'], 'draw', None)):
-          print("Drawing",game_obj['type'])
+          #print("Drawing",game_obj['type'])
           game_obj['obj'].draw()
 
       game.dashboard.draw()

@@ -17,12 +17,11 @@ board = [
       'image'       : 'sky32.jpg'
     }},
     {'player'       : {
-      'rect'        : (200,150,50,50),
+      'rect'        : (200,450,50,50),
       'image'       : 'player.png',
       'crosshair_image' : 'crosshair.png',
-      'boundary'    : (0,550,800,100),
-      'speed'       :  2,
-      'axix'        : 'x',
+      'boundary'    : (0,450,800,50),
+      'speed'       :  10,
       'sound'       : 'big_bang.wav',
       'shoot_sound' : 'shoot_sound.wav'
     }},
@@ -33,12 +32,11 @@ board = [
     {'city'         : { 'rect' : (430,700,50,50), 'image' : 'city.png' }},
     {'city'         : { 'rect' : (530,700,50,50), 'image' : 'city.png' }},
     {'alien'        : {
-      'rect'        : (750,0,50,50),
-      'image'       : 'alien.png',
-      'boundary'    : (0,0,800,100),
-      'speed'       : 2,
-      'direction'   : (-1,0),
-      'axix'        : 'x',
+      'rect'        : (750,30,60,60),
+      'image'       : 'alien2.png',
+      'boundary'    : (0,30,800,40),
+      'speed'       : 7,
+      'direction'   : 180,
       'sound'       : 'small_bang.wav',
       'shoot_sound' : 'small_shoot_sound.wav'
     }},
@@ -54,3 +52,4 @@ board = [
     {'alien'      : [(0,50),1]},
   ],
 ]
+
