@@ -22,18 +22,18 @@ import os
 import sys
 
 # Import game classes
-from include import alien
-from include import bomb
-from include import background
-from include import city
-from include import common
-from include import dashboard
-from include import player
-from include import player_input
-from include import setting
-from include import shot
-from include import globals
-import storry
+from game_objects import alien
+from game_objects import bomb
+from game_objects import background
+from game_objects import city
+from game_objects import common
+from game_objects import dashboard
+from game_objects import player
+from game_objects import player_input
+from game_objects import setting
+from game_objects import shot
+from game_objects import globals
+from game_objects import storry
 
 # Link a game object type to the actual object class definition
 game_object_type = dict(
@@ -137,9 +137,5 @@ class Game:
       # Calculate timing and wait until frame rate is right
       clock.tick( setting.frame_rate * game.game_speed )
       
-# Start a new game
-globals.gfx_path = os.path.join(os.path.dirname(__file__), "gfx", "")
-game = Game()
-game.loop()
-del game
+
 

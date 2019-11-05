@@ -6,8 +6,8 @@
 
 ============================================================================"""
 import pygame
-from include import globals
-from include import setting
+from game_objects import globals
+from game_objects import setting
 
 class Dashboard:
   def __init__(self):

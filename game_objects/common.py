@@ -5,7 +5,7 @@
 ============================================================================"""
 import pygame
 import math
-from include import globals
+from game_objects import globals
 
 # load image, convert alpha channel (transparrent areas) and resize image
 def load_image(name, rect=False):
