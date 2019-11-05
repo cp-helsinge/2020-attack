@@ -30,7 +30,8 @@ class PlayerInput:
         self.stop = True
 
       if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:  
-        self.suspend = not self.suspend
+        #self.suspend = not self.suspend
+        self.stop = True
 
       if not self.suspend:
         if event.type == pygame.MOUSEMOTION :

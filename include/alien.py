@@ -31,10 +31,11 @@ class Alien:
 
     self.image      = common.load_image(image, rect )
     self.rect       = pygame.Rect(rect)
-    self.boundary   = boundary 
     self.speed      = speed
     self.direction  = direction
-    if not boundary:
+    if boundary:
+      self.boundary   = pygame.Rect(boundary)
+    else:
       self.boundary = globals.game.rect
     self.dead       = False
 
@@ -42,9 +43,9 @@ class Alien:
     globals.game.window.blit(self.image,self.rect)
 
   def update(self):
-    if self.rect.left <= globals.game.rect.left:
+    if self.rect.left <= self.boundary.left:
       self.direction = 0
-    elif self.rect.right >= globals.game.rect.right:
+    elif self.rect.right >= self.boundary.right:
       self.direction = 180
 
     self.rect = common.move_rect(self.rect, self.direction , self.speed, self.boundary)  
