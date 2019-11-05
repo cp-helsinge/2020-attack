@@ -7,15 +7,15 @@ Rect(left, top, width, height)
 import pygame
 
 number_of_cities = 5
-screen_width = 1200
-screen_height = 800
+screen_width = 1000
+screen_height = 700
 screen_rect = (0 , 0, screen_width, screen_height)
 frame_rate = 60
 game_speed = 1
 
 dashboard_background_color = (234,224,200)
 dashboard_color = (0,0,0)
-dashboard_rectangle = (0,760,1200,40)
+dashboard_rectangle = (0,660,1000,40)
 dashboard_font = 'freesansbold.ttf'
 dashboard_font_size = 32
 
