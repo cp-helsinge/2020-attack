@@ -5,18 +5,20 @@
 ============================================================================"""
 import pygame
 import math
+import os
+
 from game_objects import globals
 
 # load image, convert alpha channel (transparrent areas) and resize image
 def load_image(name, rect=False):
   if( rect ):
     return pygame.transform.smoothscale(
-      pygame.image.load( globals.gfx_path + name )
+      pygame.image.load( os.path.join(globals.gfx_path, name ))
         .convert_alpha(),
       ( rect[2], rect[3] )
     )
   else:
-    return pygame.image.load( globals.gfx_path + name ).convert_alpha()
+    return pygame.image.load( os.path.join(globals.gfx_path, name) ).convert_alpha()
 
 
 # Move a rectangle in a direction, with a equcalent horisontal pixel speed, within a boundary recangle

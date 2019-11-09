@@ -30,10 +30,10 @@ from game_objects import common
 from game_objects import dashboard
 from game_objects import player
 from game_objects import player_input
-from game_objects import setting
 from game_objects import shot
-from game_objects import globals
 from game_objects import storry
+from game_objects import setting
+from game_objects import globals
 
 # Link a game object type to the actual object class definition
 game_object_type = dict(
@@ -47,8 +47,6 @@ game_object_type = dict(
 
 class Game:
   def __init__(self):
-    globals.game = self
-    globals.sessing = setting
     pygame.init()
     self.window = pygame.display.set_mode(
       (
@@ -74,11 +72,10 @@ class Game:
     else:
       self.game_speed = 1
     
-    self.next_level(1)
-  
   def __del__(self):
-    pygame.display.quit()
-    pygame.quit()
+    # pygame.display.quit()
+    #pygame.quit()
+    pass
 
   def next_level(self, level = False):
     if( level ):
@@ -88,22 +85,23 @@ class Game:
 
     for obj in storry.board[self.level]:
       for obj_type, parameters in obj.items():
-        try:
+        #try:
           self.game_objects.append( {
               'type' : obj_type,
-              'obj'  : game_object_type[obj_type](**parameters) 
+              'obj'  : game_object_type[obj_type]( **parameters) 
             }
           )
-        except Exception as err:
-          print(
-            "Error in storry board, when creating",
-            obj_type,
-            ":",err,
-            parameters
-          ) 
-          self.__del__()
-          sys.exit(1)
-
+          """
+          except Exception as err:
+            print(
+              "Error in storry board, when creating",
+              obj_type,
+              ":",err,
+              parameters
+            ) 
+            self.__del__()
+            sys.exit(1)
+          """
   # This is the main game loop
   def loop(self):
     # Start using pygame loop timing (Frame rate)
@@ -130,12 +128,12 @@ class Game:
           #print("Drawing",game_obj['type'])
           game_obj['obj'].draw()
 
-      game.dashboard.draw()
+      globals.game.dashboard.draw()
 
       pygame.display.flip()
 
       # Calculate timing and wait until frame rate is right
-      clock.tick( setting.frame_rate * game.game_speed )
+      clock.tick( setting.frame_rate * globals.game.game_speed )
       
 
 

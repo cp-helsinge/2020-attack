@@ -14,7 +14,7 @@
    <string>Credits</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
+   <string notr="true">background:  #FFF;
 </string>
   </property>
   <property name="frameShape">
@@ -52,22 +52,51 @@ background-image: url('qt/back.png');</string>
     <string/>
    </property>
   </widget>
-  <widget class="QTextBrowser" name="text">
+  <widget class="QTextBrowser" name="text_1">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1000</width>
-     <height>700</height>
+     <x>20</x>
+     <y>90</y>
+     <width>960</width>
+     <height>360</height>
     </rect>
    </property>
-   <property name="styleSheet">
-    <string notr="true">background-image:url('qt/html/coding_pirate.png'); 
-background-repeat: no-repeat;</string>
+   <property name="font">
+    <font>
+     <family>DejaVu Sans</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+   <property name="locale">
+    <locale language="English" country="Denmark"/>
+   </property>
+   <property name="html">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'DejaVu Sans'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <zorder>text</zorder>
+  <widget class="QTextBrowser" name="text_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>619</y>
+     <width>960</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+  </widget>
+  <zorder>text_1</zorder>
   <zorder>back_button</zorder>
+  <zorder>text_2</zorder>
  </widget>
  <resources/>
  <connections/>

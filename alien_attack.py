@@ -25,11 +25,12 @@
 import sys
 import os
 
-from PyQt5 import uic
+from PyQt5 import uic, QtCore, QtWebEngineWidgets
 from PyQt5.QtWidgets import (QWidget, QListWidget, QStackedWidget, QApplication,
                              QHBoxLayout, QListWidgetItem, QLabel)
 
 from game_objects import game_play
+from game_objects import globals
 
 
 class MainPage():
@@ -37,15 +38,25 @@ class MainPage():
         self.widget = uic.loadUi(os.path.join(qt_path,'main_page.ui'))
 
         self.widget.credits_button.clicked.connect(lambda: navigate("credits_page"))
+        self.widget.boring_button.clicked.connect(lambda: navigate("boring_page"))
         self.widget.play_button.clicked.connect(lambda: navigate("play"))
         self.widget.exit_button.clicked.connect(lambda: navigate("exit"))
 
 class CreditsPage():
     def __init__(self, navigate):
         self.widget = uic.loadUi(os.path.join(qt_path,'credits_page.ui'))
+        with open( os.path.join(html_path,'credits.html'), 'r' ) as html_file:
+            self.widget.text.setText( html_file.read() ) 
 
         self.widget.back_button.clicked.connect(lambda: navigate("main_page"))
 
+class BoringPage():
+    def __init__(self, navigate):
+        self.widget = uic.loadUi(os.path.join(qt_path,'boring_page.ui'))
+        with open( os.path.join(html_path,'boring.html'), 'r' ) as html_file:
+            self.widget.text_1.setText( html_file.read() ) 
+        self.widget.text_2.setText(boring_text) 
+        self.widget.back_button.clicked.connect(lambda: navigate("main_page"))
 
 class MainWindow(QWidget):
     def __init__(self, *args, **kwargs):
@@ -60,39 +71,41 @@ class MainWindow(QWidget):
         self.page = {}
         self.page['main_page'] = self.stacked_widget.addWidget(MainPage(self.navigate).widget)
         self.page['credits_page'] = self.stacked_widget.addWidget(CreditsPage(self.navigate).widget)
+        self.page['boring_page'] = self.stacked_widget.addWidget(BoringPage(self.navigate).widget)
 
         self.show()
 
-    def navigate(self, lable):
-        print(lable)
-        if lable in self.page:
-            self.stacked_widget.setCurrentIndex(self.page[lable])
+    def navigate(self, page_name):
+        if page_name in self.page:
+            self.stacked_widget.setCurrentIndex(self.page[page_name])
 
-        elif lable == 'exit':
+        elif page_name == 'exit':
             sys.exit(0)
 
-        elif lable == 'play':
-            app.game = game_play.Game()
+        elif page_name == 'play':
+            globals.game = game_play.Game()
+            globals.game.next_level(1)
+            globals.game.loop()
+            del globals.game
 
-            
+
 app = QApplication(sys.argv)
 # app.setStyleSheet(Stylesheet)
 
-root_path = os.path.join(os.path.dirname(__file__))
-root_path = root_path
-qt_path   = os.path.join(root_path,'qt')
-game_path = os.path.join(root_path,'pame_play')
-html_path = os.path.join(root_path,'qt','html')
+globals.root_path = root_path = os.path.join(os.path.dirname(__file__))
+globals.qt_path   = qt_path   = os.path.join(root_path,'qt')
+globals.game_path = game_path = os.path.join(root_path,'game_objects')
+globals.html_path = html_path = os.path.join(root_path,'qt','html')
+globals.gfx_path  = gfx_path  = os.path.join(root_path,'gfx')
 
-
-app.globals = {
-    'root_path' : root_path,
-    'qt_path'   : os.path.join(root_path,'qt'),
-    'game_path' : os.path.join(root_path,'pame_play'),
-    'html_path' : os.path.join(root_path,'qt','html'),
-
-    'game'      : game_play,
-}
+boring_text = """
+<div style="  display: inline-block; vertical-align: middle;">
+    Developed by Martin Kristensen @ Coding Pirates 2020 <img src="qt/coding_pirates.png">
+</div>
+<div style="  display: inline-block; vertical-align: middle;">
+Original design by Simon Rigét @ Coding Pirates 2019 <img src="qt/coding_pirates.png">
+</div>
+"""
 
 window = MainWindow()
 window.app = app
