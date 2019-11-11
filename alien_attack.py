@@ -83,10 +83,12 @@ class MainWindow(QWidget):
             sys.exit(0)
 
         elif page_name == 'play':
+            self.hide()
             globals.game = game_play.Game()
             globals.game.next_level(1)
             globals.game.loop()
             del globals.game
+            self.show()
 
 
 boring_text = """
