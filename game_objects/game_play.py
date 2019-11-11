@@ -73,9 +73,8 @@ class Game:
       self.game_speed = 1
     
   def __del__(self):
-    # pygame.display.quit()
-    #pygame.quit()
-    pass
+    pygame.display.quit()
+    pygame.quit()
 
   def next_level(self, level = False):
     if( level ):
@@ -102,6 +101,7 @@ class Game:
             self.__del__()
             sys.exit(1)
           """
+
   # This is the main game loop
   def loop(self):
     # Start using pygame loop timing (Frame rate)
@@ -134,6 +134,5 @@ class Game:
 
       # Calculate timing and wait until frame rate is right
       clock.tick( setting.frame_rate * globals.game.game_speed )
-      
-
-
+  
+    

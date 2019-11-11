@@ -14,8 +14,7 @@
    <string>Credits</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-</string>
+   <string notr="true"/>
   </property>
   <property name="frameShape">
    <enum>QFrame::NoFrame</enum>
@@ -62,8 +61,10 @@ background-image: url('qt/back.png');</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-image:url('qt/html/coding_pirate.png'); 
-background-repeat: no-repeat;</string>
+    <string notr="true">background-image:url('qt/html/python.png'); 
+background-repeat: no-repeat;
+background-color: #000;
+color: #b90;</string>
    </property>
   </widget>
   <zorder>text</zorder>

@@ -89,15 +89,6 @@ class MainWindow(QWidget):
             del globals.game
 
 
-app = QApplication(sys.argv)
-# app.setStyleSheet(Stylesheet)
-
-globals.root_path = root_path = os.path.join(os.path.dirname(__file__))
-globals.qt_path   = qt_path   = os.path.join(root_path,'qt')
-globals.game_path = game_path = os.path.join(root_path,'game_objects')
-globals.html_path = html_path = os.path.join(root_path,'qt','html')
-globals.gfx_path  = gfx_path  = os.path.join(root_path,'gfx')
-
 boring_text = """
 <div style="  display: inline-block; vertical-align: middle;">
     Developed by Martin Kristensen @ Coding Pirates 2020 <img src="qt/coding_pirates.png">
@@ -107,7 +98,23 @@ Original design by Simon Rigét @ Coding Pirates 2019 <img src="qt/coding_pirate
 </div>
 """
 
-window = MainWindow()
-window.app = app
+# Set some global variables
+globals.root_path = root_path = os.path.join(os.path.dirname(__file__))
+globals.qt_path   = qt_path   = os.path.join(root_path,'qt')
+globals.game_path = game_path = os.path.join(root_path,'game_objects')
+globals.html_path = html_path = os.path.join(root_path,'qt','html')
+globals.gfx_path  = gfx_path  = os.path.join(root_path,'gfx')
+
+globals.app = app = QApplication(sys.argv)
+# app.setStyleSheet(Stylesheet)
+
+globals.window = window = MainWindow()
 app.exec_()
+
+
+
+# Error hyandler
+pass
+
+
 
