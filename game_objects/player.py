@@ -13,8 +13,8 @@
     
 ============================================================================"""
 import pygame
-from include import globals
-from include import common
+from game_objects import globals
+from game_objects import common
 
 class Player:
   def __init__(self, 

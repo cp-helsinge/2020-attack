@@ -9,8 +9,8 @@
 ============================================================================"""
 import pygame
 from pygame import *
-from include import globals
-from include import setting
+from game_objects import globals
+from game_objects import setting
 
 class PlayerInput:
   def __init__(self):

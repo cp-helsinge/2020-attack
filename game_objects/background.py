@@ -4,9 +4,9 @@
 
 ============================================================================"""
 import pygame
-from include import globals
-from include import setting
-from include import common
+from game_objects import common
+from game_objects import setting
+from game_objects import globals
 
 
 class Background:

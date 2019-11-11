@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Alien Attack</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1001</width>
+      <height>701</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: url('qt/background.png')</string>
+    </property>
+    <property name="locale">
+     <locale language="English" country="Denmark"/>
+    </property>
+    <widget class="QWidget" name="main_window">
+     <widget class="QPushButton" name="exit_button">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>580</y>
+        <width>100</width>
+        <height>100</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>26</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string extracomment="Play">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Exit&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: qradialgradient(cx: 0.3, cy: -0.4,fx: 0.3, fy: -0.4,radius: 1.35,stop: 0 #fff, stop: 1 #bbb);
+background-image: url('qt/exit.png');</string>
+      </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhHiddenText</set>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="credits_button">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>580</y>
+        <width>100</width>
+        <height>100</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>26</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string extracomment="Play">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;See who made this game&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: qradialgradient(cx: 0.3, cy: -0.4,fx: 0.3, fy: -0.4,radius: 1.35,stop: 0 #fff, stop: 1 #bbb);
+background-image: url('qt/credits.png');</string>
+      </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhHiddenText</set>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="play_button">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>300</y>
+        <width>100</width>
+        <height>100</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>26</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string extracomment="Play">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Play the game!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: qradialgradient(cx: 0.3, cy: -0.4,fx: 0.3, fy: -0.4,radius: 1.35,stop: 0 #fff, stop: 1 #bbb);
+background-image: url('qt/play.png');</string>
+      </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhHiddenText</set>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="boring_button">
+      <property name="geometry">
+       <rect>
+        <x>880</x>
+        <y>580</y>
+        <width>100</width>
+        <height>100</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>26</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string extracomment="Play">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The boring stuff&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: qradialgradient(cx: 0.3, cy: -0.4,fx: 0.3, fy: -0.4,radius: 1.35,stop: 0 #fff, stop: 1 #bbb);
+background-image: url('qt/boring.png');</string>
+      </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhHiddenText</set>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_2"/>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
