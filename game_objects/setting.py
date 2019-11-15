@@ -12,6 +12,7 @@ screen_height = 700
 screen_rect = (0 , 0, screen_width, screen_height)
 frame_rate = 60
 game_speed = 1
+fire_rate = 2
 
 dashboard_background_color = (234,224,200)
 dashboard_color = (0,0,0)
@@ -32,6 +33,9 @@ key_bind =  {
   pygame.K_UP     : 'up',
   pygame.K_s      : 'down',  # D
   pygame.K_DOWN   : 'down',
+  pygame.K_SPACE  : 'fire',
+  pygame.K_RETURN : 'fire',
+  
 }
 mouse_bind = {
   MOUSE_LEFT : 'fire',

@@ -20,6 +20,7 @@ from pygame.locals import *
 import time
 import os
 import sys
+import traceback
 
 # Import game classes
 from game_objects import alien
@@ -35,15 +36,40 @@ from game_objects import storry
 from game_objects import setting
 from game_objects import globals
 
-# Link a game object type to the actual object class definition
-game_object_type = dict(
-  alien = alien.Alien,
-  bomb = bomb.Bomb,
-  background = background.Background,
-  city = city.City,
-  player = player.Player,
-  shot = shot.Shot,
-)
+
+
+class GameObject():
+  def __init__(self):
+    self.list = []
+    # Link a game object type to the actual object class definition
+    self.object_type = dict(
+      alien = alien.Alien,
+      bomb = bomb.Bomb,
+      background = background.Background,
+      city = city.City,
+      player = player.Player,
+      shot = shot.Shot,
+    )
+
+  def add(self, obj_type, parameters):  
+    try:
+      self.list.append( {
+          'type' : obj_type,
+          'obj'  : self.object_type[obj_type]( **parameters) 
+        }
+      )
+    except Exception as err:
+      print(
+        "Error in storry board, when creating",
+        obj_type,
+        ":",err,
+        parameters
+      ) 
+      #traceback.print_stack()
+      #self.__del__()
+      sys.exit(1)  
+
+
 
 class Game:
   def __init__(self):
@@ -61,7 +87,7 @@ class Game:
     # Game objects
     self.dashboard = dashboard.Dashboard()
     self.rect = pygame.Rect(0,0,setting.screen_width,setting.screen_height - self.dashboard.rect[3]) 
-    self.game_objects = []
+    self.object = GameObject()
     self.player_input = player_input.PlayerInput()
     self.level = 1
     self.score = 10000
@@ -84,23 +110,7 @@ class Game:
 
     for obj in storry.board[self.level]:
       for obj_type, parameters in obj.items():
-        #try:
-          self.game_objects.append( {
-              'type' : obj_type,
-              'obj'  : game_object_type[obj_type]( **parameters) 
-            }
-          )
-          """
-          except Exception as err:
-            print(
-              "Error in storry board, when creating",
-              obj_type,
-              ":",err,
-              parameters
-            ) 
-            self.__del__()
-            sys.exit(1)
-          """
+        self.object.add(obj_type, parameters)
 
   # This is the main game loop
   def loop(self):
@@ -110,23 +120,32 @@ class Game:
     while not self.player_input.stop:
       # Get player input
       self.player_input.update()
-      # pygame.display.toggle_fullscreen()
+
       # move all objects
-      for game_obj in self.game_objects:
+      for game_obj in self.object.list:
         if callable(getattr(game_obj['obj'], 'update', None)):
           game_obj['obj'].update()
 
-      # claculate collissions
+      # Check for collissions
       #    if getattr(obj, 'dead', False) and obj.dead :
       #      game.all_objects[category].remove(obj)
-      # paint background
+      for i in range(0, len(self.object.list) ):
+        if not getattr( self.object.list[i], 'dead', False) and getattr(self.object.list[i], 'rect', False):
+          for ii in range(i, len(self.object.list) ):
+            if not getattr( self.object.list[ii], 'dead', False) and getattr(self.object.list[ii], 'rect', False) and self.object.list[i].rect.colliderect(self.object.list[ii].rect):
+              if getattr(self.object.list[i], 'hit', False):
+                self.object.list[i].hit(self.object.list[ii].type)
+              if getattr(self.object.list[ii], 'hit', False):
+                self.object.list[ii].hit(self.object.list[i].type)
 
       # Paint all objects
-      for game_obj in self.game_objects:
-        #print("game_obj",game_obj)
+      for game_obj in self.object.list:
         if callable(getattr(game_obj['obj'], 'draw', None)):
-          #print("Drawing",game_obj['type'])
           game_obj['obj'].draw()
+
+        # Remove dead objects  
+        if getattr(game_obj['obj'], 'dead', False):
+          self.object.list.remove(game_obj)
 
       globals.game.dashboard.draw()
 

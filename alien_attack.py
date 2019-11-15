@@ -29,7 +29,7 @@ from PyQt5 import uic, QtCore, QtWebEngineWidgets
 from PyQt5.QtWidgets import (QWidget, QListWidget, QStackedWidget, QApplication,
                              QHBoxLayout, QListWidgetItem, QLabel)
 
-from game_objects import game_play
+from game_objects import game
 from game_objects import globals
 
 
@@ -84,7 +84,7 @@ class MainWindow(QWidget):
 
         elif page_name == 'play':
             self.hide()
-            globals.game = game_play.Game()
+            globals.game = game.Game()
             globals.game.next_level(1)
             globals.game.loop()
             del globals.game
@@ -115,7 +115,7 @@ app.exec_()
 
 
 
-# Error hyandler
+# Error handler
 pass
 
 
