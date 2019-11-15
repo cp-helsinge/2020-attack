@@ -46,7 +46,6 @@ class Player:
     self.last_shot  = 0
 
   def draw(self):
-    print("Player rect",self.rect)
     globals.game.window.blit(self.image,self.rect)
 
   def update(self):
@@ -54,15 +53,24 @@ class Player:
 
     if key['left']:
       self.rect = common.move_rect(self.rect, 180, self.speed, self.boundary)
+    
     if key['right']:
       self.rect = common.move_rect(self.rect, 0, self.speed, self.boundary)
+    
     if key['up']:
       self.rect = common.move_rect(self.rect, 90, self.speed, self.boundary)
+    
     if key['down']:
       self.rect = common.move_rect(self.rect, -90, self.speed, self.boundary)
+    
     if key['fire'] and ( ( pygame.time.get_ticks() - self.last_shot ) > 1000 / self.fire_rate ):
       self.last_shot = pygame.time.get_ticks()
-      player_rect = self.rect
-      self.shot['rect'] = ( self.rect.x, self.rect.y, self.shot['rect'][2], self.shot['rect'][3])
+      
+      # Place shot on top of player (without touching)
+      player_midtop = self.rect.midtop
+      x = player_midtop[0] - self.shot['rect'][2] // 2
+      y = player_midtop[1] - self.shot['rect'][3] - 1 
+      self.shot['rect'] = ( x, y, self.shot['rect'][2], self.shot['rect'][3])
+      
       globals.game.object.add('shot',self.shot)
 

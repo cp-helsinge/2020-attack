@@ -50,7 +50,7 @@ class Alien:
 
     self.rect = common.move_rect(self.rect, self.direction , self.speed, self.boundary)  
 
-  def hit(object_type):
+  def hit(self, object_type):
     if object_type == 'shot':
       self.dead = True
       globals.game.score += 100

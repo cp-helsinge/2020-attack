@@ -42,7 +42,7 @@ class GameObject():
   def __init__(self):
     self.list = []
     # Link a game object type to the actual object class definition
-    self.object_type = dict(
+    self.class_list = dict(
       alien = alien.Alien,
       bomb = bomb.Bomb,
       background = background.Background,
@@ -51,17 +51,17 @@ class GameObject():
       shot = shot.Shot,
     )
 
-  def add(self, obj_type, parameters):  
+  def add(self, object_type, parameters):  
     try:
       self.list.append( {
-          'type' : obj_type,
-          'obj'  : self.object_type[obj_type]( **parameters) 
+          'type' : object_type,
+          'obj'  : self.class_list[object_type]( **parameters) 
         }
       )
     except Exception as err:
       print(
         "Error in storry board, when creating",
-        obj_type,
+        object_type,
         ":",err,
         parameters
       ) 
@@ -92,6 +92,7 @@ class Game:
     self.level = 1
     self.score = 10000
     self.player_health = 100
+    self.end_game = False     
 
     if( setting.game_speed < 100 or setting.game_speed > 0 ):
       self.game_speed = setting.game_speed
@@ -108,16 +109,21 @@ class Game:
     else:
       self.level += 1
 
-    for obj in storry.board[self.level]:
-      for obj_type, parameters in obj.items():
-        self.object.add(obj_type, parameters)
+    if self.level < len(storry.board):
+      self.object.list = []
+      for obj in storry.board[self.level]:
+        for object_type, parameters in obj.items():
+          self.object.add(object_type, parameters)
+
+    else:
+      self.end_game = True      
 
   # This is the main game loop
   def loop(self):
     # Start using pygame loop timing (Frame rate)
     clock = pygame.time.Clock()
 
-    while not self.player_input.stop:
+    while not self.player_input.stop and not self.end_game:
       # Get player input
       self.player_input.update()
 
@@ -126,32 +132,42 @@ class Game:
         if callable(getattr(game_obj['obj'], 'update', None)):
           game_obj['obj'].update()
 
-      # Check for collissions
-      #    if getattr(obj, 'dead', False) and obj.dead :
-      #      game.all_objects[category].remove(obj)
+      # Check for collissions with all non dead objects, that has a defined rectangle
       for i in range(0, len(self.object.list) ):
-        if not getattr( self.object.list[i], 'dead', False) and getattr(self.object.list[i], 'rect', False):
-          for ii in range(i, len(self.object.list) ):
-            if not getattr( self.object.list[ii], 'dead', False) and getattr(self.object.list[ii], 'rect', False) and self.object.list[i].rect.colliderect(self.object.list[ii].rect):
-              if getattr(self.object.list[i], 'hit', False):
-                self.object.list[i].hit(self.object.list[ii].type)
-              if getattr(self.object.list[ii], 'hit', False):
-                self.object.list[ii].hit(self.object.list[i].type)
-
-      # Paint all objects
+        if not self.object.list[i]['type'] == 'background' and not getattr( self.object.list[i]['obj'], 'dead', False) and getattr(self.object.list[i]['obj'], 'rect', False):
+          for ii in range(i+1, len(self.object.list) ):
+            if not getattr( self.object.list[ii]['obj'], 'dead', False) and getattr(self.object.list[ii]['obj'], 'rect', False) and self.object.list[i]['obj'].rect.colliderect(self.object.list[ii]['obj'].rect):
+              # print(i,"hitting",ii)
+              if getattr(self.object.list[i]['obj'], 'hit', False):
+                self.object.list[i]['obj'].hit(self.object.list[ii]['type'])
+              if getattr(self.object.list[ii]['obj'], 'hit', False):
+                self.object.list[ii]['obj'].hit(self.object.list[i]['type'])
+      
+      # Paint all objects and cleanm up
+      aliens = 0
       for game_obj in self.object.list:
         if callable(getattr(game_obj['obj'], 'draw', None)):
           game_obj['obj'].draw()
 
         # Remove dead objects  
         if getattr(game_obj['obj'], 'dead', False):
+          # print(game_obj['type'],"died")
           self.object.list.remove(game_obj)
+
+        # Count aliens
+        if game_obj['type'] == 'alien':
+          aliens += 1
 
       globals.game.dashboard.draw()
 
       pygame.display.flip()
 
+      print("Aliens", aliens)
+      if aliens <= 0:
+        self.next_level()
+
       # Calculate timing and wait until frame rate is right
       clock.tick( setting.frame_rate * globals.game.game_speed )
-  
+
+
     

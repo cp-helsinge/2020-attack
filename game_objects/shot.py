@@ -39,5 +39,5 @@ class Shot:
       self.dead = True
       pass
 
-  def hit(object_type):
+  def hit(self, object_type):
     self.dead = True

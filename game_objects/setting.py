@@ -12,7 +12,7 @@ screen_height = 700
 screen_rect = (0 , 0, screen_width, screen_height)
 frame_rate = 60
 game_speed = 1
-fire_rate = 2
+fire_rate = 3
 
 dashboard_background_color = (234,224,200)
 dashboard_color = (0,0,0)
@@ -38,6 +38,7 @@ key_bind =  {
   
 }
 mouse_bind = {
-  MOUSE_LEFT : 'fire',
+  MOUSE_LEFT : 'fire',  
+  MOUSE_RIGHT : 'fire',
 }
 
