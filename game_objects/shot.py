@@ -37,7 +37,6 @@ class Shot:
     self.rect = common.move_rect(self.rect, self.direction , self.speed, self.boundary)  
     if self.rect.y <= self.boundary.y:
       self.dead = True
-      pass
 
   def hit(self, object_type):
     self.dead = True

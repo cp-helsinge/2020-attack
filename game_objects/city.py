@@ -17,3 +17,7 @@ class City:
     if( not surface ):
       surface = globals.game.window
     surface.blit(self.image,self.rect)
+
+  def hit(self, object_type):
+    self.dead = True
+    globals.game.score -= 1000
