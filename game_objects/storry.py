@@ -19,7 +19,7 @@ board.append([
   }},
   {'player'       : {
     'rect'        : (500,500,80,80),
-    'image'       : 'player10.png',
+    'image'       : 'a1a1_rocket2.png',
     'crosshair_image' : 'crosshair.png',
     'boundary'    : (0,500,1000,80),
     'speed'       :  10,
