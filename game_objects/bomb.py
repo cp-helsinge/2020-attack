@@ -3,18 +3,42 @@
   Bomb (Alien)
 
 ============================================================================"""
+import pygame
+import random 
+from game_objects import globals
+from game_objects import setting
+from game_objects import common
+
 
 class Bomb:
-    def __init__(self, pos, x_speed, y_speed):
-        self.enemyBomb = pygame.image.load("gfx/enemy_bomb.png").convert_alpha()
-        self.rect = self.enemyBomb.get_rect(center=pos)
-        self.x = self.rect.x
-        self.y = self.rect.y
-        self.x_speed = x_speed
-        self.y_speed = y_speed
+  def __init__(self, 
+    rect, 
+    image='bomb.png', 
+    boundary = False, 
+    direction = 90, 
+    speed = 1, 
+    sound = False,
+  ):
 
-    def move(self):
-        self.x = self.x + self.x_speed
-        self.y = self.y + self.y_speed
-        self.rect.x = self.x
-        self.rect.y = self.y
+    self.image      = common.load_image(image, rect )
+    self.rect       = pygame.Rect(rect)
+    self.speed      = speed
+    self.direction  = direction
+    if boundary:
+      self.boundary   = pygame.Rect(boundary)
+    else:
+      self.boundary = globals.game.rect
+    self.dead       = False
+
+  def draw(self):
+    globals.game.window.blit(self.image,self.rect)
+
+  def update(self):
+    self.rect = common.move_rect(self.rect, self.direction , self.speed, self.boundary)  
+    if self.rect.y + self.rect.height >= self.boundary.height:
+      self.dead = True
+
+  def hit(self, object_type):
+    if not object_type == 'alien' and not object_type == 'bomb':
+      self.dead = True
+      globals.game.score += 1

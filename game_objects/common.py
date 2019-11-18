@@ -6,8 +6,10 @@
 import pygame
 import math
 import os
+import random 
 
 from game_objects import globals
+from game_objects import setting
 
 # load image, convert alpha channel (transparrent areas) and resize image
 def load_image(name, rect=False):
@@ -32,6 +34,9 @@ def move_rect(rect, direction, speed, boundary=False):
   new_rect.clamp_ip(boundary)
   return new_rect
 
+# Return true at random, on avarage at <freq> times pr. second
+def random_frequency(freq):
+  return random.randint(0, setting.frame_rate // (freq * globals.game.game_speed) ) == 0
 
 
 

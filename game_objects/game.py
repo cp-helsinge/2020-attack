@@ -1,4 +1,3 @@
-#! /usr/bin/env python3
 """============================================================================
 Sideways arcade space game
 
@@ -92,7 +91,8 @@ class Game:
     self.level = 1
     self.score = 10000
     self.player_health = 100
-    self.end_game = False     
+    self.end_game = False    
+    self.level_time = 0
 
     if( setting.game_speed < 100 or setting.game_speed > 0 ):
       self.game_speed = setting.game_speed
@@ -115,6 +115,7 @@ class Game:
         for object_type, parameters in obj.items():
           self.object.add(object_type, parameters)
 
+      self.level_time = pygame.time.get_ticks() 
     else:
       self.end_game = True      
 
@@ -162,7 +163,6 @@ class Game:
 
       pygame.display.flip()
 
-      print("Aliens", aliens)
       if aliens <= 0:
         self.next_level()
 

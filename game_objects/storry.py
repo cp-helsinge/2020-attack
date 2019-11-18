@@ -19,7 +19,7 @@ board.append([
   }},
   {'player'       : {
     'rect'        : (500,500,80,80),
-    'image'       : 'player10.png',
+    'image'       : 'a1a1_rocket2.png',
     'crosshair_image' : 'crosshair.png',
     'boundary'    : (0,500,1000,80),
     'speed'       :  10,
@@ -40,7 +40,9 @@ board.append([
     'speed'       : 5,
     'direction'   : 180,
     'sound'       : 'small_bang.wav',
-    'shoot_sound' : 'small_shoot_sound.wav'
+    'shoot_sound' : 'small_shoot_sound.wav',
+    'bomb'        : { 'rect': (0,0,40,40), 'direction': -90, 'speed': 1, },
+    'shot'        : { 'rect': (0,0,10,10), 'direction': 90, 'speed': 5,  },
   }},    
   {'alien'        : {
     'rect'        : (100,90,100,50),
@@ -49,7 +51,9 @@ board.append([
     'speed'       : 5,
     'direction'   : 180,
     'sound'       : 'small_bang.wav',
-    'shoot_sound' : 'small_shoot_sound.wav'
+    'shoot_sound' : 'small_shoot_sound.wav',
+    'bomb'        : { 'rect': (0,0,40,40), 'direction': -90, 'speed': 1, },
+    'shot'        : { 'rect': (0,0,10,10), 'direction': 90, 'speed': 5, 'image': 'shot.png' },
   }},
 ])
 
@@ -82,7 +86,9 @@ board.append([
     'speed'       : 5,
     'direction'   : 180,
     'sound'       : 'small_bang.wav',
-    'shoot_sound' : 'small_shoot_sound.wav'
+    'shoot_sound' : 'small_shoot_sound.wav',
+    'bomb'        : { 'rect': (0,0,50,80), 'direction': -90, 'speed': 1, 'image': 'bomb.png' },
+    'shot'        : { 'rect': (0,0,10,10), 'direction': 90, 'speed': 5, 'image': 'shot.png' },
   }},    
   {'alien'        : {
     'rect'        : (100,90,100,50),
@@ -91,7 +97,9 @@ board.append([
     'speed'       : 5,
     'direction'   : 180,
     'sound'       : 'small_bang.wav',
-    'shoot_sound' : 'small_shoot_sound.wav'
+    'shoot_sound' : 'small_shoot_sound.wav',
+    'bomb'        : { 'rect': (0,0,50,80), 'direction': -90, 'speed': 1, 'image': 'bomb.png' },
+    'shot'        : { 'rect': (0,0,10,10), 'direction': 90, 'speed': 5, 'image': 'shot.png' },
   }},
     {'alien'        : {
     'rect'        : (200,30,100,50),
@@ -100,7 +108,9 @@ board.append([
     'speed'       : 5,
     'direction'   : 180,
     'sound'       : 'small_bang.wav',
-    'shoot_sound' : 'small_shoot_sound.wav'
+    'shoot_sound' : 'small_shoot_sound.wav',
+    'bomb'        : { 'rect': (0,0,50,80), 'direction': -90, 'speed': 1, 'image': 'bomb.png' },
+    'shot'        : { 'rect': (0,0,10,10), 'direction': 90, 'speed': 5, 'image': 'shot.png' },
   }},
     {'alien'        : {
     'rect'        : (300,90,100,50),
@@ -109,7 +119,9 @@ board.append([
     'speed'       : 5,
     'direction'   : 180,
     'sound'       : 'small_bang.wav',
-    'shoot_sound' : 'small_shoot_sound.wav'
+    'shoot_sound' : 'small_shoot_sound.wav',
+    'bomb'        : { 'rect': (0,0,50,80), 'direction': -90, 'speed': 1, 'image': 'bomb.png' },
+    'shot'        : { 'rect': (0,0,10,10), 'direction': 90, 'speed': 5, 'image': 'shot.png' },
   }},
 ])
 

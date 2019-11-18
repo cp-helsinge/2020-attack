@@ -74,3 +74,6 @@ class Player:
       
       globals.game.object.add('shot',self.shot)
 
+def hit(self, object_type):
+  print("I was hit by",object_type)
+  self.dead = True
