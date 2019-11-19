@@ -39,7 +39,7 @@ class Dashboard:
 
     # Paint health in the center of the dashboard
     text = self.font.render(
-      "Health: " + str(globals.game.player_health),
+      "Health: " + str(globals.player.health),
       True, 
       setting.dashboard_color
     )

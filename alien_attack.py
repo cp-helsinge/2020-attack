@@ -31,6 +31,7 @@ from PyQt5.QtWidgets import (QWidget, QListWidget, QStackedWidget, QApplication,
 
 from game_objects import game
 from game_objects import globals
+from game_objects import next_level
 
 
 class MainPage():
@@ -73,7 +74,19 @@ class MainWindow(QWidget):
         self.page['credits_page'] = self.stacked_widget.addWidget(CreditsPage(self.navigate).widget)
         self.page['boring_page'] = self.stacked_widget.addWidget(BoringPage(self.navigate).widget)
 
+        self.keyPressEvent = self.newOnkeyPressEvent
         self.show()
+
+    def newOnkeyPressEvent(self,e):
+        for page_name, stack_index in self.page.items():
+            if stack_index == self.stacked_widget.currentIndex():
+                if page_name == 'main_page':
+                    if e.key() == QtCore.Qt.Key_Escape:
+                        self.navigate('exit')
+                    if e.key() == QtCore.Qt.Key_Return:
+                        self.navigate('play')
+                else:
+                    self.navigate('main_page')
 
     def navigate(self, page_name):
         if page_name in self.page:
@@ -85,7 +98,7 @@ class MainWindow(QWidget):
         elif page_name == 'play':
             self.hide()
             globals.game = game.Game()
-            globals.game.next_level(1)
+            next_level.NextLevel(1)
             globals.game.loop()
             del globals.game
             self.show()

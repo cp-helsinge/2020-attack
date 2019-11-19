@@ -22,6 +22,7 @@ class PlayerInput:
     self.mouse = ( 0,0 )
     self.stop = False
     self.suspend = False
+    self.tech_screen_on = False
 
   def update(self):
     event_list = pygame.event.get()
@@ -32,6 +33,9 @@ class PlayerInput:
       if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:  
         #self.suspend = not self.suspend
         self.stop = True
+
+      if event.type == pygame.KEYDOWN and event.key == pygame.K_F3:  
+        self.tech_screen_on = not self.tech_screen_on
 
       if not self.suspend:
         if event.type == pygame.MOUSEMOTION :

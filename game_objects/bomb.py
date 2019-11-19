@@ -41,4 +41,4 @@ class Bomb:
   def hit(self, object_type):
     if not object_type == 'alien' and not object_type == 'bomb':
       self.dead = True
-      globals.game.score += 1
+      globals.game.score += 10

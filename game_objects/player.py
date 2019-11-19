@@ -44,6 +44,8 @@ class Player:
     self.dead       = False
     self.fire_rate  = setting.fire_rate
     self.last_shot  = 0
+    self.health     = 100
+    globals.player  = self
 
   def draw(self):
     globals.game.window.blit(self.image,self.rect)
@@ -74,6 +76,12 @@ class Player:
       
       globals.game.object.add('shot',self.shot)
 
-def hit(self, object_type):
-  print("I was hit by",object_type)
-  self.dead = True
+  def hit(self, object_type):
+    print("I was hit by",object_type)
+    if object_type == 'bomb':
+      self.health -= 50
+    elif object_type == 'shot':
+      self.health -= 10
+
+    if self.health <=0:   
+      self.dead = True

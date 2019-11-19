@@ -20,4 +20,4 @@ class City:
 
   def hit(self, object_type):
     self.dead = True
-    globals.game.score -= 1000
+    globals.game.score -= 100

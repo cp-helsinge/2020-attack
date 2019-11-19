@@ -1,5 +1,6 @@
 """============================================================================
 
+
   Alien space ship
 
   parameters:
@@ -12,6 +13,7 @@
 
 ============================================================================"""
 import pygame
+import math
 from game_objects import globals
 from game_objects import setting
 from game_objects import common
@@ -66,6 +68,23 @@ class Alien:
       self.bomb['rect'] = ( x, y, self.bomb['rect'][2], self.bomb['rect'][3])
       
       globals.game.object.add('bomb', self.bomb)
+
+    # Shoot at player at random interval
+    if self.shot and  common.random_frequency(1):
+      # Place shot under alien ship
+      midbottom = self.rect.midbottom
+      x = midbottom[0] - self.bomb['rect'][2] // 2
+      y = midbottom[1] + 1
+      self.shot['rect'] = ( x, y, self.shot['rect'][2], self.shot['rect'][3])
+      # Direct shot at player
+      """
+      target = global.player.rect.center
+      a = ( x - target.x ) / setting.screen_width
+      b = ( y - target.y ) / setting.screen_height
+      math.degrees(math.atan())
+      """
+
+      globals.game.object.add('shot', self.shot)
 
   def hit(self, object_type):
     if object_type == 'shot':
