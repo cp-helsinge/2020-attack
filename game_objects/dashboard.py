@@ -38,14 +38,13 @@ class Dashboard:
     surface.blit( text, text_rect )
 
     # Paint health in the center of the dashboard
-    text = self.font.render(
-      "Health: " + str(globals.player.health),
-      True, 
-      setting.dashboard_color
-    )
-    text_rect = text.get_rect()
-    text_rect.center = pygame.Rect(setting.dashboard_rectangle).center
-    surface.blit( text, text_rect )
+    w = self.rect.width // 5
+    h = self.rect.height // 2
+    rect = pygame.Rect(0, 0, w, h)
+    rect.center = self.rect.center
+    pygame.draw.rect(surface,(100,100,30),(rect.x-3, rect.y-3, w+6, h + 6))
+    rect.width = rect.width * globals.player.health // 100 
+    pygame.draw.rect(surface,(200,0,0),rect)
 
     # Paint level middle right of dashboard
     text = self.font.render(
