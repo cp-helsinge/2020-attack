@@ -19,5 +19,6 @@ class City:
     surface.blit(self.image,self.rect)
 
   def hit(self, object_type):
-    self.dead = True
-    globals.game.score -= 100
+    if object_type == 'bomb':
+      self.dead = True
+      globals.game.score -= 100

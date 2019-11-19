@@ -76,13 +76,10 @@ class Alien:
       x = midbottom[0] - self.bomb['rect'][2] // 2
       y = midbottom[1] + 1
       self.shot['rect'] = ( x, y, self.shot['rect'][2], self.shot['rect'][3])
+
       # Direct shot at player
-      """
-      target = global.player.rect.center
-      a = ( x - target.x ) / setting.screen_width
-      b = ( y - target.y ) / setting.screen_height
-      math.degrees(math.atan())
-      """
+      target = globals.player.rect.midtop
+      self.shot['direction'] = math.degrees(math.atan2( target[0] - x, target[1] - y )) -90
 
       globals.game.object.add('shot', self.shot)
 
