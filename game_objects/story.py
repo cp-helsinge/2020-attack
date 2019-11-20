@@ -42,24 +42,24 @@ board.append([
   {'alien'        : {
     'rect'        : (800,30,100,50),
     'image'       : 'alien8.png',
-    'boundary'    : (0,30,1000,60),
-    'speed'       : 5,
+    'boundary'    : (0,0,1000,200),
+    'speed'       : 2,
     'direction'   : 180,
     'sound'       : 'small_bang.wav',
     'shoot_sound' : 'small_shoot_sound.wav',
     'bomb'        : { 'rect': (0,0,40,40), 'direction': -90, 'speed': 1, },
-    'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 5,  'image': 'alien_shot.png' },
+    'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 3,  'image': 'alien_shot.png' },
   }},    
   {'alien'        : {
     'rect'        : (100,90,100,50),
     'image'       : 'alien8.png',
-    'boundary'    : (0,90,1000,60),
+    'boundary'    : (0,0,1000,200),
     'speed'       : 5,
     'direction'   : 180,
     'sound'       : 'small_bang.wav',
     'shoot_sound' : 'small_shoot_sound.wav',
     'bomb'        : { 'rect': (0,0,40,40), 'direction': -90, 'speed': 1, },
-    'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 5, 'image': 'alien_shot.png' },
+    'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 3, 'image': 'alien_shot.png' },
   }},
 ])
 
@@ -94,7 +94,7 @@ board.append([
   {'alien'        : {
     'rect'        : (800,30,100,50),
     'image'       : 'alien8.png',
-    'boundary'    : (0,30,1000,60),
+    'boundary'    : (0,0,1000,200),
     'speed'       : 5,
     'direction'   : 180,
     'sound'       : 'small_bang.wav',
@@ -105,7 +105,7 @@ board.append([
   {'alien'        : {
     'rect'        : (100,90,100,50),
     'image'       : 'alien8.png',
-    'boundary'    : (0,90,1000,60),
+    'boundary'    : (0,0,1000,200),
     'speed'       : 5,
     'direction'   : 180,
     'sound'       : 'small_bang.wav',
@@ -116,7 +116,7 @@ board.append([
     {'alien'        : {
     'rect'        : (300,30,100,50),
     'image'       : 'alien8.png',
-    'boundary'    : (0,90,1000,60),
+    'boundary'    : (0,0,1000,200),
     'speed'       : 5,
     'direction'   : 180,
     'sound'       : 'small_bang.wav',
@@ -127,7 +127,7 @@ board.append([
     {'alien'        : {
     'rect'        : (500,90,100,50),
     'image'       : 'alien8.png',
-    'boundary'    : (0,90,1000,60),
+    'boundary'    : (0,0,1000,200),
     'speed'       : 5,
     'direction'   : 180,
     'sound'       : 'small_bang.wav',

@@ -80,8 +80,10 @@ class Player:
     print("I was hit by",object_type)
     if object_type == 'bomb':
       self.health -= 50
-    elif object_type == 'shot':
+    elif object_type == 'enemy_shot':
       self.health -= 10
 
     if self.health <=0:   
       self.dead = True
+      self.health = 0
+    

@@ -1,6 +1,6 @@
 """============================================================================
 
-  Bomb (Alien)
+  Shot
 
 ============================================================================"""
 import pygame
@@ -10,10 +10,10 @@ from game_objects import setting
 from game_objects import common
 
 
-class Bomb:
+class EnemyShot:
   def __init__(self, 
     rect, 
-    image='bomb.png', 
+    image='enemy_shot.png', 
     boundary = False, 
     direction = 90, 
     speed = 1, 
@@ -25,7 +25,7 @@ class Bomb:
     self.speed      = speed
     self.direction  = direction
     if boundary:
-      self.boundary   = pygame.Rect(boundary)
+      self.boundary = pygame.Rect(boundary)
     else:
       self.boundary = globals.game.rect
     self.dead       = False
@@ -35,10 +35,10 @@ class Bomb:
 
   def update(self):
     self.rect = common.move_rect(self.rect, self.direction , self.speed, self.boundary)  
-    if self.rect.y + self.rect.height >= self.boundary.height:
+
+    if common.rect_touch(self.rect, self.boundary):
       self.dead = True
 
   def hit(self, object_type):
-    if not object_type == 'alien' and not object_type == 'bomb' and not object_type == 'enemy_shot':
+    if object_type == 'player':
       self.dead = True
-      globals.game.score += 10

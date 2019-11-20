@@ -14,6 +14,7 @@
 ============================================================================"""
 import pygame
 import math
+import random
 from game_objects import globals
 from game_objects import setting
 from game_objects import common
@@ -38,29 +39,25 @@ class Alien:
     self.speed      = speed
     self.direction  = direction
     if boundary:
-      self.boundary   = pygame.Rect(boundary)
+      self.boundary = pygame.Rect(boundary)
     else:
       self.boundary = globals.game.rect
-    self.bomb = bomb
-    self.shot = shot
+    self.bomb       = bomb
+    self.shot       = shot
     self.dead       = False
-
 
   def draw(self):
     globals.game.window.blit(self.image,self.rect)
 
   def update(self):
     # Movement
-    if self.rect.left <= self.boundary.left:
-      self.direction = 0
-    elif self.rect.right >= self.boundary.right:
-      self.direction = 180
+    if common.rect_touch(self.rect, self.boundary):
+      self.direction = (self.direction + 180) % 360 // 1
 
-    self.rect = common.move_rect(self.rect, self.direction , self.speed, self.boundary)  
+    self.rect = common.move_rect(self.rect, self.direction, self.speed, self.boundary)  
 
     # Bombs
-    #if self.bomb and globals.game.level_time > 50 and common.random_frequency(0.5):
-    if self.bomb and  common.random_frequency(0.1):
+    if self.bomb and  common.random_frequency(0.3):
        # Place a bomb under alien ship (without touching)
       midbottom = self.rect.midbottom
       x = midbottom[0] - self.bomb['rect'][2] // 2
@@ -70,7 +67,7 @@ class Alien:
       globals.game.object.add('bomb', self.bomb)
 
     # Shoot at player at random interval
-    if self.shot and  common.random_frequency(1):
+    if self.shot and  common.random_frequency(0.5):
       # Place shot under alien ship
       midbottom = self.rect.midbottom
       x = midbottom[0] - self.bomb['rect'][2] // 2
@@ -81,7 +78,7 @@ class Alien:
       target = globals.player.rect.midtop
       self.shot['direction'] = math.degrees(math.atan2( target[0] - x, target[1] - y )) -90
 
-      globals.game.object.add('shot', self.shot)
+      globals.game.object.add('enemy_shot', self.shot)
 
   def hit(self, object_type):
     if object_type == 'shot':

@@ -27,6 +27,7 @@ from game_objects import background
 from game_objects import city
 from game_objects import common
 from game_objects import dashboard
+from game_objects import enemy_shot
 from game_objects import player
 from game_objects import player_input
 from game_objects import shot
@@ -50,6 +51,7 @@ class GameObject():
       city = city.City,
       player = player.Player,
       shot = shot.Shot,
+      enemy_shot = enemy_shot.EnemyShot,
     )
 
   def add(self, object_type, parameters):  
@@ -134,9 +136,7 @@ class Game:
                   self.object.list[ii]['obj'].hit(self.object.list[i]['type'])
         
         # Paint all objects and cleanm up
-        aliens = 0
-        players = 0
-        cities = 0
+        count = {'alien': 0, 'player': 0, 'city':0}
         for game_obj in self.object.list:
           if callable(getattr(game_obj['obj'], 'draw', None)):
             game_obj['obj'].draw()
@@ -146,24 +146,19 @@ class Game:
             # print(game_obj['type'],"died")
             self.object.list.remove(game_obj)
 
-          # Count aliens
-          if game_obj['type'] == 'alien':
-            aliens += 1
-          if game_obj['type'] == 'player':  
-            players += 1
-          if game_obj['type'] == 'city':  
-            cities += 1
-
+          # Count some objects
+          if game_obj['type'] in count:
+            count[game_obj['type']] += 1
 
         globals.game.dashboard.draw()
         
         if self.player_input.tech_screen_on:
           self.tech_screen.draw()
 
-        if aliens <= 0:
+        if count['alien'] <= 0:
           next_level.NextLevel()
 
-        if players <= 0:
+        if count['player'] <= 0 or count['city'] <= 0:
           self.end_game = True
           end_game.EndGame()
 
