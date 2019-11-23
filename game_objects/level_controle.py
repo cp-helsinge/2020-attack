@@ -4,6 +4,7 @@
 
 ============================================================================"""
 import pygame
+import os
 
 from game_objects import story
 from game_objects import globals
@@ -13,6 +14,7 @@ from game_objects import setting
 
 class LevelControle:
   def __init__(self):
+    self.music = False
     self.active = False
 
   def add(self, 
@@ -50,6 +52,8 @@ class LevelControle:
         for object_type, parameters in obj.items():
           if object_type == 'next_level':
             self.add(**parameters)
+          elif object_type == 'music': 
+            self.music = parameters
           else:
             globals.game.object.add(object_type, parameters)
 
@@ -100,6 +104,10 @@ class LevelControle:
             stage += 1
 
         if stage > 3:
+          if self.music:
+            print("Music:",self.music)
+            pygame.mixer.music.load(os.path.join(globals.sound_path, self.music))
+            pygame.mixer.music.play(loops=-1)
           effect = False
           duration = 0
           self.active = False  

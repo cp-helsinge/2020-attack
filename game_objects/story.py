@@ -15,10 +15,10 @@ board = [ [None]] # Level 0 not used
 board.append([ 
   {'next_level'   : { 
     'image': 'next_level.png', 
-    'intro_time': 2, 
+    'intro_time': 0, 
     'intro_effect': 'slide_down', 
     'hold_time': 0, 
-    'outtro_time': 2, 
+    'outtro_time': 1, 
     'outtro_effect': 'slide_down'
   }},  
   {'background'   : {
@@ -83,6 +83,7 @@ board.append([
     'outtro_time': 2, 
     'outtro_effect': 'slide_down',
   }},  
+  {'music'        : 'zeos_-_Photo_theme_Window_like.mp3'},
   {'background'   : {
     'color'       : pygame.Color('dodgerblue1'),
     'image'       : 'sky32.jpg'

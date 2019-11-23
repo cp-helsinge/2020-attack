@@ -118,6 +118,7 @@ globals.qt_path   = qt_path   = os.path.join(root_path,'qt')
 globals.game_path = game_path = os.path.join(root_path,'game_objects')
 globals.html_path = html_path = os.path.join(root_path,'qt','html')
 globals.gfx_path  = gfx_path  = os.path.join(root_path,'gfx')
+globals.sound_path  = sound_path  = os.path.join(root_path,'sound')
 
 globals.app = app = QApplication(sys.argv)
 # app.setStyleSheet(Stylesheet)

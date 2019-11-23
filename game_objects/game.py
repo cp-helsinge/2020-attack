@@ -76,6 +76,8 @@ class GameObject():
 class Game:
   def __init__(self):
     pygame.init()
+    pygame.mixer.init()
+
     self.window = pygame.display.set_mode(
       (
         setting.screen_width,
