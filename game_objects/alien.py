@@ -27,6 +27,7 @@ class Alien:
     crosshair_image='crosshair.png', 
     boundary = False, 
     direction = 0, 
+    move_pattern = 'horisontal',
     speed = 1, 
     sound = False,
     shoot_sound = False,

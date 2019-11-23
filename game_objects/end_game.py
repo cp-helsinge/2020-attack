@@ -11,6 +11,10 @@ from game_objects import setting
 
 class EndGame:
   def __init__(self):
+    self.in_progress = False
+
+
+  def set(self):
     self.font = pygame.font.Font(None,100) 
     self.surface = pygame.Surface((setting.screen_width, setting.screen_height))
     self.rect = self.surface.get_rect()
@@ -33,7 +37,22 @@ class EndGame:
     # Make surface transparent and copy unto display surface
     self.surface.set_colorkey((0,0,0))
     self.surface.set_alpha(255)
+  
     globals.game.window.blit(self.surface, self.rect)
+    pygame.display.flip()
+
+    end = False
+    while not end:
+      globals.game.clock.tick( setting.frame_rate )
+
+      # Check for user input
+      event_list = pygame.event.get()
+      for event in event_list:
+        if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+          globals.game.player_input.stop = True
+          end = True 
+
+
 
    
   def display(self, x, y, format_str, *arguments):

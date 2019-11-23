@@ -30,9 +30,8 @@ from PyQt5.QtWidgets import (QWidget, QListWidget, QStackedWidget, QApplication,
                              QHBoxLayout, QListWidgetItem, QLabel)
 
 from game_objects import game
+from game_objects import level_controle
 from game_objects import globals
-from game_objects import next_level
-
 
 class MainPage():
     def __init__(self, navigate):
@@ -98,7 +97,7 @@ class MainWindow(QWidget):
         elif page_name == 'play':
             self.hide()
             globals.game = game.Game()
-            next_level.NextLevel(1)
+            globals.game.level_controle.set(1)
             globals.game.loop()
             del globals.game
             self.show()

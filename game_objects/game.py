@@ -35,7 +35,7 @@ from game_objects import story
 from game_objects import tech_screen
 from game_objects import setting
 from game_objects import globals
-from game_objects import next_level
+from game_objects import level_controle
 from game_objects import end_game
 
 
@@ -86,7 +86,6 @@ class Game:
     pygame.display.set_caption('Alien Attack')
     pygame.mouse.set_visible(False)
 
-    # Game objects
     self.dashboard = dashboard.Dashboard()
     self.rect = pygame.Rect(0,0,setting.screen_width,setting.screen_height - self.dashboard.rect[3]) 
     self.object = GameObject()
@@ -94,7 +93,9 @@ class Game:
     self.tech_screen = tech_screen.TechScreen()
     self.level = 1
     self.score = 0
-    self.end_game = False    
+    self.suspend = False    
+    self.end_game = end_game.EndGame()   
+    self.level_controle = level_controle.LevelControle()
     self.level_time = 0
     self.frame_start = 0
 
@@ -103,15 +104,15 @@ class Game:
     else:
       self.game_speed = 1
     
+    # Start using pygame loop timing (Frame rate)
+    self.clock = pygame.time.Clock()
+    
   def __del__(self):
     pygame.display.quit()
     pygame.quit()
 
   # This is the main game loop
   def loop(self):
-    # Start using pygame loop timing (Frame rate)
-    self.clock = pygame.time.Clock()
-
     while not self.player_input.stop:
       self.frame_start = pygame.time.get_ticks()
   
@@ -123,49 +124,49 @@ class Game:
         if callable(getattr(game_obj['obj'], 'update', None)):
           game_obj['obj'].update()
 
-      if not self.end_game:
-        # Check for collissions with all non dead objects, that has a defined rectangle
-        for i in range(0, len(self.object.list) ):
-          if not self.object.list[i]['type'] == 'background' and not getattr( self.object.list[i]['obj'], 'dead', False) and getattr(self.object.list[i]['obj'], 'rect', False):
-            for ii in range(i+1, len(self.object.list) ):
-              if not getattr( self.object.list[ii]['obj'], 'dead', False) and getattr(self.object.list[ii]['obj'], 'rect', False) and self.object.list[i]['obj'].rect.colliderect(self.object.list[ii]['obj'].rect):
-                # print(i,"hitting",ii)
-                if getattr(self.object.list[i]['obj'], 'hit', False):
-                  self.object.list[i]['obj'].hit(self.object.list[ii]['type'])
-                if getattr(self.object.list[ii]['obj'], 'hit', False):
-                  self.object.list[ii]['obj'].hit(self.object.list[i]['type'])
-        
-        # Paint all objects and cleanm up
-        count = {'alien': 0, 'player': 0, 'city':0}
-        for game_obj in self.object.list:
-          if callable(getattr(game_obj['obj'], 'draw', None)):
-            game_obj['obj'].draw()
+      # Check for collissions with all non dead objects, that has a defined rectangle
+      for i in range(0, len(self.object.list) ):
+        if not self.object.list[i]['type'] == 'background' and not getattr( self.object.list[i]['obj'], 'dead', False) and getattr(self.object.list[i]['obj'], 'rect', False):
+          for ii in range(i+1, len(self.object.list) ):
+            if not getattr( self.object.list[ii]['obj'], 'dead', False) and getattr(self.object.list[ii]['obj'], 'rect', False) and self.object.list[i]['obj'].rect.colliderect(self.object.list[ii]['obj'].rect):
+              # print(i,"hitting",ii)
+              if getattr(self.object.list[i]['obj'], 'hit', False):
+                self.object.list[i]['obj'].hit(self.object.list[ii]['type'])
+              if getattr(self.object.list[ii]['obj'], 'hit', False):
+                self.object.list[ii]['obj'].hit(self.object.list[i]['type'])
+      
+      # Paint all objects and cleanm up
+      count = {'alien': 0, 'player': 0, 'city':0}
+      for game_obj in self.object.list:
+        if callable(getattr(game_obj['obj'], 'draw', None)):
+          game_obj['obj'].draw()
 
-          # Remove dead objects  
-          if getattr(game_obj['obj'], 'dead', False):
-            # print(game_obj['type'],"died")
-            self.object.list.remove(game_obj)
+        # Remove dead objects  
+        if getattr(game_obj['obj'], 'dead', False):
+          # print(game_obj['type'],"died")
+          self.object.list.remove(game_obj)
 
-          # Count some objects
-          if game_obj['type'] in count:
-            count[game_obj['type']] += 1
+        # Count some objects
+        if game_obj['type'] in count:
+          count[game_obj['type']] += 1
 
-        globals.game.dashboard.draw()
-        
-        if self.player_input.tech_screen_on:
-          self.tech_screen.draw()
+      self.dashboard.draw()
+      
+      if self.player_input.tech_screen_on:
+        self.tech_screen.draw()
 
-        if count['alien'] <= 0:
-          next_level.NextLevel()
+      if count['alien'] <= 0:
+        self.level_controle.next()
 
-        if count['player'] <= 0 or count['city'] <= 0:
-          self.end_game = True
-          end_game.EndGame()
+      if count['player'] <= 0 or count['city'] <= 0:
+        self.end_game.set()
+        self.player_input.stop = True
 
       pygame.display.flip()
 
       # Calculate timing and wait until frame rate is right
-      self.clock.tick( setting.frame_rate * globals.game.game_speed )
+      self.clock.tick( setting.frame_rate * self.game_speed )
 
 
     
+ 

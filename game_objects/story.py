@@ -13,6 +13,14 @@ board = [ [None]] # Level 0 not used
 
 # Level 1 =======================================================================
 board.append([ 
+  {'next_level'   : { 
+    'image': 'next_level.png', 
+    'intro_time': 2, 
+    'intro_effect': 'slide_down', 
+    'hold_time': 0, 
+    'outtro_time': 2, 
+    'outtro_effect': 'slide_down'
+  }},  
   {'background'   : {
     'color'       : pygame.Color('dodgerblue1'),
     'image'       : 'sky37.jpg'
@@ -45,6 +53,7 @@ board.append([
     'boundary'    : (0,0,1000,200),
     'speed'       : 2,
     'direction'   : 180,
+    'move_pattern': 'horisontal',
     'sound'       : 'small_bang.wav',
     'shoot_sound' : 'small_shoot_sound.wav',
     'bomb'        : { 'rect': (0,0,40,40), 'direction': -90, 'speed': 1, },
@@ -56,6 +65,7 @@ board.append([
     'boundary'    : (0,0,1000,200),
     'speed'       : 5,
     'direction'   : 180,
+    'move_pattern': 'horisontal',
     'sound'       : 'small_bang.wav',
     'shoot_sound' : 'small_shoot_sound.wav',
     'bomb'        : { 'rect': (0,0,40,40), 'direction': -90, 'speed': 1, },
@@ -65,6 +75,14 @@ board.append([
 
 # Level 2 =======================================================================
 board.append([ 
+  {'next_level'   : { 
+    'image': 'next_level.png', 
+    'intro_time': 2, 
+    'intro_effect': 'slide_down', 
+    'hold_time': 1, 
+    'outtro_time': 2, 
+    'outtro_effect': 'slide_down',
+  }},  
   {'background'   : {
     'color'       : pygame.Color('dodgerblue1'),
     'image'       : 'sky32.jpg'
@@ -97,6 +115,7 @@ board.append([
     'boundary'    : (0,0,1000,200),
     'speed'       : 5,
     'direction'   : 180,
+    'move_pattern': 'horisontal',
     'sound'       : 'small_bang.wav',
     'shoot_sound' : 'small_shoot_sound.wav',
     'bomb'        : { 'rect': (0,0,40,40), 'direction': -90, 'speed': 1, 'image': 'bomb.png' },
@@ -108,6 +127,7 @@ board.append([
     'boundary'    : (0,0,1000,200),
     'speed'       : 5,
     'direction'   : 180,
+    'move_pattern': 'horisontal',
     'sound'       : 'small_bang.wav',
     'shoot_sound' : 'small_shoot_sound.wav',
     'bomb'        : { 'rect': (0,0,40,40), 'direction': -90, 'speed': 1, 'image': 'bomb.png' },
@@ -119,6 +139,7 @@ board.append([
     'boundary'    : (0,0,1000,200),
     'speed'       : 5,
     'direction'   : 180,
+    'move_pattern': 'horisontal',
     'sound'       : 'small_bang.wav',
     'shoot_sound' : 'small_shoot_sound.wav',
     'bomb'        : { 'rect': (0,0,40,40), 'direction': -90, 'speed': 1, 'image': 'bomb.png' },
@@ -130,10 +151,12 @@ board.append([
     'boundary'    : (0,0,1000,200),
     'speed'       : 5,
     'direction'   : 180,
+    'move_pattern': 'horisontal',
     'sound'       : 'small_bang.wav',
     'shoot_sound' : 'small_shoot_sound.wav',
     'bomb'        : { 'rect': (0,0,40,40), 'direction': -90, 'speed': 1, 'image': 'bomb.png' },
     'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 5, 'image': 'alien_shot.png' },
   }},
+  #{'next_level'         : { 'image': 'end_game.png', 'intro_time': 2, 'hold_time': -1, 'intro_effect': 'slide_down'}},
 ])
 
