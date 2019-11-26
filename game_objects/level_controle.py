@@ -42,11 +42,13 @@ class LevelControle:
     self.active = True
 
   def set(self, level = False):
+    pygame.mixer.music.stop()
     if( level ):
       globals.game.level = level
     else:
       globals.game.level += 1
 
+    # Start new level
     if globals.game.level < len(story.board):
       globals.game.object.list = []
       for obj in story.board[globals.game.level]:
@@ -60,16 +62,22 @@ class LevelControle:
 
       globals.game.level_time = pygame.time.get_ticks() 
 
-    if self.active:
-      self.play()
-
-    if globals.game.level >= len(story.board):  
+      if self.active:
+        self.play_new_level_effect() 
+      
+      if self.music:
+        print("Music:",self.music)
+        pygame.mixer.music.load(os.path.join(globals.sound_path, self.music))
+        pygame.mixer.music.play(loops=-1)
+      
+    else:  
       globals.game.end_game.set()
 
+    
   def next(self):
     self.set()
 
-  def play(self):
+  def play_new_level_effect(self):
     end = False
     stage = 0
     next_stage = True
