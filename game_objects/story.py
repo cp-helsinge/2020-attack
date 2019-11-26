@@ -1,6 +1,6 @@
 '''============================================================================
 
-Storry borad for 800 x 600 screen resolution
+Storry borad for 1200 x 800 screen resolution
 
 '<class type>' : [(rect), (boundry rect), color, diresction, speed, ...]
 ============================================================================'''
