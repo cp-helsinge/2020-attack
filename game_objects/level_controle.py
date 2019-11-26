@@ -5,6 +5,7 @@
 ============================================================================"""
 import pygame
 import os
+import vlc 
 
 from game_objects import story
 from game_objects import globals
@@ -104,10 +105,6 @@ class LevelControle:
             stage += 1
 
         if stage > 3:
-          if self.music:
-            print("Music:",self.music)
-            pygame.mixer.music.load(os.path.join(globals.sound_path, self.music))
-            pygame.mixer.music.play(loops=-1)
           effect = False
           duration = 0
           self.active = False  
@@ -143,5 +140,13 @@ class LevelControle:
           self.active = False 
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
           self.active = False 
-
+    
+    if self.music:
+      print("Music:",self.music)
+      #self.audio = vlc.MediaPlayer(os.path.join(globals.sound_path, self.music))
+      #self.audio.play()
+      music = pygame.mixer.Sound(os.path.join(globals.sound_path, self.music))
+      pygame.mixer.Sound.play(music)
+      #pygame.mixer.music.load(os.path.join(globals.sound_path, self.music))
+      #pygame.mixer.music.play(loops=-1)
 
