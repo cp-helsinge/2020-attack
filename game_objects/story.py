@@ -21,6 +21,7 @@ board.append([
     'outtro_time': 1, 
     'outtro_effect': 'slide_down'
   }},  
+  {'music'        : 'zeos_-_Photo_theme_Window_like.mp3'},
   {'background'   : {
     'color'       : pygame.Color('dodgerblue1'),
     'image'       : 'sky37.jpg'
