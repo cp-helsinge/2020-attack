@@ -41,7 +41,7 @@ class Player:
       self.boundary = globals.game.rect
     self.speed      = speed
     self.shot       = shot
-    self.dead       = False
+    self.delete       = False
     self.fire_rate  = setting.fire_rate
     self.last_shot  = 0
     self.health     = 100
@@ -84,6 +84,6 @@ class Player:
       self.health -= 10
 
     if self.health <=0:   
-      self.dead = True
+      self.delete = True
       self.health = 0
     

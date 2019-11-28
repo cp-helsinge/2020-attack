@@ -28,7 +28,7 @@ class EnemyShot:
       self.boundary = pygame.Rect(boundary)
     else:
       self.boundary = globals.game.rect
-    self.dead       = False
+    self.delete      = False
 
   def draw(self):
     globals.game.window.blit(self.image,self.rect)
@@ -37,8 +37,8 @@ class EnemyShot:
     self.rect = common.move_rect(self.rect, self.direction , self.speed, self.boundary)  
 
     if common.rect_touch(self.rect, self.boundary):
-      self.dead = True
+      self.delete = True
 
   def hit(self, object_type):
     if object_type == 'player':
-      self.dead = True
+      self.delete = True

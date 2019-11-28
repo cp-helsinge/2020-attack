@@ -76,7 +76,10 @@ class GameObject():
 class Game:
   def __init__(self):
     pygame.init()
-    pygame.mixer.init()
+    try:
+      pygame.mixer.init()
+    except:
+      pass
 
     self.window = pygame.display.set_mode(
       (
@@ -113,6 +116,11 @@ class Game:
     pygame.display.quit()
     pygame.quit()
 
+  # test is the game object is active and hitable
+  def __obj_active(self, obj):
+    return not getattr( obj, 'delete', False) and not getattr( obj, 'dead', False) and getattr(obj, 'rect', False) 
+
+
   # This is the main game loop
   def loop(self):
     while not self.player_input.stop:
@@ -126,11 +134,11 @@ class Game:
         if callable(getattr(game_obj['obj'], 'update', None)):
           game_obj['obj'].update()
 
-      # Check for collissions with all non dead objects, that has a defined rectangle
+      # Check for collissions with all objects, that has a defined rectangle. Execpt dead and deleted objects.
       for i in range(0, len(self.object.list) ):
-        if not self.object.list[i]['type'] == 'background' and not getattr( self.object.list[i]['obj'], 'dead', False) and getattr(self.object.list[i]['obj'], 'rect', False):
+        if not self.object.list[i]['type'] == 'background' and self.__obj_active(self.object.list[i]['obj']):
           for ii in range(i+1, len(self.object.list) ):
-            if not getattr( self.object.list[ii]['obj'], 'dead', False) and getattr(self.object.list[ii]['obj'], 'rect', False) and self.object.list[i]['obj'].rect.colliderect(self.object.list[ii]['obj'].rect):
+            if self.__obj_active(self.object.list[i]['obj']) and self.object.list[i]['obj'].rect.colliderect(self.object.list[ii]['obj'].rect):
               # print(i,"hitting",ii)
               if getattr(self.object.list[i]['obj'], 'hit', False):
                 self.object.list[i]['obj'].hit(self.object.list[ii]['type'])
@@ -143,9 +151,8 @@ class Game:
         if callable(getattr(game_obj['obj'], 'draw', None)):
           game_obj['obj'].draw()
 
-        # Remove dead objects  
-        if getattr(game_obj['obj'], 'dead', False):
-          # print(game_obj['type'],"died")
+        # Remove objects marked for deletion
+        if getattr(game_obj['obj'], 'delete', False):
           self.object.list.remove(game_obj)
 
         # Count some objects
