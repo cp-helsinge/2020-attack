@@ -1,6 +1,6 @@
 '''============================================================================
 
-Storry borad for 800 x 600 screen resolution
+Storry borad for 1200 x 800 screen resolution
 
 '<class type>' : [(rect), (boundry rect), color, diresction, speed, ...]
 ============================================================================'''
@@ -14,17 +14,17 @@ board = [ [None]] # Level 0 not used
 # Level 1 =======================================================================
 board.append([ 
   {'next_level'   : { 
-    'image': 'next_level.png', 
-    'intro_time': 0, 
+    'image': 'level1.png', 
+    'intro_time': 2, 
     'intro_effect': 'slide_down', 
-    'hold_time': 0, 
+    'hold_time': 2, 
     'outtro_time': 1, 
     'outtro_effect': 'slide_down'
   }},  
   {'music'        : 'zeos_-_Photo_theme_Window_like.mp3'},
   {'background'   : {
     'color'       : pygame.Color('dodgerblue1'),
-    'image'       : 'sky37.jpg'
+    'image'       : 'sky2.jpg'
   }},
   {'player'       : {
     'rect'        : (500,500,80,80),
@@ -87,7 +87,7 @@ board.append([
   {'music'        : 'zeos_-_Photo_theme_Window_like.mp3'},
   {'background'   : {
     'color'       : pygame.Color('dodgerblue1'),
-    'image'       : 'sky32.jpg'
+    'image'       : 'sky3.jpg'
   }},
   {'player'       : {
     'rect'        : (500,500,80,80),
@@ -175,7 +175,7 @@ board.append([
   {'music'        : 'zeos_-_Photo_theme_Window_like.mp3'},
   {'background'   : {
     'color'       : pygame.Color('dodgerblue1'),
-    'image'       : 'sky32.jpg'
+    'image'       : 'sky4.jpg'
   }},
   {'player'       : {
     'rect'        : (500,500,80,80),

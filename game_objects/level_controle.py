@@ -1,7 +1,5 @@
 """============================================================================
-
     Next_level
-
 ============================================================================"""
 import pygame
 import os
@@ -41,7 +39,11 @@ class LevelControle:
     self.active = True
 
   def set(self, level = False):
-    pygame.mixer.music.stop()
+    try:
+      pygame.mixer.music.stop()
+    except:
+      pass
+
     if( level ):
       globals.game.level = level
     else:
@@ -65,10 +67,13 @@ class LevelControle:
         self.play_new_level_effect() 
       
       if self.music:
-        print("Music:",self.music)
-        pygame.mixer.music.load(os.path.join(globals.sound_path, self.music))
-        pygame.mixer.music.play(loops=-1)
-      
+        try:
+          print("Music:",self.music)
+          pygame.mixer.music.load(os.path.join(globals.sound_path, self.music))
+          pygame.mixer.music.play(loops=-1)
+        except:
+          pass
+        
     else:  
       globals.game.end_game.set()
 
@@ -148,5 +153,3 @@ class LevelControle:
           self.active = False 
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
           self.active = False 
-
-

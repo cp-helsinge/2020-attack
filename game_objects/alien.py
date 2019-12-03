@@ -45,7 +45,7 @@ class Alien:
       self.boundary = globals.game.rect
     self.bomb       = bomb
     self.shot       = shot
-    self.dead       = False
+    self.delete     = False
 
   def draw(self):
     globals.game.window.blit(self.image,self.rect)
@@ -83,5 +83,5 @@ class Alien:
 
   def hit(self, object_type):
     if object_type == 'shot':
-      self.dead = True
+      self.delete = True
       globals.game.score += 100
