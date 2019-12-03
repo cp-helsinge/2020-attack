@@ -38,7 +38,7 @@ class LevelControle:
     self.outtro_time = outtro_time
     self.outtro_effect = outtro_effect
     self.active = True
-    self.sound = pygame.mixer.Sound("level3.m4a")
+    # self.sound = pygame.mixer.Sound(sound)
     
 
   def set(self, level = False):
@@ -88,6 +88,7 @@ class LevelControle:
     end = False
     stage = 0
     next_stage = True
+    self.sound.play()
 
     while self.active:
 
