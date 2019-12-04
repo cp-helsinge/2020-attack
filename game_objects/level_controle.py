@@ -35,8 +35,7 @@ class LevelControle:
     self.outtro_time = outtro_time
     self.outtro_effect = outtro_effect
     self.active = True
-    self.sound = False
-    #self.sound = common.load_sound(sound)
+    self.sound = common.load_sound(sound)
 
   def set(self, level = False):
     try:
