@@ -134,6 +134,7 @@ class Game:
         if callable(getattr(game_obj['obj'], 'update', None)):
           game_obj['obj'].update()
 
+      # change to self.collidable_object.list
       # Check for collissions with all objects, that has a defined rectangle. Execpt dead and deleted objects.
       for i in range(0, len(self.object.list) ):
         if not self.object.list[i]['type'] == 'background' and self.__obj_active(self.object.list[i]['obj']):
@@ -145,7 +146,7 @@ class Game:
               if getattr(self.object.list[ii]['obj'], 'hit', False):
                 self.object.list[ii]['obj'].hit(self.object.list[i]['type'])
       
-      # Paint all objects and cleanm up
+      # Paint collidable ojects and clean up
       count = {'alien': 0, 'player': 0, 'city':0}
       for game_obj in self.object.list:
         if callable(getattr(game_obj['obj'], 'draw', None)):
@@ -158,6 +159,12 @@ class Game:
         # Count some objects
         if game_obj['type'] in count:
           count[game_obj['type']] += 1
+
+      # Paint inactive objects
+      # for game_obj in self.inactive_object.list:
+      #   if callable(getattr(game_obj['obj'], 'draw', None)):
+      #     game_obj['obj'].draw()
+
 
       self.dashboard.draw()
       
