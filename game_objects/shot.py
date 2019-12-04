@@ -21,6 +21,7 @@ class Shot:
   ):
 
     self.image      = common.load_image(image, rect )
+    self.sound      = common.load_sound_effect(sound)
     self.rect       = pygame.Rect(rect)
     self.speed      = speed
     self.direction  = direction
@@ -40,4 +41,5 @@ class Shot:
       self.delete = True
 
   def hit(self, object_type):
+    self.sound.play()
     self.delete = True

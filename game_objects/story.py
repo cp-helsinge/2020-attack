@@ -185,7 +185,7 @@ board.append([
     'speed'       :  10,
     'sound'       : 'big_bang.wav',
     'shoot_sound' : 'shoot_sound.wav',
-    'shot'        : { 'rect': (0,0,10,10), 'direction': 90, 'speed': 5, 'image': 'shot.png' },
+    'shot'        : { 'rect': (0,0,10,10), 'direction': 90, 'speed': 5, 'image': 'shot.png', 'sound':'shot.wav' },
   }},
   {'city'         : { 'rect': (10,580,80,80), 'image': 'city7.png'  }},
   {'city'         : { 'rect': (100,580,80,80), 'image': 'city7.png'  }},
