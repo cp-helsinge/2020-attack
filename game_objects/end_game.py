@@ -55,7 +55,7 @@ class EndGame:
       # Check for user input
       event_list = pygame.event.get()
       for event in event_list:
-        if event.type == pygame.QUIT or event.type == pygame.KEYDOWN:
+        if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
           globals.game.player_input.stop = True
           end = True 
 
