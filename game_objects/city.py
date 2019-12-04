@@ -11,7 +11,7 @@ class City:
   def __init__(self, rect, image = 'city.png', sound = ''):
     self.image = common.load_image(image, rect)
     self.rect = pygame.Rect(rect)
-    self.dead = False
+    self.delete = False
 
   def draw(self, surface = False ):
     if( not surface ):
@@ -20,5 +20,5 @@ class City:
 
   def hit(self, object_type):
     if object_type == 'bomb':
-      self.dead= True
+      self.delete = True
       globals.game.score -= 100

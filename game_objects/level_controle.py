@@ -24,6 +24,7 @@ class LevelControle:
     hold_time = 1, 
     outtro_time = 1,
     outtro_effect = False,
+    sound = False
   ):
     self.movie = False
     if image:
@@ -37,6 +38,8 @@ class LevelControle:
     self.outtro_time = outtro_time
     self.outtro_effect = outtro_effect
     self.active = True
+    # self.sound = pygame.mixer.Sound(sound)
+    
 
   def set(self, level = False):
     try:
@@ -85,6 +88,7 @@ class LevelControle:
     end = False
     stage = 0
     next_stage = True
+    self.sound.play()
 
     while self.active:
 
