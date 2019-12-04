@@ -13,6 +13,8 @@ from game_objects import setting
 
 # load image, convert alpha channel (transparrent areas) and resize image
 def load_image(name, rect=False):
+  if not name:
+    return False
   if( rect ):
     return pygame.transform.smoothscale(
       pygame.image.load( os.path.join(globals.gfx_path, name ))
@@ -22,6 +24,14 @@ def load_image(name, rect=False):
   else:
     return pygame.image.load( os.path.join(globals.gfx_path, name) ).convert_alpha()
 
+
+def load_sound(name):
+  if not name or not pygame.mixer.get_init():
+    return False
+  return pygame.mixer.Sound(os.path.join(globals.sound_path, name) )
+
+def load_music(name):
+  return 
 
 # Move a rectangle in a direction, with a equcalent horisontal pixel speed, within a boundary recangle
 def move_rect(rect, direction, speed, boundary=False):

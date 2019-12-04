@@ -27,10 +27,7 @@ class LevelControle:
     sound = False
   ):
     self.movie = False
-    if image:
-      self.image = common.load_image(image, ( 0,0, setting.screen_width, setting.screen_height) )
-    else:
-      self.image = False  
+    self.image = common.load_image(image, ( 0,0, setting.screen_width, setting.screen_height) )
     self.color = color
     self.intro_time = intro_time
     self.intro_effect = intro_effect
@@ -38,8 +35,7 @@ class LevelControle:
     self.outtro_time = outtro_time
     self.outtro_effect = outtro_effect
     self.active = True
-    # self.sound = pygame.mixer.Sound(sound)
-    
+    self.sound = common.load_sound(sound)
 
   def set(self, level = False):
     try:
@@ -88,7 +84,9 @@ class LevelControle:
     end = False
     stage = 0
     next_stage = True
-    self.sound.play()
+
+    if self.sound: 
+      self.sound.play()
 
     while self.active:
 
