@@ -84,7 +84,7 @@ board.append([
     'outtro_time': 2, 
     'outtro_effect': 'slide_down',
   }},  
-  {'music'        : 'zeos_-_Photo_theme_Window_like.mp3'},
+  {'music'        : 'Yul Anderson - unknown titel.ogg'},
   {'background'   : {
     'color'       : pygame.Color('dodgerblue1'),
     'image'       : 'sky3.jpg'
@@ -173,7 +173,7 @@ board.append([
     'outtro_time': 2, 
     'outtro_effect': 'slide_down',
   }},  
-  {'music'        : 'zeos_-_Photo_theme_Window_like.mp3'},
+  {'music'        : 'Yul Anderson - Nightbird.ogg'},
   {'background'   : {
     'color'       : pygame.Color('dodgerblue1'),
     'image'       : 'sky4.jpg'
