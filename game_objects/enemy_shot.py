@@ -40,5 +40,5 @@ class EnemyShot:
       self.delete = True
 
   def hit(self, object_type):
-    if object_type == 'player':
+    if object_type == 'player' or object_type == 'shot' or object_type == 'city':
       self.delete = True
