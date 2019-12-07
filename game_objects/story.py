@@ -238,7 +238,7 @@ board.append([
     'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 5, 'image': 'alien_shot.png' },
   }},    
   {'alien'        : {
-    'rect'        : (800,30,100,50),
+    'rect'        : (900,30,100,50),
     'image'       : 'alien8.png',
     'boundary'    : (0,0,1000,200),
     'speed'       : 5,
@@ -250,7 +250,7 @@ board.append([
     'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 5, 'image': 'alien_shot.png' },
   }},    
   {'alien'        : {
-    'rect'        : (800,30,100,50),
+    'rect'        : (600,30,100,50),
     'image'       : 'alien8.png',
     'boundary'    : (0,0,1000,200),
     'speed'       : 5,
@@ -262,7 +262,7 @@ board.append([
     'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 5, 'image': 'alien_shot.png' },
   }},    
   {'alien'        : {
-    'rect'        : (800,30,100,50),
+    'rect'        : (500,30,100,50),
     'image'       : 'alien8.png',
     'boundary'    : (0,0,1000,200),
     'speed'       : 5,
@@ -274,7 +274,7 @@ board.append([
     'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 5, 'image': 'alien_shot.png' },
   }},    
   {'alien'        : {
-    'rect'        : (800,30,100,50),
+    'rect'        : (100,30,100,50),
     'image'       : 'alien8.png',
     'boundary'    : (0,0,1000,200),
     'speed'       : 5,
@@ -286,7 +286,7 @@ board.append([
     'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 5, 'image': 'alien_shot.png' },
   }},    
   {'alien'        : {
-    'rect'        : (800,30,100,50),
+    'rect'        : (200,30,100,50),
     'image'       : 'alien8.png',
     'boundary'    : (0,0,1000,200),
     'speed'       : 5,
@@ -298,7 +298,7 @@ board.append([
     'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 5, 'image': 'alien_shot.png' },
   }},    
   {'alien'        : {
-    'rect'        : (100,90,100,50),
+    'rect'        : (350,90,100,50),
     'image'       : 'alien8.png',
     'boundary'    : (0,0,1000,200),
     'speed'       : 5,
@@ -310,7 +310,7 @@ board.append([
     'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 5, 'image': 'alien_shot.png' },
   }},
     {'alien'        : {
-    'rect'        : (300,30,100,50),
+    'rect'        : (750,30,100,50),
     'image'       : 'alien8.png',
     'boundary'    : (0,0,1000,200),
     'speed'       : 5,
@@ -322,7 +322,7 @@ board.append([
     'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 5, 'image': 'alien_shot.png' },
   }},
     {'alien'        : {
-    'rect'        : (500,90,100,50),
+    'rect'        : (400,90,100,50),
     'image'       : 'alien8.png',
     'boundary'    : (0,0,1000,200),
     'speed'       : 5,
