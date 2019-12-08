@@ -20,8 +20,8 @@ class Shot:
     sound = False,
   ):
 
-    self.image      = common.load_image(image, rect )
-    self.sound      = common.load_sound(sound)
+    self.image      = image
+    self.sound      = sound
     if self.sound:
       self.sound.play()
     self.rect       = pygame.Rect(rect)

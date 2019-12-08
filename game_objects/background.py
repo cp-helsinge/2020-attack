@@ -13,7 +13,7 @@ class Background:
   def __init__(self, color = (0,0,0), image = False ):
     self.color = False
     if image:
-      self.image = common.load_image(image, setting.screen_rect)
+      self.image = image
     else:
       self.color = color
     self.rect = globals.game.rect

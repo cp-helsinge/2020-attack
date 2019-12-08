@@ -9,9 +9,9 @@ from game_objects import common
 
 class City:
   def __init__(self, rect, image = 'city.png', sound = False):
-    self.image = common.load_image(image, rect)
+    self.image = image
     self.rect = pygame.Rect(rect)
-    self.sound = common.load_sound(sound)
+    self.sound = sound
     self.delete = False
 
   def draw(self, surface = False ):

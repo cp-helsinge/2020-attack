@@ -27,7 +27,7 @@ class LevelControle:
     sound = False
   ):
     self.movie = False
-    self.image = common.load_image(image, ( 0,0, setting.screen_width, setting.screen_height) )
+    self.image = image
     self.color = color
     self.intro_time = intro_time
     self.intro_effect = intro_effect
@@ -35,7 +35,7 @@ class LevelControle:
     self.outtro_time = outtro_time
     self.outtro_effect = outtro_effect
     self.active = True
-    self.sound = common.load_sound(sound)
+    self.sound = sound
 
   def set(self, level = False):
     try:
@@ -49,14 +49,17 @@ class LevelControle:
       globals.game.level += 1
 
     # Start new level
-    if globals.game.level < len(story.board):
+    board = story.get_level(globals.game.level)
+    if board:
       globals.game.object.list = []
-      for obj in story.board[globals.game.level]:
+      for obj in board:
         for object_type, parameters in obj.items():
+          # Load pseudo classes
           if object_type == 'next_level':
             self.add(**parameters)
           elif object_type == 'music': 
             self.music = parameters
+          # Load in-game objects  
           else:
             globals.game.object.add(object_type, parameters)
 

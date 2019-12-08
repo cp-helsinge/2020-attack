@@ -20,7 +20,7 @@ class EnemyShot:
     sound = False,
   ):
 
-    self.image      = common.load_image(image, rect )
+    self.image      = image
     self.rect       = pygame.Rect(rect)
     self.speed      = speed
     self.direction  = direction

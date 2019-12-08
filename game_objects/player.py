@@ -22,8 +22,7 @@ from game_objects import setting
 class Player:
   def __init__(self, 
     rect, 
-    image='player.png', 
-    crosshair_image='crosshair.png', 
+    image, 
     boundary = False, 
     direction = 0, 
     speed = 1, 
@@ -33,8 +32,7 @@ class Player:
     ):
     
     # load image, convert alpha channel (transparrent areas) and resize image
-    self.image       = common.load_image(image, rect )
-    self.crosshair_image    = common.load_image("crosshair.png")
+    self.image      = image
     self.rect       = pygame.Rect(rect)
     self.boundary   = boundary 
     if not boundary:
