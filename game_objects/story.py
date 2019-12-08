@@ -47,6 +47,7 @@ class Level1:
   def __init__(self):
     # Load resources
     music             = common.load_music('zeos_-_Photo_theme_Window_like.mp3')
+    next_level_sound  = common.load_sound('level2.ogg')
 
     background_image  = common.load_image('sky2.jpg',( 0,0, setting.screen_width, setting.screen_height))
     player_image      = common.load_image('a1a1_rocket2.png',(500,500,80,80))
@@ -121,6 +122,7 @@ class Level1:
         'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 3, 'image': alien_shot_image },
       }},
       {'next_level': { 
+        'sound'         : next_level_sound,
         'image'         : level1_image,
         'intro_time'    : 2, 
         'intro_effect'  : 'slide_down', 
