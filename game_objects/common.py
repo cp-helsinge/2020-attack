@@ -28,8 +28,11 @@ def load_image(name, rect=False):
 def load_sound(name):
   if not name or not pygame.mixer.get_init():
     return False
-  return pygame.mixer.Sound(os.path.join(globals.sound_path, name) )
-
+  try:
+    return pygame.mixer.Sound(os.path.join(globals.sound_path, name) )
+  except:
+    return False
+    
 def load_music(name):
   return 
 

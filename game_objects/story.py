@@ -59,10 +59,10 @@ class Level1:
     level1_image      = common.load_image('level1.png',( 0,0, setting.screen_width, setting.screen_height) )
 
     player_dead_sound = common.load_sound('big_bang.wav')
-    player_shot_sound = common.load_sound('shoot_sound.wav')
+    player_shot_sound = common.load_sound('shot.wav')
     city_dead_sound   = common.load_sound('city_explosion.wav')
-    alien_dead_sound  = common.load_sound('small_bang.wav')
-    alien_shot_sound  = common.load_sound('small_shoot_sound.wav')
+    alien_dead_sound  = False #common.load_sound('small_bang.wav')
+    alien_shot_sound  = False #common.load_sound('small_shoot_sound.wav')
 
     self.objects = [
       {'music': music},
@@ -149,7 +149,7 @@ class Level2:
     level1_image      = common.load_image('level1.png',( 0,0, setting.screen_width, setting.screen_height) )
 
     player_dead_sound = common.load_sound('big_bang.wav')
-    player_shot_sound = common.load_sound('shoot_sound.wav')
+    player_shot_sound = common.load_sound('shot.wav')
     city_dead_sound   = common.load_sound('city_explosion.wav')
     alien_dead_sound  = common.load_sound('small_bang.wav')
     alien_shot_sound  = common.load_sound('small_shoot_sound.wav')
@@ -262,7 +262,7 @@ class Level3:
     level1_image      = common.load_image('level1.png',( 0,0, setting.screen_width, setting.screen_height) )
 
     player_dead_sound = common.load_sound('big_bang.wav')
-    player_shot_sound = common.load_sound('shoot_sound.wav')
+    player_shot_sound = common.load_sound('shot.wav')
     city_dead_sound   = common.load_sound('city_explosion.wav')
     alien_dead_sound  = common.load_sound('small_bang.wav')
     alien_shot_sound  = common.load_sound('small_shoot_sound.wav')
