@@ -47,7 +47,7 @@ class Level1:
   def __init__(self):
     # Load resources
     music             = common.load_music('zeos_-_Photo_theme_Window_like.mp3')
-    next_level_sound  = common.load_sound('level2.ogg')
+    next_level_sound  = False
 
     background_image  = common.load_image('sky2.jpg',( 0,0, setting.screen_width, setting.screen_height))
     player_image      = common.load_image('a1a1_rocket2.png',(500,500,80,80))
@@ -56,7 +56,7 @@ class Level1:
     alien_image       = common.load_image('alien8.png',(800,30,100,50))
     alien_bomb_image  = common.load_image('bomb.png',(0,0,40,40))
     alien_shot_image  = common.load_image('alien_shot.png')
-    level1_image      = common.load_image('level1.png',( 0,0, setting.screen_width, setting.screen_height) )
+    level_image      = common.load_image('level1.png',( 0,0, setting.screen_width, setting.screen_height) )
 
     player_dead_sound = common.load_sound('big_bang.wav')
     player_shot_sound = common.load_sound('shot.wav')
@@ -65,6 +65,15 @@ class Level1:
     alien_shot_sound  = False #common.load_sound('small_shoot_sound.wav')
 
     self.objects = [
+      {'next_level': { 
+        'sound'         : next_level_sound,
+        'image'         : level_image,
+        'intro_time'    : 2, 
+        'intro_effect'  : 'slide_down', 
+        'hold_time'     : 2, 
+        'outtro_time'   : 1, 
+        'outtro_effect' : 'slide_down'
+      }}, 
       {'music': music},
       {'background': {
         'color': pygame.Color('dodgerblue1'),
@@ -121,15 +130,6 @@ class Level1:
         'bomb'        : { 'rect': (0,0,40,40), 'direction': -90, 'speed': 1, 'image': alien_bomb_image },
         'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 3, 'image': alien_shot_image },
       }},
-      {'next_level': { 
-        'sound'         : next_level_sound,
-        'image'         : level1_image,
-        'intro_time'    : 2, 
-        'intro_effect'  : 'slide_down', 
-        'hold_time'     : 2, 
-        'outtro_time'   : 1, 
-        'outtro_effect' : 'slide_down'
-      }},  
     ]
 
 # Level 2 =====================================================================
@@ -137,7 +137,7 @@ class Level2:
   def __init__(self):
     # Load resources
     music             = common.load_music('Yul Anderson - unknown titel.ogg')
-    next_level_sound  = common.load_sound('level3.ogg')
+    next_level_sound  = common.load_sound('level2.ogg')
 
     background_image  = common.load_image('sky3.jpg',( 0,0, setting.screen_width, setting.screen_height))
     player_image      = common.load_image('a1a1_rocket2.png',(500,500,80,80))
@@ -146,7 +146,7 @@ class Level2:
     alien_image       = common.load_image('alien8.png',(800,30,100,50))
     alien_bomb_image  = common.load_image('bomb.png',(0,0,40,40))
     alien_shot_image  = common.load_image('alien_shot.png')
-    level1_image      = common.load_image('level1.png',( 0,0, setting.screen_width, setting.screen_height) )
+    level_image       = common.load_image('level1.png',( 0,0, setting.screen_width, setting.screen_height) )
 
     player_dead_sound = common.load_sound('big_bang.wav')
     player_shot_sound = common.load_sound('shot.wav')
@@ -155,6 +155,15 @@ class Level2:
     alien_shot_sound  = common.load_sound('small_shoot_sound.wav')
 
     self.objects = [
+      {'next_level': { 
+        'sound'         : next_level_sound,
+        'image'         : level_image,
+        'intro_time'    : 2, 
+        'intro_effect'  : 'slide_down', 
+        'hold_time'     : 2, 
+        'outtro_time'   : 1, 
+        'outtro_effect' : 'slide_down'
+      }}, 
       {'music': music},
       {'background': {
         'color': pygame.Color('dodgerblue1'),
@@ -234,16 +243,7 @@ class Level2:
         'shoot_sound' : alien_shot_sound,
         'bomb'        : { 'rect': (0,0,40,40), 'direction': -90, 'speed': 1, 'image': alien_bomb_image },
         'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 3, 'image': alien_shot_image },
-      }},
-      {'next_level': { 
-        'sound'         : next_level_sound,
-        'image'         : level1_image,
-        'intro_time'    : 2, 
-        'intro_effect'  : 'slide_down', 
-        'hold_time'     : 2, 
-        'outtro_time'   : 1, 
-        'outtro_effect' : 'slide_down'
-      }},  
+      }}, 
     ]
 
 # Level 3 =====================================================================
@@ -251,6 +251,7 @@ class Level3:
   def __init__(self):
     # Load resources
     music             = common.load_music('Yul Anderson - Nightbird.ogg')
+    next_level_sound  = common.load_sound('level3.ogg')
 
     background_image  = common.load_image('sky4.jpg',( 0,0, setting.screen_width, setting.screen_height))
     player_image      = common.load_image('a1a1_rocket2.png',(500,500,80,80))
@@ -259,7 +260,7 @@ class Level3:
     alien_image       = common.load_image('alien8.png',(800,30,100,50))
     alien_bomb_image  = common.load_image('bomb.png',(0,0,40,40))
     alien_shot_image  = common.load_image('alien_shot.png')
-    level1_image      = common.load_image('level1.png',( 0,0, setting.screen_width, setting.screen_height) )
+    level_image       = common.load_image('level1.png',( 0,0, setting.screen_width, setting.screen_height) )
 
     player_dead_sound = common.load_sound('big_bang.wav')
     player_shot_sound = common.load_sound('shot.wav')
@@ -268,6 +269,15 @@ class Level3:
     alien_shot_sound  = common.load_sound('small_shoot_sound.wav')
 
     self.objects = [
+      {'next_level': { 
+        'sound'         : next_level_sound,
+        'image'         : level_image,
+        'intro_time'    : 2, 
+        'intro_effect'  : 'slide_down', 
+        'hold_time'     : 2, 
+        'outtro_time'   : 1, 
+        'outtro_effect' : 'slide_down'
+      }}, 
       {'music': music},
       {'background': {
         'color': pygame.Color('dodgerblue1'),
@@ -408,12 +418,4 @@ class Level3:
         'bomb'        : { 'rect': (0,0,40,40), 'direction': -90, 'speed': 1, 'image': alien_bomb_image },
         'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 5, 'image': alien_shot_image },
       }},    
-      {'next_level': { 
-        'image'         : level1_image,
-        'intro_time'    : 2, 
-        'intro_effect'  : 'slide_down', 
-        'hold_time'     : 2, 
-        'outtro_time'   : 1, 
-        'outtro_effect' : 'slide_down'
-      }},  
     ]
