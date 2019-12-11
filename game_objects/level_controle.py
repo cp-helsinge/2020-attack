@@ -49,6 +49,7 @@ class LevelControle:
       globals.game.level += 1
 
     # Start new level
+    globals.game.player_input.reset()
     board = story.get_level(globals.game.level)
     if board:
       globals.game.object.list = []
@@ -69,13 +70,8 @@ class LevelControle:
         self.play_new_level_effect() 
       
       if self.music:
-        try:
-          print("Music:",self.music)
-          pygame.mixer.music.load(os.path.join(globals.sound_path, self.music))
-          pygame.mixer.music.play(loops=-1)
-        except:
-          pass
-        
+        pygame.mixer.music.play(loops=-1)
+          
     else:  
       globals.game.end_game.set()
 

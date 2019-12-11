@@ -14,6 +14,10 @@ from game_objects import setting
 
 class PlayerInput:
   def __init__(self):
+    self.tech_screen_on = False
+    self.reset()
+
+  def reset(self):
     self.key = {}
     for event, key in setting.key_bind.items():
       self.key[key] = False
@@ -22,8 +26,8 @@ class PlayerInput:
     self.mouse = ( 0,0 )
     self.stop = False
     self.suspend = False
-    self.tech_screen_on = False
 
+   
   def update(self):
     event_list = pygame.event.get()
     for event in event_list:

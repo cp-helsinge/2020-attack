@@ -34,7 +34,11 @@ def load_sound(name):
     return False
     
 def load_music(name):
-  return 
+  try:
+    pygame.mixer.music.load(os.path.join(globals.sound_path, music))
+    return True
+  except:
+    return False
 
 # Move a rectangle in a direction, with a equcalent horisontal pixel speed, within a boundary recangle
 def move_rect(rect, direction, speed, boundary=False):
