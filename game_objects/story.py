@@ -26,6 +26,7 @@ import pygame
 from pygame.locals import *
 from game_objects import common
 from game_objects import setting
+from game_objects import animation
 
 
 def get_level(level):
@@ -63,6 +64,7 @@ class Level1:
     city_dead_sound   = common.load_sound('city_explosion.wav')
     alien_dead_sound  = False #common.load_sound('small_bang.wav')
     alien_shot_sound  = False #common.load_sound('small_shoot_sound.wav')
+    julemand_animation = animation.Animation("julemand.png",(276,104),20,-1,(138,52)) 
 
     self.objects = [
       {'next_level': { 
@@ -123,6 +125,19 @@ class Level1:
         'image'       : alien_image,
         'boundary'    : (0,0,1000,200),
         'speed'       : 2,
+        'direction'   : 180,
+        'move_pattern': 'horisontal',
+        'sound'       : alien_dead_sound,
+        'shoot_sound' : alien_shot_sound,
+        'bomb'        : { 'rect': (0,0,40,40), 'direction': -90, 'speed': 1, 'image': alien_bomb_image },
+        'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 3, 'image': alien_shot_image },
+      }},    
+     
+      {'alien'     : {
+        'rect'        : (500,140,276,104),
+        'image'       : julemand_animation,
+        'boundary'    : (0,0,1000,400),
+        'speed'       : 1,
         'direction'   : 180,
         'move_pattern': 'horisontal',
         'sound'       : alien_dead_sound,
