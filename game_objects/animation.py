@@ -154,7 +154,6 @@ class Animation:
       for col in range(0,cols):
         self.frame_rect.x = self.frame_rect.width * col 
         self.frame_rect.y = self.frame_rect.height * row 
-        print("Blit",self.frame_rect)
         clip = pygame.Surface((self.frame_rect.width, self.frame_rect.height),pygame.SRCALPHA)
         clip.blit(image, (0,0), self.frame_rect)
         list.append(pygame.transform.smoothscale(clip, ( self.rect.width, self.rect.height )))
