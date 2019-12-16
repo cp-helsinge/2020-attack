@@ -70,14 +70,14 @@ class Animate:
     if frame_rect:
       sprite_map = True
       self.frame_rect = tuple2rect(frame_rect)
-    self.image = []
+    self.collection = []
     self.frames = 0
     self.current_frame = 0
     self.frame_time = 0
 
     if "{index}" in name: 
       # Load one or multiple image files as frames
-      self.image = self.__load_image_sequence(self.name)
+      self.collection = self.__load_image_sequence(self.name)
 
     else:
       try:
@@ -91,23 +91,23 @@ class Animate:
       if image:
         if sprite_map:
           # split image into frames
-          self.image = self.__load_sprite_map(image)
+          self.collection = self.__load_sprite_map(image)
         elif rect:  
           # Use as a single still image, and rescale it
-          self.image = [ pygame.transform.smoothscale(image, ( self.rect.width, self.rect.height )) ]
+          self.collection = [ pygame.transform.smoothscale(image, ( self.rect.width, self.rect.height )) ]
         else:  
           # Use as a single still image
-          self.image = [ image ]
+          self.collection = [ image ]
 
     # Set meta data
-    self.frames = len(self.image)
+    self.frames = len(self.collection)
     if self.frames > 0:
       # Set animation rect 
       if not rect:
         if frame_rect:
           self.rect = frame_rect
         else:
-          self.rect = pygame.Rect(self.image[0].get_rect(topleft=(0,0)))
+          self.rect = pygame.Rect(self.collection[0].get_rect(topleft=(0,0)))
       # Set frame rate    
       if not frame_rate: 
         self.frame_rate = self.frames
@@ -117,10 +117,10 @@ class Animate:
       if not rect:
         rect = (0,0,100,100)
       self.rect = tuple2rect(rect)
-      self.image = [ pygame.Surface((self.rect.width, self.rect.height)).convert_alpha() ]
+      self.collection = [ pygame.Surface((self.rect.width, self.rect.height)).convert_alpha() ]
       # Make it transparent with a red frame
-      self.image[0].fill(0) 
-      pygame.draw.rect(self.image[0], (255, 0, 0),(0,0,50,50), 1)
+      self.collection[0].fill(0) 
+      pygame.draw.rect(self.collection[0], (255, 0, 0),(0,0,50,50), 1)
       self.frames = 1
 
   # Load one or multiple image files as frames
@@ -160,7 +160,7 @@ class Animate:
   def get_surface(self):
     if self.frame_time < (pygame.time.get_ticks() - 1000 // self.frame_rate):
       if not self.loop == 0: 
-        if len(self.image) -1  == self.current_frame: 
+        if len(self.collection) -1  == self.current_frame: 
           if not self.loop == 0: 
             if self.loop > 0: self.loop -= 1
             self.current_frame = 0
@@ -168,5 +168,5 @@ class Animate:
         else:    
           self.current_frame += 1
           self.frame_time = pygame.time.get_ticks()
-    return self.image[self.current_frame]
+    return self.collection[self.current_frame]
 
