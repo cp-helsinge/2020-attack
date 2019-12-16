@@ -18,6 +18,7 @@ import random
 from game_objects import globals
 from game_objects import setting
 from game_objects import common
+from game_objects import animation
 
 
 class Alien:
@@ -48,7 +49,13 @@ class Alien:
     self.delete     = False
 
   def draw(self):
-    globals.game.window.blit(self.image,self.rect)
+    if isinstance(self.image, animation.Animation):
+      if self.direction > 0:
+        globals.game.window.blit(pygame.transform.flip(self.image.surface(),True,False),self.rect)
+      else:  
+        globals.game.window.blit(self.image.surface(),self.rect)
+    else:
+      globals.game.window.blit(self.image,self.rect)
 
   def update(self):
     # Movement

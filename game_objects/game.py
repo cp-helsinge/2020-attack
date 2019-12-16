@@ -35,6 +35,7 @@ from game_objects import story
 from game_objects import tech_screen
 from game_objects import setting
 from game_objects import globals
+from game_objects import animation
 from game_objects import level_controle
 from game_objects import end_game
 
