@@ -6,10 +6,11 @@
 import pygame
 from game_objects import globals
 from game_objects import common
+from game_objects import animation
 
 class City:
-  def __init__(self, rect, image = 'city.png', sound = False):
-    self.image = image
+  def __init__(self, rect, sprite = 'city.png', sound = False):
+    self.sprite = sprite
     self.rect = pygame.Rect(rect)
     self.sound = sound
     self.delete = False
@@ -17,7 +18,7 @@ class City:
   def draw(self, surface = False ):
     if( not surface ):
       surface = globals.game.window
-    surface.blit(self.image,self.rect)
+    surface.blit(self.sprite.get_surface(), self.rect)
 
   def hit(self, object_type):
     if object_type == 'bomb':

@@ -9,6 +9,7 @@ from game_objects import globals
 from game_objects import common
 from game_objects import end_game
 from game_objects import setting
+from game_objects import animation
 
 class LevelControle:
   def __init__(self):
@@ -17,7 +18,7 @@ class LevelControle:
 
   def add(self, 
     movie = False,
-    image = False, 
+    sprite = False, 
     color = (0,0,0),
     intro_time = 2,
     intro_effect = False,  
@@ -27,7 +28,7 @@ class LevelControle:
     sound = False
   ):
     self.movie = False
-    self.image = image
+    self.sprite = sprite
     self.color = color
     self.intro_time = intro_time
     self.intro_effect = intro_effect
@@ -112,8 +113,8 @@ class LevelControle:
             effect = self.outtro_effect
             duration = self.outtro_time
             for game_object in globals.game.object.list:
-              if game_object['type'] == 'background' and game_object['obj'].image:
-                self.image = game_object['obj'].image
+              if game_object['type'] == 'background' and game_object['obj'].sprite:
+                self.sprite = game_object['obj'].sprite
           else:
             stage += 1
 
@@ -127,10 +128,10 @@ class LevelControle:
 
       if effect == 'slide_down':
         inc = int( setting.screen_height / duration / setting.frame_rate )
-        if self.image:
+        if self.sprite:
           step += inc
-          if self.image:
-            globals.game.window.blit(self.image, (0, step - setting.screen_height))
+          if self.sprite:
+            globals.game.window.blit(self.sprite.get_surface(), (0, step - setting.screen_height))
           else:
             globals.game.window.fill(self.color, (0, step - setting.screen_height))
           globals.game.window.scroll(0, inc)

@@ -5,7 +5,7 @@
 
   parameters:
     rect      : Start position and size 
-    image     : Image
+    sprite     : sprite
     boundery  : boundary of movement
     speed     : 2
     direction : in degrees 0-359 counting counter clockwise and 0 = right
@@ -16,13 +16,12 @@ import pygame
 from game_objects import globals
 from game_objects import common
 from game_objects import setting
-
-
+from game_objects import animation
 
 class Player:
   def __init__(self, 
     rect, 
-    image, 
+    sprite, 
     boundary = False, 
     direction = 0, 
     speed = 1, 
@@ -31,8 +30,8 @@ class Player:
     shot = False,
     ):
     
-    # load image, convert alpha channel (transparrent areas) and resize image
-    self.image      = image
+    # load sprite, convert alpha channel (transparrent areas) and resize sprite
+    self.sprite      = sprite
     self.rect       = pygame.Rect(rect)
     self.boundary   = boundary 
     if not boundary:
@@ -46,7 +45,7 @@ class Player:
     globals.player  = self
 
   def draw(self):
-    globals.game.window.blit(self.image,self.rect)
+    globals.game.window.blit(self.sprite.get_surface(),self.rect)
 
   def update(self):
     key = globals.game.player_input.key

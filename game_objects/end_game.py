@@ -9,6 +9,7 @@ import pygame
 from game_objects import globals
 from game_objects import setting
 from game_objects import common
+from game_objects import animation
 
 class EndGame:
   def __init__(self):
@@ -23,8 +24,8 @@ class EndGame:
     self.idle_avarage = 1
  
     if globals.player.health > 0:
-      self.image = common.load_image('end_game.png', setting.screen_rect)
-      globals.game.window.blit(self.image,setting.screen_rect)
+      self.sprite = animation.Animate('end_game.png', setting.screen_rect)
+      globals.game.window.blit(self.sprite.get_surface(), setting.screen_rect)
 
     else:  
       # Paint background as transparent 
@@ -67,9 +68,9 @@ class EndGame:
     text = self.font.render(str, True, self.text_color)
     self.surface.blit( text, (x, y) )
 
-  def blitRotateCenter(surf, image, topleft, angle):
+  def blitRotateCenter(surf, sprite, topleft, angle):
 
-    rotated_image = pygame.transform.rotate(image, angle)
-    new_rect = rotated_image.get_rect(center = image.get_rect(topleft = topleft).center)
+    rotated_sprite = pygame.transform.rotate(sprite, angle)
+    new_rect = rotated_sprite.get_rect(center = sprite.get_rect(topleft = topleft).center)
 
-    surf.blit(rotated_image, new_rect.topleft)
+    surf.blit(rotated_sprite, new_rect.topleft)

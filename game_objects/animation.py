@@ -51,9 +51,7 @@ def tuple2rect(rect):
   else:
     return pygame.Rect(rect)
 
-
-
-class Animation:
+class Animate:
   def __init__(
     self, 
     name, 
@@ -96,7 +94,7 @@ class Animation:
           self.image = self.__load_sprite_map(image)
         elif rect:  
           # Use as a single still image, and rescale it
-          self.image = [ pygame.transform.smoothscale(image, ( rect.width, rect.height )) ]
+          self.image = [ pygame.transform.smoothscale(image, ( self.rect.width, self.rect.height )) ]
         else:  
           # Use as a single still image
           self.image = [ image ]
@@ -109,7 +107,7 @@ class Animation:
         if frame_rect:
           self.rect = frame_rect
         else:
-          self.rect = pygame.Rect(self.image[0].get_rect(topleft=(rect[0],rect[1])))
+          self.rect = pygame.Rect(self.image[0].get_rect(topleft=(0,0)))
       # Set frame rate    
       if not frame_rate: 
         self.frame_rate = self.frames
@@ -159,7 +157,7 @@ class Animation:
         list.append(pygame.transform.smoothscale(clip, ( self.rect.width, self.rect.height )))
     return list
 
-  def surface(self):
+  def get_surface(self):
     if self.frame_time < (pygame.time.get_ticks() - 1000 // self.frame_rate):
       if not self.loop == 0: 
         if len(self.image) -1  == self.current_frame: 

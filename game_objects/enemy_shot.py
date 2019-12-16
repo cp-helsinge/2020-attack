@@ -8,19 +8,19 @@ import random
 from game_objects import globals
 from game_objects import setting
 from game_objects import common
-
+from game_objects import animation
 
 class EnemyShot:
   def __init__(self, 
     rect, 
-    image='enemy_shot.png', 
+    sprite='enemy_shot.png', 
     boundary = False, 
     direction = 90, 
     speed = 1, 
     sound = False,
   ):
 
-    self.image      = image
+    self.sprite      = sprite
     self.rect       = pygame.Rect(rect)
     self.speed      = speed
     self.direction  = direction
@@ -31,7 +31,7 @@ class EnemyShot:
     self.delete      = False
 
   def draw(self):
-    globals.game.window.blit(self.image,self.rect)
+    globals.game.window.blit(self.sprite.get_surface(), self.rect)
 
   def update(self):
     self.rect = common.move_rect(self.rect, self.direction , self.speed, self.boundary)  

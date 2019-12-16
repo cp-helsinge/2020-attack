@@ -24,7 +24,7 @@ from game_objects import animation
 class Alien:
   def __init__(self, 
     rect, 
-    image='player.png', 
+    sprite='player.png', 
     crosshair_image='crosshair.png', 
     boundary = False, 
     direction = 0, 
@@ -36,7 +36,7 @@ class Alien:
     shot = False,
     ):
 
-    self.image      = image
+    self.sprite     = sprite
     self.rect       = pygame.Rect(rect)
     self.speed      = speed
     self.direction  = direction
@@ -49,14 +49,11 @@ class Alien:
     self.delete     = False
 
   def draw(self):
-    if isinstance(self.image, animation.Animation):
-      if self.direction > 0:
-        globals.game.window.blit(pygame.transform.flip(self.image.surface(),True,False),self.rect)
-      else:  
-        globals.game.window.blit(self.image.surface(),self.rect)
-    else:
-      globals.game.window.blit(self.image,self.rect)
-
+    if self.direction > 0:
+      globals.game.window.blit(pygame.transform.flip(self.sprite.get_surface(),True,False),self.rect)
+    else:  
+      globals.game.window.blit(self.sprite.get_surface(),self.rect)
+    
   def update(self):
     # Movement
     if common.rect_touch(self.rect, self.boundary):

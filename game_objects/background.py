@@ -7,23 +7,20 @@ import pygame
 from game_objects import common
 from game_objects import setting
 from game_objects import globals
-
+from game_objects import animation
 
 class Background:
-  def __init__(self, color = (0,0,0), image = False ):
+  def __init__(self, color = (0,0,0), sprite = False ):
     self.color = False
-    if image:
-      self.image = image
+    if sprite:
+      self.sprite = sprite
     else:
       self.color = color
     self.rect = globals.game.rect
 
-  def draw(self, surface = False ):
-    if( not surface ):
-      surface = globals.game.window
-
+  def draw(self):
     if(self.color):
-      surface.fill( self.color )
+      globals.game.window.fill( self.color )
     else:
-      surface.blit(self.image,self.rect)
+      globals.game.window.blit(self.sprite.get_surface(),self.rect)
 
