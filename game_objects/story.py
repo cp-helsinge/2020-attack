@@ -151,7 +151,7 @@ class Level1:
 class Level2:
   def __init__(self):
     # Load resources
-    music             = common.load_music('Yul Anderson - unknown titel.ogg')
+    music             = common.load_music('Test1.ogg')
     next_level_sound  = common.load_sound('level2.ogg')
 
     background_sprite  = animation.Animate('sky3.jpg',( 0,0, setting.screen_width, setting.screen_height))
@@ -265,7 +265,7 @@ class Level2:
 class Level3:
   def __init__(self):
     # Load resources
-    music             = common.load_music('Yul Anderson - Nightbird.ogg')
+    music             = common.load_music('Test1.ogg')
     next_level_sound  = common.load_sound('level3.ogg')
 
     background_sprite  = animation.Animate('sky4.jpg',( 0,0, setting.screen_width, setting.screen_height))
