@@ -47,7 +47,7 @@ class Level0:
 class Level1:
   def __init__(self):
     # Load resources
-    music               = common.load_music('zeos_-_Photo_theme_Window_like.mp3')
+    music               = common.load_music('Test1')
     next_level_sound    = False
 
     background_sprite   = animation.Animate('sky2.jpg',( 0,0, setting.screen_width, setting.screen_height))
