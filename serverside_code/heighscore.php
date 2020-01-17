@@ -6,7 +6,7 @@
   Global heighscore list, for coding pirate games
 
 \* ========================================================================= */
-$list_max_length = 50
+$list_max_length = 50;
 
 // Initialize storage
 require "rocket-store.php";
@@ -39,7 +39,7 @@ if($_REQUEST['service'] == 'KDCTY9560F3E3563A6SERWERWEW875EVYVRI' && !empty($_RE
       }
       $list[] = $data;
       usort($list, "list_cmp");
-      $list = array_slice ( $list , 0, 10 );
+      $list = array_slice ( $list , 0, $list_max_length );
       $response = $rs->post("key-store",$_REQUEST['key'], $list);
     }
   } while(false);
