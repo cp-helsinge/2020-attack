@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3 
 # -*- coding: utf-8 -*-
 """============================================================================
 
@@ -41,6 +41,7 @@ class MainPage():
         self.widget.boring_button.clicked.connect(lambda: navigate("boring_page"))
         self.widget.play_button.clicked.connect(lambda: navigate("play"))
         self.widget.exit_button.clicked.connect(lambda: navigate("exit"))
+
 
 class CreditsPage():
     def __init__(self, navigate):
