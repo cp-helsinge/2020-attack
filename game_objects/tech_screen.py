@@ -41,6 +41,11 @@ class TechScreen:
 
     self.display(10, 130, "Game speed: {0}", globals.game.game_speed )
 
+    # Draw box around game objects
+    for game_obj in globals.game.object.list:
+      if getattr(game_obj['obj'], 'rect', None):
+        pygame.draw.rect(self.surface,self.text_color, game_obj['obj'].rect, 2)
+ 
     # Make surface transparent and copy unto display surface
     self.surface.set_colorkey((0,0,0))
     self.surface.set_alpha(150)

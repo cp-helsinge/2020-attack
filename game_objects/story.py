@@ -84,7 +84,7 @@ class Level1:
       {'player': {
         'rect'            : (500,500,80,80),
         'sprite'           : player_sprite,
-        'boundary'        : (0,500,1000,80),
+        'boundary'        : (0,300,1000,360),
         'speed'           :  10,
         'sound'           : player_dead_sound,
         'shoot_sound'     : player_shot_sound,
@@ -187,7 +187,7 @@ class Level2:
       {'player': {
         'rect'            : (500,500,80,80),
         'sprite'           : player_sprite,
-        'boundary'        : (0,500,1000,80),
+        'boundary'        : (0,300,1000,360),
         'speed'           :  10,
         'sound'           : player_dead_sound,
         'shoot_sound'     : player_shot_sound,
@@ -301,7 +301,7 @@ class Level3:
       {'player': {
         'rect'            : (500,500,80,80),
         'sprite'           : player_sprite,
-        'boundary'        : (0,500,1000,80),
+        'boundary'        : (0,300,1000,360),
         'speed'           :  10,
         'sound'           : player_dead_sound,
         'shoot_sound'     : player_shot_sound,

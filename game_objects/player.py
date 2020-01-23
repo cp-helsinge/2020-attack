@@ -41,7 +41,7 @@ class Player:
     self.delete       = False
     self.fire_rate  = setting.fire_rate
     self.last_shot  = 0
-    self.health     = 100
+    self.health     = 100000
     globals.player  = self
 
   def draw(self):

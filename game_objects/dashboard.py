@@ -43,7 +43,7 @@ class Dashboard:
     rect = pygame.Rect(0, 0, w, h)
     rect.center = self.rect.center
     pygame.draw.rect(surface,(100,100,30),(rect.x-3, rect.y-3, w+6, h + 6))
-    rect.width = rect.width * globals.player.health // 100 
+    rect.width = rect.width * min(globals.player.health, 100) // 100 
     pygame.draw.rect(surface,(200,0,0),rect)
 
     # Paint level middle right of dashboard
