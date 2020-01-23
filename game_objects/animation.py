@@ -158,7 +158,7 @@ class Animate:
     return list
 
   def get_surface(self):
-    if self.frame_time < (pygame.time.get_ticks() - 1000 // self.frame_rate):
+    if self.frame_time < (pygame.time.get_ticks() - 1000  // self.frame_rate) :
       if not self.loop == 0: 
         if len(self.collection) -1  == self.current_frame: 
           if not self.loop == 0: 
