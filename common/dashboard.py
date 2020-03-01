@@ -33,10 +33,10 @@ class Dashboard:
       (
         (cx - w//2, cy - h//2), # Top left
         (cx + w//2, cy - h//2), # Top right
-        (cx + w//2 + h   , cy       ), # middel right
+        (cx + w//2 + 3 * bw   , cy       ), # middel right
         (cx + w//2, cy + h//2), # bottom right
         (cx - w//2, cy + h//2), # Bottom left
-        (cx - w//2 - h , cy       ), # middel right
+        (cx - w//2 - 3 * bw , cy       ), # middel right
         (cx - w//2, cy - h//2), # Top left
       )
     )
@@ -46,10 +46,10 @@ class Dashboard:
       (
         (cx - w//2 + bw, cy - h//2 + bw ), # Top left
         (cx + w//2 - bw, cy - h//2 + bw ), # Top right
-        (cx + w//2 + h//2    , cy       ), # middel right
+        (cx + w//2 + bw    , cy       ), # middel right
         (cx + w//2 - bw, cy + h//2 - bw ), # bottom right
         (cx - w//2 + bw, cy + h//2 - bw ), # Bottom left
-        (cx - w//2 - h//2 , cy          ), # middel right
+        (cx - w//2 - bw , cy          ), # middel right
         (cx - w//2 + bw, cy - h//2 + bw ), # Top left
       )
     )
