@@ -129,19 +129,6 @@ class Level1:
         'bomb'        : { 'rect': (0,0,40,40), 'direction': -90, 'speed': 1, 'sprite': alien_bomb_sprite },
         'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 3, 'sprite': alien_shot_sprite },
       }},    
-     
-      {'alien'     : {
-        'rect'        : (500,140,276,104),
-        'sprite'       : julemand_sprite,
-        'boundary'    : (0,0,1000,400),
-        'speed'       : 1,
-        'direction'   : 180,
-        'move_pattern': 'horisontal',
-        'sound'       : alien_dead_sound,
-        'shoot_sound' : alien_shot_sound,
-        'bomb'        : { 'rect': (0,0,40,40), 'direction': -90, 'speed': 1, 'sprite': alien_bomb_sprite },
-        'shot'        : { 'rect': (0,0,10,10), 'direction': -90, 'speed': 3, 'sprite': alien_shot_sprite },
-      }},
     ]
 
 # Level 2 =====================================================================
