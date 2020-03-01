@@ -53,7 +53,6 @@ class Level1:
     player_shot_sprite  = animation.Animate('shot.png',(0,0,10,10))
     city_sprite         = animation.Animate('city7.png',(0,0,80,80))
     alien_sprite        = animation.Animate("ufo1-{index}.png",(0,0,100,50))
-    julemand_sprite     = animation.Animate("julemand.png",(276,104),20,-1,(138,52)) 
     alien_bomb_sprite   = animation.Animate('bomb.png',(0,0,40,40))
     alien_shot_sprite   = animation.Animate('alien_shot.png')
     level_sprite        = animation.Animate('level1.png',( 0,0, setting.screen_width, setting.screen_height) )
