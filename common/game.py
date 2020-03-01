@@ -21,25 +21,8 @@ import sys
 import traceback
 
 # Import game classes
-from game_objects import alien
-from game_objects import bomb
-from game_objects import background
-from game_objects import city
-from game_objects import common
-from game_objects import dashboard
-from game_objects import enemy_shot
-from game_objects import player
-from game_objects import player_input
-from game_objects import shot
-from game_objects import story
-from game_objects import tech_screen
-from game_objects import setting
-from game_objects import globals
-from game_objects import animation
-from game_objects import level_controle
-from game_objects import end_game
-
-
+from common import globals, common, animation, dashboard, player_input, level_controle, end_game, tech_screen
+from game_objects import alien, bomb, background, city, enemy_shot, player, shot, story, setting
 
 class GameObject():
   def __init__(self):
@@ -124,6 +107,7 @@ class Game:
 
   # This is the main game loop
   def loop(self):
+    print("Game started")
     while not self.player_input.stop:
       self.frame_start = pygame.time.get_ticks()
   
@@ -175,7 +159,8 @@ class Game:
       if count['alien'] <= 0:
         self.level_controle.next()
 
-      if count['player'] <= 0 or count['city'] <= 0:
+      if count['player'] <= 0:
+        print("Game ended")
         self.end_game.set()
         self.player_input.stop = True
 
@@ -183,6 +168,7 @@ class Game:
 
       # Calculate timing and wait until frame rate is right
       self.clock.tick( setting.frame_rate * self.game_speed )
+
 
 
     

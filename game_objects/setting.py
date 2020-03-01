@@ -14,8 +14,8 @@ frame_rate = 60
 game_speed = 1
 fire_rate = 3
 
-dashboard_background_color = (234,224,200)
-dashboard_color = (0,0,0)
+dashboard_background_color = (16,64,96)
+dashboard_color = (192,128,0)
 dashboard_rectangle = (0,660,1000,40)
 dashboard_font = 'freesansbold.ttf'
 dashboard_font_size = 32

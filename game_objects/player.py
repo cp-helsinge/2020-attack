@@ -13,10 +13,8 @@
     
 ============================================================================"""
 import pygame
-from game_objects import globals
-from game_objects import common
+from common import globals, common, animation
 from game_objects import setting
-from game_objects import animation
 
 class Player:
   def __init__(self, 
@@ -41,7 +39,7 @@ class Player:
     self.delete       = False
     self.fire_rate  = setting.fire_rate
     self.last_shot  = 0
-    self.health     = 100000
+    self.health     = 100
     globals.player  = self
 
   def draw(self):

@@ -8,7 +8,7 @@ import math
 import os
 import random 
 
-from game_objects import globals
+from common import globals
 from game_objects import setting
 
 # load image, convert alpha channel (transparrent areas) and resize image

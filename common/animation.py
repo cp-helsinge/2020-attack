@@ -35,7 +35,7 @@ ommit the text "{index}" in the filename and the frame_rect parameter.
 ============================================================================"""
 import os
 import pygame
-from game_objects import globals
+from common import globals
 
 def tuple2rect(rect):
   if isinstance(rect, pygame.Rect):
@@ -85,19 +85,20 @@ class Animate:
         image = pygame.image.load(self.name).convert_alpha()
 
       except Exception as error:
-        print(error, self.name, "not loaded")
-        image = False
+        if not rect:
+          self.rect = tuple2rect((0,0,100,100))
+        print(error, self.name, "Using default image")
+        image = self.__default_image(self.rect)
 
-      if image:
-        if sprite_map:
-          # split image into frames
-          self.collection = self.__load_sprite_map(image)
-        elif rect:  
-          # Use as a single still image, and rescale it
-          self.collection = [ pygame.transform.smoothscale(image, ( self.rect.width, self.rect.height )) ]
-        else:  
-          # Use as a single still image
-          self.collection = [ image ]
+      if sprite_map:
+        # split image into frames
+        self.collection = self.__load_sprite_map(image)
+      elif rect:  
+        # Use as a single still image, and rescale it
+        self.collection = [ pygame.transform.smoothscale(image, ( self.rect.width, self.rect.height )) ]
+      else:  
+        # Use as a single still image
+        self.collection = [ image ]
 
     # Set meta data
     self.frames = len(self.collection)
@@ -112,16 +113,6 @@ class Animate:
       if not frame_rate: 
         self.frame_rate = self.frames
 
-    # Create a default still image
-    else:
-      if not rect:
-        rect = (0,0,100,100)
-      self.rect = tuple2rect(rect)
-      self.collection = [ pygame.Surface((self.rect.width, self.rect.height)).convert_alpha() ]
-      # Make it transparent with a red frame
-      self.collection[0].fill(0) 
-      pygame.draw.rect(self.collection[0], (255, 0, 0),(0,0,50,50), 1)
-      self.frames = 1
 
   # Load one or multiple image files as frames
   def __load_image_sequence(self, name):
@@ -132,12 +123,13 @@ class Animate:
       try:
         image = pygame.image.load(self.name.format(index = index)).convert_alpha()
         image = pygame.transform.smoothscale(image, ( self.rect[2], self.rect[3] ))
-        list.append(image)
-        index += 1
       except Exception as error:
         if index <= 0:
           print(error, self.name.format(index = self.frames), "not loaded")
+          image = self.__default_image(self.rect)
         done = True
+      list.append(image)
+      index += 1
     return list
 
 
@@ -157,6 +149,16 @@ class Animate:
         list.append(pygame.transform.smoothscale(clip, ( self.rect.width, self.rect.height )))
     return list
 
+  # Create an image, with a rectangle arround and a cross in it
+  def __default_image(self, rect):
+    if not self.rect:
+      self.rect = tuple2rect(0,0,100,100)
+    image = pygame.Surface((self.rect.width, self.rect.height ))
+    pygame.draw.rect(image, (200,0,0), (0, 0, self.rect.width, self.rect.height ), 2)
+    pygame.draw.line(image, (200,0,0), (0,0) , (self.rect.width, self.rect.height), 2)
+    pygame.draw.line(image, (200,0,0), (0,self.rect.height) , (self.rect.width, 0), 2)
+    return image
+  
   def get_surface(self):
     if self.frame_time < (pygame.time.get_ticks() - 1000  // self.frame_rate) :
       if not self.loop == 0: 

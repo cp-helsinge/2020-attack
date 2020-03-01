@@ -4,9 +4,7 @@
 
 ============================================================================"""
 import pygame
-from game_objects import globals
-from game_objects import common
-from game_objects import animation
+from common import globals, common, animation
 
 class City:
   def __init__(self, rect, sprite = 'city.png', sound = False):

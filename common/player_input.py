@@ -9,7 +9,7 @@
 ============================================================================"""
 import pygame
 from pygame import *
-from game_objects import globals
+from common import globals
 from game_objects import setting
 
 class PlayerInput:

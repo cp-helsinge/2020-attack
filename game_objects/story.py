@@ -24,10 +24,8 @@ Rhe function story.get_level(level) returns the level dictionary
 import sys
 import pygame
 from pygame.locals import *
-from game_objects import common
+from common import common, animation
 from game_objects import setting
-from game_objects import animation
-
 
 def get_level(level):
     board = getattr(sys.modules[__name__], "Level" + str(level),False)

@@ -4,12 +4,8 @@
 import pygame
 import os
 
-from game_objects import story
-from game_objects import globals
-from game_objects import common
-from game_objects import end_game
-from game_objects import setting
-from game_objects import animation
+from game_objects import story, setting
+from common import globals, common, end_game, animation
 
 class LevelControle:
   def __init__(self):

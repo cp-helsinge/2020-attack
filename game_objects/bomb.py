@@ -5,10 +5,9 @@
 ============================================================================"""
 import pygame
 import random 
-from game_objects import globals
+
+from common import globals, common, animation
 from game_objects import setting
-from game_objects import common
-from game_objects import animation
 
 class Bomb:
   def __init__(self, 
