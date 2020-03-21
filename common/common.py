@@ -46,6 +46,21 @@ class Music:
 def random_frequency(freq):
   return random.randint(0, setting.frame_rate // (freq * globals.game.game_speed) ) == 0
 
+# Move a rectangle in a direction, with a equcalent horisontal pixel speed, within a boundary recangle
+def move_rect(rect, direction, speed, boundary=False):
+  if not boundary:
+    boundary = globals.game.rect
+  radie = -math.radians(direction)
+  x = speed * math.cos(radie)
+  y = speed * math.sin(radie)
+  new_rect = rect.move(x,y)
+  new_rect.clamp_ip(boundary)
+  return new_rect
+
+def rect_touch(rect, boundary):
+  return rect.x == boundary.x or rect.y == boundary.y or rect.x == boundary.width - rect.width or rect.y == boundary.height - rect.height
+
+
 """
 def calculate_x_velocity(position, target, velocity):
     direction = math.atan2(target[1] - position[1], target[0] - position[0])
