@@ -19,7 +19,8 @@ import time
 import os
 import sys
 import glob
-#import importlib
+
+import config
 
 # Import game classes
 #from common import globals, common, animation, dashboard, player_input, level_controle, end_game, tech_screen
@@ -35,7 +36,7 @@ game_objects_from = 'game_objects' # Used to import game objects dynamically as 
 
 # Here is stores, the current state of the game 
 class GameState:
-  def __init__(self, Env):
+  def __init__(self):
     self.reset()
 
   def reset(self):
@@ -43,22 +44,25 @@ class GameState:
     self.score = 0
     self.player_health = 100
     self.suspend = False
-    self.game_speed = 1
+    self.frame_start = 0
     self.level_time = 0
-    self.screen_width = screen_width
-    self.screen_height = screen_height
+    self.screen_width = config.screen_width
+    self.screen_height = config.screen_height
+    self.frame_rate = frame_rate
+    self.game_speed = game_speed
+
 
 
 class GameObject:
-  def __init__(self, Env):
+  def __init__(self):
     # List og game object for current level
     self.list = []
 
     # Make list of game objects
     self.class_list = {}
-    for file in glob.glob(os.path.join(Env.game_obj_path,"*.py")):
+    for file in glob.glob(os.path.join(config.game_obj_path,"*.py")):
       # Extract the file name, without extension and in lower case 
-      name = os.path.splitext(os.path.basename(file))[0].lower()
+      name = os.path.splitext(os.path.basename(file))[0].capitalize()
       
       # Ignore private and protected files
       if name.startswith("_"): continue
@@ -66,34 +70,42 @@ class GameObject:
       # Import classes      
       if not name in self.class_list:
         print("loading class",name)
-        try:
-          # from <game_objects_from> import <name>
-          cls = __import__(game_objects_from, None, None, [name], 0)
-          # class = <name>.<Name>
-          self.class_list[name] = getattr( getattr(cls,name),name.capitalize() )
+        # from <game_objects_from> import <name>
+        cls = __import__(game_objects_from, None, None, [name.lower()], 0)
+        # class = <name>.<Name>
+        self.class_list[name] = getattr( getattr(cls,name.lower()),name )
 
-        except Exception as err:
-          print("Unable to load game object in", name + ".py")
+        #except Exception as err:
+        #  print("Unable to load game object in", name + ".py", err)
+      print("Loaded classes",self.class_list)
 
   # Add a game object to the running game
-  def add(self, name, parameters):  
+  def add(self, obj_description):  
+    descr = obj_description.copy()
+    name = descr['class_name']
+
+    if not name in self.class_list:
+      print("Error in story bord: \""+ name + "\" is not a known game object class name")
+      sys.exit(1) 
+
+    del descr['class_name']
+    print("adding object", name);
+
     # Create the new object and add it to the list
-    name = name.lower()
-    try:
-      print("adding object", name);
-      obj = self.class_list[name]( **parameters) 
-      self.list.append( {
-          'type' : obj.object_type,
-          'obj'  : obj 
-        }
-      )
-    except Exception as err:
-      print("Error in story board, when creating", name, "object:", err,"with parameters:", parameters)
-      sys.exit(1)  
+    #try:
+    obj = self.class_list[name](**descr) 
+    self.list.append( {
+        'type' : obj.object_type,
+        'obj'  : obj 
+      }
+    )
+    #except Exception as err:
+    #  print("Error in story board, when creating", name, ": \"", err, "\"\n  Unable to create game object with parameters:", obj_description)
+    #  sys.exit(1)  
 
 class Game:
   # Constructor
-  def __init__(self, Env):
+  def __init__(self):
     
     pygame.init()
     # Set up game screen
@@ -110,19 +122,22 @@ class Game:
       print("Pygame Sound mixer failed to initialize")
 
     # Make a place to store the current state of the game
-    self.state = GameState(Env)
+    self.state = GameState()
 
     # in game objects
-    self.state.object = GameObject(Env)
+    self.state.object = GameObject()
 
     # Create basic game interface
     self.dashboard = dashboard.Dashboard(self.state)
+    
     # Enable input from user
     self.player_input = player_input.PlayerInput(self.state)
+    self.state.player_input = self.player_input
+
     # Define the game screen area
     self.rect = pygame.Rect(0,0,screen_width,screen_height - self.dashboard.rect[3]) 
     
-    #self.tech_screen = tech_screen.TechScreen(game_variable)
+    self.tech_screen = tech_screen.TechScreen(self.state)
     #self.end_game = end_game.EndGame(game_variable)   
     self.level_controle = level_controle.LevelControle(self.state)
 
@@ -150,7 +165,7 @@ class Game:
     self.clock = pygame.time.Clock()
     while not self.state.stop:
       # Store the time that this frame starts
-      self.frame_start = pygame.time.get_ticks()
+      self.state.frame_start = pygame.time.get_ticks()
   
       # Get player input
       self.player_input.update()
@@ -202,15 +217,16 @@ class Game:
       
       # Draw basic game interface
       self.dashboard.draw(self.window)
-      """ 
+
       # Draw tech screen
       if self.state.tech_screen_on:
-        self.tech_screen.draw()
+        self.tech_screen.draw(self.window)
 
       # Next leven?
-      if count['alien'] <= 0:
-        self.level_controle.next()
+      #if count['alien'] <= 0:
+      #  self.level_controle.next()
 
+      """
       # Player dead?
       if count['player'] <= 0:
         print("Game ended")

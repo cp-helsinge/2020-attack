@@ -1,6 +1,6 @@
 """============================================================================
 
-Animate
+Animation
 
 Loads an animation series (or just a still) and creates a pygame surface for it.
 
@@ -35,11 +35,11 @@ ommit the text "{index}" in the filename and the frame_size parameter.
 ============================================================================"""
 import os
 import pygame
-from game_functions import globals
+import config
 
 class Animation:
   def __init__(self, name, frame_size = None, size = None, frame_rate = None, loop = -1):
-    self.file_name = os.path.join(os.getcwd(),globals.gfx_path, name)
+    self.file_name = os.path.join(os.getcwd(),config.gfx_path, name)
    
     if frame_size is None and size is not None:
       frame_size =  size
@@ -55,6 +55,7 @@ class Animation:
     self.frames = 0
     self.current_frame = 0
     self.frame_time = 0
+    self.rect = None
       
     # Load multiple image files as frames 
     if "{index}" in name: 

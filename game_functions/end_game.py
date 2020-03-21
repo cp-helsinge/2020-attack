@@ -7,6 +7,7 @@
 
 import pygame
 from game_functions import animation
+import config
 
 class EndGame:
   def __init__(self):

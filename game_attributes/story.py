@@ -31,38 +31,42 @@ level.append( [] )
 
 # Level 1 =====================================================================
 level.append([
-  {
-    'class name': 'Next_level',
-    'sound'         : 'level2.ogg',
-    'sprite'         : 'level_sprite',
-    'intro_time'    : 2, 
-    'intro_effect'  : 'slide_down', 
-    'hold_time'     : 2, 
-    'outtro_time'   : 1, 
-    'outtro_effect' : 'slide_down'
-  }, 
-  {'class name': 'Music', 'file name': 'Test1.ogg'},
-  { 
-    'class name': 'Background', 
-    'color': pygame.Color('dodgerblue1'), 
-    'sprite': 'sky2.jpg',
-  },
-  {'class_name': 'city', 'position': (  10,580), },
-  {'class_name': 'city', 'position': ( 100,580), },
-  {'class_name': 'city', 'position': ( 190,580), },
-  {'class_name': 'city', 'position': ( 280,580), },
-  {'class_name': 'city', 'position': ( 370,580), },
-  {'class_name': 'city', 'position': ( 460,580), },
-  {'class_name': 'city', 'position': ( 550,580), },
-  {'class_name': 'city', 'position': ( 640,580), },
-  {'class_name': 'city', 'position': ( 730,580), },
-  {'class_name': 'city', 'position': ( 820,580), },
-  {'class_name': 'city', 'position': ( 910,580), },
-  {'class_name': 'city', 'position': (1000,580), },
-  {'class_name': 'Player1', 'position': (500,500), 'boundary': (0,300,1000,360)},
   {'class_name': 'Alien1', 'position': (800,30), 'boundary': (0,0,1000,200), 'speed' : 2,'direction'   : 180},    
   {'class_name': 'Alien1', 'position': (100,90), 'boundary': (0,0,1000,200), 'speed' : 2,'direction'   : 180},    
 ])
+
+"""
+{
+  'class name': 'Next_level',
+  'sound'         : 'level2.ogg',
+  'sprite'         : 'level_sprite',
+  'intro_time'    : 2, 
+  'intro_effect'  : 'slide_down', 
+  'hold_time'     : 2, 
+  'outtro_time'   : 1, 
+  'outtro_effect' : 'slide_down'
+}, 
+{'class name': 'Music', 'file name': 'Test1.ogg'},
+{ 
+  'class name': 'Background', 
+  'color': pygame.Color('dodgerblue1'), 
+  'sprite': 'sky2.jpg',
+},
+{'class_name': 'city', 'position': (  10,580), },
+{'class_name': 'city', 'position': ( 100,580), },
+{'class_name': 'city', 'position': ( 190,580), },
+{'class_name': 'city', 'position': ( 280,580), },
+{'class_name': 'city', 'position': ( 370,580), },
+{'class_name': 'city', 'position': ( 460,580), },
+{'class_name': 'city', 'position': ( 550,580), },
+{'class_name': 'city', 'position': ( 640,580), },
+{'class_name': 'city', 'position': ( 730,580), },
+{'class_name': 'city', 'position': ( 820,580), },
+{'class_name': 'city', 'position': ( 910,580), },
+{'class_name': 'city', 'position': (1000,580), },
+{'class_name': 'Player1', 'position': (500,500), 'boundary': (0,300,1000,360)},
+"""
+
 """
 # Level 2 =====================================================================
 class Level2:

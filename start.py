@@ -26,17 +26,17 @@ import sys
 import os
 from PyQt5 import uic, QtCore, QtWidgets, QtGui
 import game
+import config
 
+config.root_path     = os.path.join(os.path.dirname(__file__))       # Root of this package
+config.qt_path       = os.path.join(config.root_path,'qt')           # root of QT application files
+config.game_obj_path = os.path.join(config.root_path,'game_objects') # Game program objects
+config.html_path     = os.path.join(config.root_path,'qt','html')    # QT HTML pages
+config.gfx_path      = os.path.join(config.root_path,'gfx')          # Graphic art and sprites
+config.sound_path    = os.path.join(config.root_path,'sound')        # sound effects and music
 
-# Set some global variables
-class Env:
-    root_path      = os.path.join(os.path.dirname(__file__))    # Root of this package
-    qt_path        = os.path.join(root_path,'qt')               # root of QT application files
-    game_obj_path  = os.path.join(root_path,'game_objects')     # Game program objects
-    html_path      = os.path.join(root_path,'qt','html')        # QT HTML pages
-    gfx_path       = os.path.join(root_path,'gfx')              # Graphic art and sprites
-    sound_path     = os.path.join(root_path,'sound')            # sound effects and music
-
+config.screen_width  = 1000
+config.screen_height = 700
 
 
 # Create a widget, using a HTML file (located in the html_path.
@@ -50,13 +50,13 @@ class SimpleHTMLPage:
         # Enable external links to be opened in the system browser
         self.widget.setOpenExternalLinks(True)
         # Load the HTML, markdown or text file
-        self.widget.setSource(QtCore.QUrl().fromLocalFile(os.path.join(Env.html_path,url)))
+        self.widget.setSource(QtCore.QUrl().fromLocalFile(os.path.join(config.html_path,url)))
 
 
 class MainPage():
     def __init__(self, navigate):
         # Load a UI resource file
-        self.widget = uic.loadUi(os.path.join(Env.qt_path,'main_page.ui'))
+        self.widget = uic.loadUi(os.path.join(config.qt_path,'main_page.ui'))
 
         # Attach action to buttons
         self.widget.credits_button.clicked.connect(lambda: navigate("credits_page"))
@@ -129,8 +129,8 @@ class MainWindow(QtWidgets.QWidget):
         # Start game
         elif page_name == 'play':
             self.hide()
-            current_game = game.Game(Env)
-            #current_game.level_controle.set(1)
+            current_game = game.Game()
+            current_game.start()
             current_game.loop()
             del current_game
             self.show()
@@ -140,8 +140,8 @@ class MainWindow(QtWidgets.QWidget):
 app = QtWidgets.QApplication(sys.argv)
 window = MainWindow()
 
-Env.app = app
-Env.window = window
+config.window        = window
+config.app           = app
 
 app.exec_()
 

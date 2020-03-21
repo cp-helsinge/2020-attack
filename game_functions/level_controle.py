@@ -12,11 +12,15 @@ import os
 from game_functions import end_game, animation
 from game_attributes import story
 
+import config
+
+
+
 class LevelControle:
   def __init__(self, game_state):
+    self.game_state = game_state
     self.music = False
     self.active = False
-    self.game_state = game_state
 
   def add(self, 
     movie = False,
@@ -56,18 +60,21 @@ class LevelControle:
       self.game_state.level += 1
 
     # Load game objects for the new level
+    print("Loading level",self.game_state.level)
     if len(story.level) > self.game_state.level:
+      # Empty game object list
       self.game_state.object.list = []
+
+      # Loop through list of game object on this level
       for obj in story.level[self.game_state.level]:
-        for name, parameters in obj.items():
-          # Load pseudo classes
-          if object_type == 'next_level':
-            self.add(**parameters)
-          elif object_type == 'music': 
-            self.music = parameters
-          # Load in-game objects  
-          else:
-            self.game_state.object.add(name, parameters)
+        # Load pseudo classes
+        if obj['class_name'] == 'next_level':
+          self.add(**parameters)
+        elif obj['class_name'] == 'music': 
+          self.music = parameters
+        # Load in-game objects  
+        else:
+          self.game_state.object.add(obj)
 
       # run next level graphics
       if self.active:
@@ -81,7 +88,7 @@ class LevelControle:
       self.game_state.level_time = pygame.time.get_ticks() 
 
     else:  
-      pass
+      self.game_state.stop = True
       # globals.game.end_game.set()
 
     
@@ -142,10 +149,10 @@ class LevelControle:
         if self.sprite:
           step += inc
           if self.sprite:
-            globals.game.window.blit(self.sprite.get_surface(), (0, step - setting.screen_height))
+            self.game_state.window.blit(self.sprite.get_surface(), (0, step - setting.screen_height))
           else:
-            globals.game.window.fill(self.color, (0, step - setting.screen_height))
-          globals.game.window.scroll(0, inc)
+            self.game_state.window.fill(self.color, (0, step - setting.screen_height))
+          self.game_state.window.scroll(0, inc)
           
           if step >= setting.screen_height:
             next_stage = True
@@ -156,13 +163,13 @@ class LevelControle:
           next_stage = True
       
       pygame.display.flip()
-      globals.game.clock.tick( setting.frame_rate )
+      self.game_state.clock.tick( setting.frame_rate )
 
       # Check for user input
       event_list = pygame.event.get()
       for event in event_list:
         if event.type == pygame.QUIT:
-          globals.game.player_input.stop
+          self.game_state.player_input.stop
           self.active = False 
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
           self.active = False 
