@@ -28,9 +28,6 @@ from game_functions import dashboard, player_input, level_controle, end_game, te
 # from game_attributes import background, frame
 
 game_name = 'Alien Attack'
-screen_width = 1000
-screen_height = 700
-frame_rate = 60
 game_speed = 1
 game_objects_from = 'game_objects' # Used to import game objects dynamically as the from part
 
@@ -48,12 +45,10 @@ class GameState:
     self.level_time = 0
     self.screen_width = config.screen_width
     self.screen_height = config.screen_height
-    self.frame_rate = frame_rate
+    self.frame_rate = config.frame_rate
     self.game_speed = game_speed
 
-
-
-class GameObject:
+class GameObjects:
   def __init__(self):
     # List og game object for current level
     self.list = []
@@ -109,7 +104,7 @@ class Game:
     
     pygame.init()
     # Set up game screen
-    self.window = pygame.display.set_mode( (screen_width,screen_height) 
+    self.window = pygame.display.set_mode( (config.screen_width,config.screen_height) 
        #, RESIZABLE | SCALED | FULLSCREEN
     )
     pygame.display.set_caption(game_name)
@@ -122,24 +117,24 @@ class Game:
       print("Pygame Sound mixer failed to initialize")
 
     # Make a place to store the current state of the game
-    self.state = GameState()
+    config.game_state = self.game_state = GameState()
 
     # in game objects
-    self.state.object = GameObject()
+    self.game_state.object = GameObjects()
 
     # Create basic game interface
-    self.dashboard = dashboard.Dashboard(self.state)
+    self.dashboard = dashboard.Dashboard(self.game_state)
     
     # Enable input from user
-    self.player_input = player_input.PlayerInput(self.state)
-    self.state.player_input = self.player_input
+    self.player_input = player_input.PlayerInput(self.game_state)
+    self.game_state.player_input = self.player_input
 
     # Define the game screen area
-    self.rect = pygame.Rect(0,0,screen_width,screen_height - self.dashboard.rect[3]) 
+    self.rect = pygame.Rect(0,0,config.screen_width,config.screen_height - self.dashboard.rect[3]) 
     
-    self.tech_screen = tech_screen.TechScreen(self.state)
+    self.tech_screen = tech_screen.TechScreen(self.game_state)
     #self.end_game = end_game.EndGame(game_variable)   
-    self.level_controle = level_controle.LevelControle(self.state)
+    self.level_controle = level_controle.LevelControle(self.game_state)
 
   # Destructor  
   def __del__(self):
@@ -153,7 +148,7 @@ class Game:
 
   def start(self):
     # Set game variables to start values.
-    self.state.reset()
+    self.game_state.reset()
     self.level_controle.set(1)
     self.loop()
 
@@ -163,48 +158,48 @@ class Game:
     
     # Start using pygame loop timing (Frame rate)
     self.clock = pygame.time.Clock()
-    while not self.state.stop:
+    while not self.game_state.stop:
       # Store the time that this frame starts
-      self.state.frame_start = pygame.time.get_ticks()
+      self.game_state.frame_start = pygame.time.get_ticks()
   
       # Get player input
       self.player_input.update()
 
-      scroll = (0,0)
+      scroll = (0,1)
+      self.window.fill((0,0,70))
       
       # == move all objects ==
-      for game_obj in self.state.object.list:
+      for game_obj in self.game_state.object.list:
         if callable(getattr(game_obj['obj'], 'update', None)):
           game_obj['obj'].update(scroll)
 
 
       # == Collission check ==
-  
       # change to self.collidable_object.list
       # Check for collissions with all objects, that has a defined rectangle. Execpt dead and deleted objects.
-      for i in range(0, len(self.state.object.list) ):
-        if not self.state.object.list[i]['type'] == 'background' and self.__obj_active(self.state.object.list[i]['obj']):
-          for ii in range(i+1, len(self.state.object.list) ):
-            if self.__obj_active(self.state.object.list[i]['obj']) and self.state.object.list[i]['obj'].rect.colliderect(self.state.object.list[ii]['obj'].rect):
+      for i in range(0, len(self.game_state.object.list) ):
+        if not self.game_state.object.list[i]['type'] == 'background' and self.__obj_active(self.game_state.object.list[i]['obj']):
+          for ii in range(i+1, len(self.game_state.object.list) ):
+            if self.__obj_active(self.game_state.object.list[i]['obj']) and self.game_state.object.list[i]['obj'].rect.colliderect(self.game_state.object.list[ii]['obj'].rect):
               # print(i,"hitting",ii)
-              if getattr(self.state.object.list[i]['obj'], 'hit', False):
-                self.state.object.list[i]['obj'].hit(self.state.object.list[ii]['type'], self.state)
-              if getattr(self.state.object.list[ii]['obj'], 'hit', False):
-                self.state.object.list[ii]['obj'].hit(self.state.object.list[i]['type'], self.state)
+              if getattr(self.game_state.object.list[i]['obj'], 'hit', False):
+                self.game_state.object.list[i]['obj'].hit(self.game_state.object.list[ii]['type'], self.game_state)
+              if getattr(self.game_state.object.list[ii]['obj'], 'hit', False):
+                self.game_state.object.list[ii]['obj'].hit(self.game_state.object.list[i]['type'], self.game_state)
 
       # == Paint on screen ==
       # Count objects that determins when the game ends
       # Clean up dead objects
       count = {'alien': 0, 'player': 0, 'city':0}
 
-      for game_obj in self.state.object.list:
+      for game_obj in self.game_state.object.list:
         # Draw objects
         if callable(getattr(game_obj['obj'], 'draw', None)):
           game_obj['obj'].draw(self.window)
 
         # Remove dead objects
         if getattr(game_obj['obj'], 'delete', False):
-          self.state.object.list.remove(game_obj)
+          self.game_state.object.list.remove(game_obj)
 
         # Count important objects
         if game_obj['type'] in count:
@@ -219,7 +214,7 @@ class Game:
       self.dashboard.draw(self.window)
 
       # Draw tech screen
-      if self.state.tech_screen_on:
+      if self.game_state.tech_screen_on:
         self.tech_screen.draw(self.window)
 
       # Next leven?
@@ -231,13 +226,13 @@ class Game:
       if count['player'] <= 0:
         print("Game ended")
         self.end_game.set()
-        self.state.stop = True
+        self.game_state.stop = True
       """
       # Show the new frame on screen
       pygame.display.flip()
 
       # Calculate timing and wait until frame rate is right
-      self.clock.tick( frame_rate * self.state.game_speed )
+      self.clock.tick( frame_rate * self.game_state.game_speed )
 
 
 

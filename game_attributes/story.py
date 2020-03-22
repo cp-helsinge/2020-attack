@@ -31,8 +31,9 @@ level.append( [] )
 
 # Level 1 =====================================================================
 level.append([
-  {'class_name': 'Alien1', 'position': (800,30), 'boundary': (0,0,1000,200), 'speed' : 2,'direction'   : 180},    
-  {'class_name': 'Alien1', 'position': (100,90), 'boundary': (0,0,1000,200), 'speed' : 2,'direction'   : 180},    
+  {'class_name': 'Player', 'position': (500,500), 'boundary': (0,300,1000,360)},
+  {'class_name': 'Alien1', 'position': (800,30), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 20},    
+  {'class_name': 'Alien1', 'position': (100,90), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 160},    
 ])
 
 """

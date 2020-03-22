@@ -17,6 +17,7 @@ sound_path    = None # sound effects and music
 # Screen size
 screen_width  = 1000
 screen_height = 700
+frame_rate = 30
 
 # Global variables
 window        = None

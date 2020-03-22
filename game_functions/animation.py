@@ -47,6 +47,7 @@ class Animation:
     if size is None and frame_size is not None:
       size =  frame_size
 
+    self.name = name
     self.frame_size = frame_size
     self.size = size
     self.frame_rate = frame_rate
@@ -90,7 +91,6 @@ class Animation:
       if frame_rate is None: 
         self.frame_rate = self.frames
 
-
   # Load one or multiple image files as frames
   def __load_image_sequence(self, name):
     frame_list = []
@@ -112,7 +112,6 @@ class Animation:
       index += 1
 
     return frame_list
-
 
   # Load one image and split it into frames (Sprite map)
   def __load_sprite_map(self, image):
@@ -150,11 +149,17 @@ class Animation:
     pygame.draw.rect(image, (200,0,0), ((0, 0), self.size), 2)
     pygame.draw.line(image, (200,0,0), (0,0) , self.size, 2)
     pygame.draw.line(image, (200,0,0), (0,self.size[1]) , (self.size[0], 0), 2)
+
+    font = pygame.font.Font(None,(self.size[0] * 3)//len(self.name)) 
+    text = font.render(self.name, True, (240,0,0),(0,0,0))
+    text_rect = text.get_rect()
+    text_rect.center = image.get_rect().center
+    image.blit( text, text_rect )
     return image
   
   # return a pointer to the current surface frame of this animation
   def get_surface(self):
-    if self.frame_time < (pygame.time.get_ticks() - 1000  // self.frame_rate) :
+    if self.frame_time < ((pygame.time.get_ticks() - 1000)  // self.frame_rate) :
       if not self.loop == 0: 
         if len(self.collection) -1  == self.current_frame: 
           if not self.loop == 0: 
@@ -165,6 +170,7 @@ class Animation:
           self.current_frame += 1
           self.frame_time = pygame.time.get_ticks()
     return self.collection[self.current_frame]
+
 
 class Sound:
   def __init__(self, file_name):
@@ -183,21 +189,4 @@ class Music:
     except Exception as ex:
       print("failed to load music",ex, "using sound file:", file_name)
 
-# Return true at random, on avarage at <freq> times pr. second
-def random_frequency(freq):
-  return random.randint(0, setting.frame_rate // (freq * globals.game.game_speed) ) == 0
 
-  
-# Move a rectangle in a direction, with a equcalent horisontal pixel speed, within a boundary recangle
-def move_rect(rect, direction, speed, boundary=False):
-  if not boundary:
-    boundary = globals.game.rect
-  radie = -math.radians(direction)
-  x = speed * math.cos(radie)
-  y = speed * math.sin(radie)
-  new_rect = rect.move(x,y)
-  new_rect.clamp_ip(boundary)
-  return new_rect
-
-def rect_touch(rect, boundary):
-  return rect.x == boundary.x or rect.y == boundary.y or rect.x == boundary.width - rect.width or rect.y == boundary.height - rect.height
