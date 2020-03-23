@@ -9,7 +9,7 @@
 
 ============================================================================"""
 import pygame
-
+import pprint
 import config
 
 class TechScreen:
@@ -41,6 +41,8 @@ class TechScreen:
       int(1000 / self.game_state.frame_rate / self.game_state.game_speed) )
 
     self.display(10, 130, "Game speed: {0}", self.game_state.game_speed )
+
+    self.display(10,160, "Object count: " + str(self.game_state.count))
 
     # Draw box around game objects
     for game_obj in self.game_state.object.list:

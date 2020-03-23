@@ -32,9 +32,9 @@ class Alien1(gameobject.Gameobject):
       #Alien1.sprite_bomb      = animation.Animation('bomb.png', (40,40), (40,40))            # Bomb sprite map 
       #Alien1.sprite_shot      = animation.Animation('shot.png', (8,8), (8,8))                # Shot sprite map
 
-      Alien1.sound_die        = animation.Sound('small_bang.wav') # Sound to make when dieing
-      Alien1.sound_bomb_drop  = animation.Sound('drop_bomb.wav')  # Sound to make when dropping a bomb
-      Alien1.sound_shoot      = animation.Sound('plop.wav')       # Sound to make when shooting
+      #Alien1.sound_die        = animation.Sound('small_bang.wav') # Sound to make when dieing
+      #Alien1.sound_bomb_drop  = animation.Sound('drop_bomb.wav')  # Sound to make when dropping a bomb
+      #Alien1.sound_shoot      = animation.Sound('plop.wav')       # Sound to make when shooting
 
       Alien1.loaded = True # Indicate that all common external attributes are loaded
 

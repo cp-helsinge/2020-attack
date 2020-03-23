@@ -41,7 +41,8 @@ class Gameobject:
     self.rect = pygame.Rect(self.position, self.size)
 
     self.game_state = config.game_state
-    self.delete     = False
+
+    self.delete = False
     self.object_type = Gameobject.Type.INACTIVE
 
   # Move object according to speed and direction, within boundary

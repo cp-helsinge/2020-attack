@@ -60,7 +60,7 @@ class LevelControle:
       self.game_state.level += 1
 
     # Load game objects for the new level
-    print("Loading level",self.game_state.level)
+    print("=== Loading level",self.game_state.level,"===")
     if len(story.level) > self.game_state.level:
       # Empty game object list
       self.game_state.object.list = []

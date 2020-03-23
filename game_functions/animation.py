@@ -65,16 +65,7 @@ class Animation:
 
     # Load a single image file 
     else:
-      try:
-        image = pygame.image.load(self.file_name).convert_alpha()
-
-      # If failing to load image file, create a default image
-      except Exception as error:
-        print(error, self.file_name, "Using default image")
-        image = self.__default_image(self.rect)
-
-      # split sprite map image into frames
-      self.collection = self.__load_sprite_map(image)
+      self.collection = self.__load_sprite_map(self.file_name)
 
     # Set meta data
     self.frames = len(self.collection)
@@ -97,14 +88,13 @@ class Animation:
     index = 0
     done = False
     while not done:
-      
       try:
         image = pygame.image.load(self.file_name.format(index = index)).convert_alpha()
         if silf.size is not None:
           image = pygame.transform.smoothscale(image, self.size)
       except Exception as error:
         if index <= 0:
-          print(error, self.file_name.format(index = self.frames), "not loaded")
+          print(error, "Image sequence not loaded. Using default image.")
           image = self.__default_image(self.rect)
         done = True
 
@@ -113,9 +103,17 @@ class Animation:
 
     return frame_list
 
-  # Load one image and split it into frames (Sprite map)
-  def __load_sprite_map(self, image):
+  # Use image to split into frames (Sprite map)
+  def __load_sprite_map(self, file_name):
     frame_list = []
+    try:
+      image = pygame.image.load(self.file_name).convert_alpha()
+
+    # If failing to load image file, create a default image
+    except Exception as error:
+      print(error, "Image or sprite map not loaded. Using default image.")
+      image = self.__default_image(self.rect)
+
     rect = image.get_rect()
     if self.frame_size is None:
       cols = 1
@@ -135,7 +133,7 @@ class Animation:
         clip.blit(image, (0,0), pygame.Rect((x,y),self.frame_size))
         
         # Scale clip and append it to the frame list
-        if self.size is not None:
+        if self.size is not None and self.size != self.frame_size:
           clip = pygame.transform.smoothscale(clip, self.size)
         frame_list.append(clip)
 
@@ -159,7 +157,8 @@ class Animation:
   
   # return a pointer to the current surface frame of this animation
   def get_surface(self):
-    if self.frame_time < ((pygame.time.get_ticks() - 1000)  // self.frame_rate) :
+    if len(self.collection) < 1: return None
+    if self.frame_time < int((pygame.time.get_ticks() - 1000)  / self.frame_rate) :
       if not self.loop == 0: 
         if len(self.collection) -1  == self.current_frame: 
           if not self.loop == 0: 

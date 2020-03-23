@@ -24,17 +24,17 @@ class Player(gameobject.Gameobject):
   sound_shoot = None
 
   # Initialize Player 
-  def __init__(self, boundary = None, position = None, speed = 1):
-    print("init alien")
+  def __init__(self, boundary = None, position = None, speed = 20):
+    print("init Player")
     # Load animations and sounds first time this class is used
     if not Player.loaded:
-      Player.size = (100,50)
-      Player.sprite           = animation.Animation("player.png", (100,50), Player.size) # Alien sprite map
+      Player.size = (50,50)
+      Player.sprite = animation.Animation("playerX.png", (50,50), Player.size) # sprite map
       #Player.sprite_bomb      = animation.Animation('bomb.png', (40,40), (40,40))            # Bomb sprite map 
       #Player.sprite_shot      = animation.Animation('shot.png', (8,8), (8,8))                # Shot sprite map
 
-      Player.sound_die        = animation.Sound('big_bang.wav') # Sound to make when dieing
-      Player.sound_shoot      = animation.Sound('plop.wav')       # Sound to make when shooting
+      #Player.sound_die        = animation.Sound('big_bang.wav') # Sound to make when dieing
+      #Player.sound_shoot      = animation.Sound('plop.wav')       # Sound to make when shooting
 
       Player.loaded = True # Indicate that all common external attributes are loaded
 
@@ -44,7 +44,7 @@ class Player(gameobject.Gameobject):
 
     self.fire_rate = fire_rate
     self.last_shot = pygame.time.get_ticks()
-    print("Alian at",self.rect)
+    print("Player at",self.rect)
 
   # Draw on game surface
   def draw(self, surface):

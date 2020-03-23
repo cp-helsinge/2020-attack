@@ -19,12 +19,12 @@ import time
 import os
 import sys
 import glob
-
+import pprint
 import config
 
 # Import game classes
 #from common import globals, common, animation, dashboard, player_input, level_controle, end_game, tech_screen
-from game_functions import dashboard, player_input, level_controle, end_game, tech_screen
+from game_functions import dashboard, player_input, level_controle, end_game, tech_screen, gameobject
 # from game_attributes import background, frame
 
 game_name = 'Alien Attack'
@@ -50,6 +50,7 @@ class GameState:
 
 class GameObjects:
   def __init__(self):
+    print("Loading game object classes...")
     # List og game object for current level
     self.list = []
 
@@ -64,7 +65,7 @@ class GameObjects:
 
       # Import classes      
       if not name in self.class_list:
-        print("loading class",name)
+        print("..loading",name)
         # from <game_objects_from> import <name>
         cls = __import__(game_objects_from, None, None, [name.lower()], 0)
         # class = <name>.<Name>
@@ -72,7 +73,7 @@ class GameObjects:
 
         #except Exception as err:
         #  print("Unable to load game object in", name + ".py", err)
-      print("Loaded classes",self.class_list)
+    print(len(self.class_list)," Game Classes loaded.")
 
   # Add a game object to the running game
   def add(self, obj_description):  
@@ -148,14 +149,17 @@ class Game:
 
   def start(self):
     # Set game variables to start values.
-    self.game_state.reset()
     self.level_controle.set(1)
     self.loop()
 
   # This is the main game loop
   def loop(self):
     self.player_input.reset()
-    
+    zero_count = {}
+    for obj_type in dir(gameobject.Gameobject.Type) :
+      if obj_type.startswith("_"): continue
+      zero_count[getattr(gameobject.Gameobject.Type,obj_type)] = 0
+
     # Start using pygame loop timing (Frame rate)
     self.clock = pygame.time.Clock()
     while not self.game_state.stop:
@@ -173,7 +177,6 @@ class Game:
         if callable(getattr(game_obj['obj'], 'update', None)):
           game_obj['obj'].update(scroll)
 
-
       # == Collission check ==
       # change to self.collidable_object.list
       # Check for collissions with all objects, that has a defined rectangle. Execpt dead and deleted objects.
@@ -183,14 +186,14 @@ class Game:
             if self.__obj_active(self.game_state.object.list[i]['obj']) and self.game_state.object.list[i]['obj'].rect.colliderect(self.game_state.object.list[ii]['obj'].rect):
               # print(i,"hitting",ii)
               if getattr(self.game_state.object.list[i]['obj'], 'hit', False):
-                self.game_state.object.list[i]['obj'].hit(self.game_state.object.list[ii]['type'], self.game_state)
+                self.game_state.object.list[i]['obj'].hit(self.game_state.object.list[ii]['type'])
               if getattr(self.game_state.object.list[ii]['obj'], 'hit', False):
-                self.game_state.object.list[ii]['obj'].hit(self.game_state.object.list[i]['type'], self.game_state)
+                self.game_state.object.list[ii]['obj'].hit(self.game_state.object.list[i]['type'])
 
       # == Paint on screen ==
       # Count objects that determins when the game ends
       # Clean up dead objects
-      count = {'alien': 0, 'player': 0, 'city':0}
+      self.game_state.count = zero_count
 
       for game_obj in self.game_state.object.list:
         # Draw objects
@@ -201,9 +204,8 @@ class Game:
         if getattr(game_obj['obj'], 'delete', False):
           self.game_state.object.list.remove(game_obj)
 
-        # Count important objects
-        if game_obj['type'] in count:
-          count[game_obj['type']] += 1
+        # Count objects by type
+        self.game_state.count[game_obj['type']] += 1
 
       # Paint inactive objects
       # for game_obj in self.inactive_object.list:
@@ -232,7 +234,7 @@ class Game:
       pygame.display.flip()
 
       # Calculate timing and wait until frame rate is right
-      self.clock.tick( frame_rate * self.game_state.game_speed )
+      self.clock.tick( config.frame_rate * self.game_state.game_speed )
 
 
 
