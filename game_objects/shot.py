@@ -26,15 +26,12 @@ class Shot(gameobject.Gameobject):
     print("init shot")
     # Load animations and sounds first time this class is used
     if not Shot.loaded:
-      Shot.sprite = animation.Animation("shotX.png",) 
-
-      #Shot.sound = animation.Sound('plop.wav')       # Sound to make when shooting
-
+      Shot.sprite = self.Animate("shotX.png",) 
       Shot.loaded = True # Indicate that all common external attributes are loaded
 
     # Inherit from game object class
     gameobject.Gameobject.__init__(self, boundary, position,None, speed, direction)
-    self.object_type = gameobject.Gameobject.Type.SHOT
+    self.object_type = self.Type.SHOT
     # Adjust position to be centered on top of position
     self.rect.midbottom = position
     
@@ -46,7 +43,7 @@ class Shot(gameobject.Gameobject):
   def update(self, scroll):
     if scroll[0] or scroll[1]:
       self.rect.move(scroll)
-    self.boundary.move(scroll)
+      self.boundary.move(scroll)
 
     # test if out of boundary and deflect sprite by mirroring direction
     if self.touch_boundary():
@@ -56,5 +53,5 @@ class Shot(gameobject.Gameobject):
 
   # When hit or hitting something
   def hit(self, object_type):
-    if object_type == gameobject.Gameobject.Type.ENEMY:
+    if object_type == self.Type.ENEMY:
       self.delete = True

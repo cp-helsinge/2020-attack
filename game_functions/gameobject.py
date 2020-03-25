@@ -11,7 +11,7 @@ import random
 from game_functions import animation
 import config
 
-class Gameobject:
+class Gameobject(animation.Animation):
   class Type:
     NEUTRAL = 'neutral'
     ENEMY = 'enemy'
@@ -19,7 +19,7 @@ class Gameobject:
     FRIEND = 'friend'
     INACTIVE = 'inactive'
     SHOT = 'shot'
-    ENEMY_SHOT = 'enemy_shot'
+    ENEMY_SHOT = 'enemy shot'
     ENEMY_BOMB = 'enemy bomb'
 
   def __init__(self, boundary = None, position=None, size=None, speed=1, direction=0):
@@ -42,7 +42,7 @@ class Gameobject:
     self.game_state = config.game_state
 
     self.delete = False
-    self.object_type = Gameobject.Type.INACTIVE
+    self.object_type = self.Type.INACTIVE
 
   # Move object according to speed and direction, within boundary
   def move(self):
