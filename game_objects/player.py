@@ -12,7 +12,7 @@ import pygame
 from game_functions import animation, gameobject
 import config
 
-fire_rate = 1
+fire_rate = 3
 
 class Player(gameobject.Gameobject):
   # Variables to store animations and sounds common to all Player object
@@ -44,6 +44,7 @@ class Player(gameobject.Gameobject):
 
     self.fire_rate = fire_rate
     self.last_shot = pygame.time.get_ticks()
+    self.empty_rect = pygame.Rect(0,0,0,0)
     print("Player at",self.rect)
 
   # Draw on game surface
@@ -73,21 +74,19 @@ class Player(gameobject.Gameobject):
       self.direction = 270
       self.move()
     
+    # Fire, but only if  1 / fire_rate seconds has passed since last shot
     if self.game_state.key['fire'] and ( ( pygame.time.get_ticks() - self.last_shot ) > 1000 / self.fire_rate ):
+      # Save stooting time
       self.last_shot = pygame.time.get_ticks()
       
-      # Place shot on top of player (without touching)
-      gun_position = self.rect.midtop
-      #x = player_midtop[0] - self.shot['rect'][2] // 2
-      #y = player_midtop[1] - self.shot['rect'][3] - 1 
-      #self.shot['rect'] = ( x, y, self.shot['rect'][2], self.shot['rect'][3])
-      
-      #self.game_state.object.add('shot',self.shot)
+      config.game_state.object.add({
+        'class_name': 'Shot',
+        'position': self.rect.midtop,
+        'boundary': None,
+        'speed': 5,
+        'direction': 90
+      })
 
-
-      # Move sprite according to speed and direction
-      self.move()
- 
   # When hit or hitting something
   def hit(self, object_type):
     print("I was hit by",object_type)
@@ -95,3 +94,5 @@ class Player(gameobject.Gameobject):
       self.game_state.health -= 10
     if object_type == gameobject.Gameobject.Type.ENEMY_BOMB:
       self.game_state.health -= 50
+    if object_type == gameobject.Gameobject.Type.ENEMY:
+      self.game_state.health -= 100

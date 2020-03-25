@@ -9,40 +9,59 @@
 
 ============================================================================"""
 import pygame
+import pygame.freetype
 import pprint
 import config
 
 class TechScreen:
   def __init__(self, game_state):
     self.game_state = game_state
-    self.font = pygame.font.Font(None,30) 
+    self.font = pygame.freetype.SysFont('Arial', 30, bold=True)
+    self.font.origin = True
     self.surface = pygame.Surface((config.screen_width, config.screen_height))
     self.rect = self.surface.get_rect()
     self.text_color = (0,128,0)
-    self.idle_avarage = 1
 
-  def display(self, x, y, format_str, *arguments):
-    str = format_str.format(*arguments)
-    text = self.font.render(str, True, self.text_color)
-    self.surface.blit( text, (x, y) )
+  # Display text on transparent tech screen
+  # Respect new line and do word wrap
+  def text_display(self, start_x, start_y, format_str, *arguments):
+    text = format_str.format(*arguments)
+    chars = list(text)
+    width, height = self.surface.get_size()
+    width -= start_x
+    height -= start_y
+    line_spacing = self.font.get_sized_height() + 2
+    space = self.font.get_rect(' ')
+    x = start_x
+    y = start_y + line_spacing
+
+    for char in chars:
+      # Check for new line
+      if char == "\n": 
+        x, y = start_x, y + line_spacing
+
+      # Check for word wrap 
+      elif char == " " and x + space.width >= width :
+        x, y = start_x, y + line_spacing
+
+      # Display letter
+      else:
+        self.font.render_to(self.surface, (x, y), char, self.text_color)
+        x += self.font.get_rect(char).width + 1
+
+    return x, y
 
   def draw(self, screen_surface):
     # Paint background as transparent 
     self.surface.fill((0,0,0))
-
-    self.display(10, 10, "Process time: {0} ms", pygame.time.get_ticks() - self.game_state.frame_start)                   
-
-    self.display(10, 40, "Game objects: {0}", len(self.game_state.object.list))
-    
-    self.display(10, 70, "Level time: {0} Sec.", (pygame.time.get_ticks() - self.game_state.level_time) // 1000)
- 
-    self.display(10, 100, "Frame rate: {0}/sec. ({1}ms)", 
+    self.text_display(10, 10, "Process time: {0} ms", pygame.time.get_ticks() - self.game_state.frame_start)                   
+    self.text_display(10, 40, "Game objects: {0}", len(self.game_state.object.list))
+    self.text_display(10, 70, "Level time: {0} Sec.", (pygame.time.get_ticks() - self.game_state.level_time) // 1000)
+    self.text_display(10, 100, "Frame rate: {0}/sec. ({1}ms)", 
       int(self.game_state.frame_rate * self.game_state.game_speed),
       int(1000 / self.game_state.frame_rate / self.game_state.game_speed) )
-
-    self.display(10, 130, "Game speed: {0}", self.game_state.game_speed )
-
-    self.display(10,160, "Object count: " + str(self.game_state.count))
+    self.text_display(10, 130, "Game speed: {0}", self.game_state.game_speed )
+    self.text_display(10,160, "Object count: \n{0}", pprint.pformat(self.game_state.count, indent=5))
 
     # Draw box around game objects
     for game_obj in self.game_state.object.list:

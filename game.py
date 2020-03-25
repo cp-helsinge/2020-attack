@@ -193,7 +193,7 @@ class Game:
       # == Paint on screen ==
       # Count objects that determins when the game ends
       # Clean up dead objects
-      self.game_state.count = zero_count
+      self.game_state.count = zero_count.copy()
 
       for game_obj in self.game_state.object.list:
         # Draw objects

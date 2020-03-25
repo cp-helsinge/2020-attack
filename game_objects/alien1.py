@@ -68,6 +68,6 @@ class Alien1(gameobject.Gameobject):
 
   # When hit or hitting something
   def hit(self, object_type):
-    if object_type == gameobject.Gameobject.Type.PLAYER or object_type == gameobject.Gameobject.Type.FREIND:
+    if object_type == gameobject.Gameobject.Type.PLAYER or object_type == gameobject.Gameobject.Type.FRIEND:
       self.delete = True
       self.game_state.score += 100

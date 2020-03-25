@@ -16,8 +16,11 @@ class Gameobject:
     NEUTRAL = 'neutral'
     ENEMY = 'enemy'
     PLAYER = 'player'
-    FREIND = 'freind'
+    FRIEND = 'friend'
     INACTIVE = 'inactive'
+    SHOT = 'shot'
+    ENEMY_SHOT = 'enemy_shot'
+    ENEMY_BOMB = 'enemy bomb'
 
   def __init__(self, boundary = None, position=None, size=None, speed=1, direction=0):
     self.speed      = speed
@@ -28,17 +31,13 @@ class Gameobject:
     else: 
       self.boundary = pygame.Rect((0,0), (config.screen_width, config.screen_height))
 
-    if size:
-      self.size = size
-    else:    
-      self.size = (100,100)
+    if not size:
+      size = (100,100)
 
-    if position:
-      self.position = position
-    else:
-      self.position = self.boundary.center
+    if not position:
+      position = self.boundary.center
 
-    self.rect = pygame.Rect(self.position, self.size)
+    self.rect = pygame.Rect(position, size)
 
     self.game_state = config.game_state
 

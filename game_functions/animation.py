@@ -118,6 +118,7 @@ class Animation:
     if self.frame_size is None:
       cols = 1
       rows = 1
+      self.frame_size = self.size =  rect.size
     else:
       cols = rect.width // self.frame_size[0]
       rows = rect.height // self.frame_size[1]
