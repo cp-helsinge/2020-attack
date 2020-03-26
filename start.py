@@ -131,7 +131,6 @@ class MainWindow(QtWidgets.QWidget):
             self.hide()
             current_game = game.Game()
             current_game.start()
-            current_game.loop()
             del current_game
             self.show()
             self.back_button.hide()

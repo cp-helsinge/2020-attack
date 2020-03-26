@@ -56,8 +56,8 @@ class Animation:
 
       self.collection = []
       self.frames = 0
-      self.current_frame = 0
-      self.frame_time = 0
+      self.animation_ended = False
+      self.frame_time = pygame.time.get_ticks()
       self.rect = None
         
       # Load multiple image files as frames 
@@ -92,7 +92,7 @@ class Animation:
       while not done:
         try:
           image = pygame.image.load(self.file_name.format(index = index)).convert_alpha()
-          if silf.size is not None:
+          if self.size is not None:
             image = pygame.transform.smoothscale(image, self.size)
         except Exception as error:
           if index <= 0:
@@ -159,17 +159,25 @@ class Animation:
       return image
     
     # return a pointer to the current surface frame of this animation
-    def get_surface(self):
+    def get_surface(self, offset=0):
       if len(self.collection) < 1: return None
-      if self.frame_time < int((pygame.time.get_ticks() - 1000)  / self.frame_rate) :
-        if not self.loop == 0: 
-          if len(self.collection) -1  == self.current_frame: 
-            if not self.loop == 0: 
-              if self.loop > 0: self.loop -= 1
-              self.current_frame = 0
-              self.frame_time = pygame.time.get_ticks()
-          else:    
-            self.current_frame += 1
-            self.frame_time = pygame.time.get_ticks()
-      return self.collection[self.current_frame]
+
+      # Still
+      if self.loop == 0:
+        return self.collection[0]
+
+      # Animation has ended
+      if self.animation_ended:
+        return self.collection[self.frames-1]
+
+      # Rotate frames based on ( time - begin_time ) * frame_rate / frames
+      frame_changes = int(offset + (pygame.time.get_ticks() - self.frame_time) * self.frame_rate / 1000)
+
+      # Stop animation
+      if self.loop > 0 and frame_changes / self.frames > self.loop:
+        self.animation_ended = True
+        return self.collection[self.frames-1]
+
+      # Animate
+      return self.collection[frame_changes % self.frames]
 

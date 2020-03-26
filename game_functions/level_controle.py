@@ -2,7 +2,7 @@
   Next_level
 
   - Start new levels
-  - load game objects
+  - load game game_objectss
   - run new level graphics
 
 ============================================================================"""
@@ -47,7 +47,7 @@ class LevelControle:
   # Set a new game level
   def set(self, level = False):
     # remove queued player input 
-    self.game_state.player_input.reset()
+    self.game_state.reset_player_input()
 
     # Turn music off
     try:
@@ -59,22 +59,22 @@ class LevelControle:
     else:
       self.game_state.level += 1
 
-    # Load game objects for the new level
+    # Load game game_objectss for the new level
     print("=== Loading level",self.game_state.level,"===")
     if len(story.level) > self.game_state.level:
-      # Empty game object list
-      self.game_state.object.list = []
+      # Empty game game_objects list
+      self.game_state.game_objects.list = []
 
-      # Loop through list of game object on this level
+      # Loop through list of game game_objects on this level
       for obj in story.level[self.game_state.level]:
         # Load pseudo classes
         if obj['class_name'] == 'next_level':
           self.add(**parameters)
         elif obj['class_name'] == 'music': 
           self.music = parameters
-        # Load in-game objects  
+        # Load in-game game_objectss  
         else:
-          self.game_state.object.add(obj)
+          self.game_state.game_objects.add(obj)
 
       # run next level graphics
       if self.active:
@@ -130,9 +130,9 @@ class LevelControle:
           if self.outtro_time > 0:
             effect = self.outtro_effect
             duration = self.outtro_time
-            for game_object in self.game_state.object.list:
-              if game_object['type'] == 'background' and game_object['obj'].sprite:
-                self.sprite = game_object['obj'].sprite
+            for game_game_objects in self.game_state.game_objects.list:
+              if game_game_objects['type'] == 'background' and game_game_objects['obj'].sprite:
+                self.sprite = game_game_objects['obj'].sprite
           else:
             stage += 1
 

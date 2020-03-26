@@ -27,9 +27,9 @@ class TechScreen:
   def text_display(self, start_x, start_y, format_str, *arguments):
     text = format_str.format(*arguments)
     chars = list(text)
-    width, height = self.surface.get_size()
-    width -= start_x
-    height -= start_y
+    width, height = self.rect.size
+    #width -= start_x
+    #height -= start_y
     line_spacing = self.font.get_sized_height() + 2
     space = self.font.get_rect(' ')
     x = start_x
@@ -42,6 +42,7 @@ class TechScreen:
 
       # Check for word wrap 
       elif char == " " and x + space.width >= width :
+        print(x, space.width, width)
         x, y = start_x, y + line_spacing
 
       # Display letter
@@ -74,15 +75,15 @@ class TechScreen:
 
     x, y = self.text_display(10, y, "Mouse X:{0} Y:{1}",*self.game_state.mouse)     
     # List object count
-    x, y = self.text_display(10, y, "Game objects: {0}", len(self.game_state.object.list))
+    x, y = self.text_display(700, 10, "Game objects: {0}", len(self.game_state.game_objects.list))
     # x, y  = self.text_display(10,y, "Object count: \n{0}", pprint.pformat(self.game_state.count, indent=5))
     for k, v in self.game_state.count.items():
-      x, y = self.text_display(10, y, "     {0}: {1}",k,v) 
+      x, y = self.text_display(700, y, "     {0}: {1}",k,v) 
 
 
 
     # Draw box around game objects
-    for game_obj in self.game_state.object.list:
+    for game_obj in self.game_state.game_objects.list:
       if getattr(game_obj, 'rect', None):
         pygame.draw.rect(self.surface,self.text_color, game_obj.rect, 2)
  

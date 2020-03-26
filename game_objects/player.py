@@ -29,12 +29,11 @@ class Player(gameobject.Gameobject):
     # Load animations and sounds first time this class is used
     if not Player.loaded:
       Player.size = (50,50)
-      Player.sprite = self.Animate("playerX.png", (50,50), Player.size) # sprite map
+      Player.sprite = self.Animate("a1a1_rocket2.png", (100,100), Player.size) # sprite map
       Player.loaded = True # Indicate that all common external attributes are loaded
 
     # Inherit from game object class
     gameobject.Gameobject.__init__(self, boundary, position, self.sprite.size, speed)
-     
     self.fire_rate = fire_rate
     self.last_shot = 0
     self.health = 100
@@ -73,7 +72,7 @@ class Player(gameobject.Gameobject):
     if self.game_state.key['fire'] and ( ( pygame.time.get_ticks() - self.last_shot ) > 1000 / self.fire_rate ):
       # Save stooting time
       self.last_shot = pygame.time.get_ticks()
-      self.game_state.object.add({
+      self.game_state.game_objects.add({
         'class_name': 'Shot',
         'position': self.rect.midtop,
         'boundary': None,

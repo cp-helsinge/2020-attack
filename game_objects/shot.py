@@ -23,7 +23,6 @@ class Shot(gameobject.Gameobject):
 
   # Initialize Shot 
   def __init__(self, boundary = None, position = None, direction = 90, speed = 10):
-    print("init shot")
     # Load animations and sounds first time this class is used
     if not Shot.loaded:
       Shot.sprite = self.Animate("shot.png",) 
@@ -31,7 +30,7 @@ class Shot(gameobject.Gameobject):
 
     # Inherit from game object class
     gameobject.Gameobject.__init__(self, boundary, position,self.sprite.size, speed, direction)
-
+    
     # Adjust position to be centered on top of position
     self.rect.midbottom = position
     
@@ -50,6 +49,7 @@ class Shot(gameobject.Gameobject):
       self.delete = True
 
     self.move()
+    self.speed += 1
 
   # When hit or hitting something
   def hit(self, object_type):

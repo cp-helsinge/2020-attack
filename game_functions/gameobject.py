@@ -36,7 +36,7 @@ class Gameobject(animation.Animation):
 
     self.delete = False
     self.dead = False
-    self.inactive = True
+    self.inactive = False
 
   # Move object according to speed and direction, within boundary
   def move(self):
