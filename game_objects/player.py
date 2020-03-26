@@ -9,7 +9,7 @@
 
 ============================================================================"""
 import pygame
-from game_functions import animation, gameobject
+from game_functions import gameobject
 import config
 
 fire_rate = 3
@@ -33,13 +33,14 @@ class Player(gameobject.Gameobject):
       Player.loaded = True # Indicate that all common external attributes are loaded
 
     # Inherit from game object class
-    gameobject.Gameobject.__init__(self, boundary, position, Player.size, speed)
-    self.object_type = self.Type.PLAYER
-
+    gameobject.Gameobject.__init__(self, boundary, position, self.sprite.size, speed)
+     
     self.fire_rate = fire_rate
-    self.last_shot = pygame.time.get_ticks()
-    self.empty_rect = pygame.Rect(0,0,0,0)
-    print("Player at",self.rect)
+    self.last_shot = 0
+    self.health = 100
+
+    # Make this object accessable to other objects
+    self.game_state.player = self
 
   # Draw on game surface
   def draw(self, surface):
@@ -72,7 +73,6 @@ class Player(gameobject.Gameobject):
     if self.game_state.key['fire'] and ( ( pygame.time.get_ticks() - self.last_shot ) > 1000 / self.fire_rate ):
       # Save stooting time
       self.last_shot = pygame.time.get_ticks()
-      
       self.game_state.object.add({
         'class_name': 'Shot',
         'position': self.rect.midtop,
@@ -84,9 +84,9 @@ class Player(gameobject.Gameobject):
   # When hit or hitting something
   def hit(self, object_type):
     print("I was hit by",object_type)
-    if object_type == self.Type.ENEMY_SHOT:
-      self.game_state.health -= 10
-    if object_type == self.Type.ENEMY_BOMB:
-      self.game_state.health -= 50
-    if object_type == self.Type.ENEMY:
-      self.game_state.health -= 100
+    if object_type == 'Shot':
+      self.health -= 15
+    if object_type == 'Bomd':
+      self.health -= 40
+    if object_type == 'Alien1':
+      self.health -= 70

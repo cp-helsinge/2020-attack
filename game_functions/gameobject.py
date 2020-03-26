@@ -12,17 +12,10 @@ from game_functions import animation
 import config
 
 class Gameobject(animation.Animation):
-  class Type:
-    NEUTRAL = 'neutral'
-    ENEMY = 'enemy'
-    PLAYER = 'player'
-    FRIEND = 'friend'
-    INACTIVE = 'inactive'
-    SHOT = 'shot'
-    ENEMY_SHOT = 'enemy shot'
-    ENEMY_BOMB = 'enemy bomb'
-
+  
   def __init__(self, boundary = None, position=None, size=None, speed=1, direction=0):
+    self.game_state = config.game_state
+
     self.speed      = speed
     self.direction  = direction
 
@@ -30,6 +23,8 @@ class Gameobject(animation.Animation):
       self.boundary   = pygame.Rect(boundary)
     else: 
       self.boundary = pygame.Rect((0,0), (config.screen_width, config.screen_height))
+    #confine boundary to game area
+    self.boundary = pygame.Rect.clip(self.boundary, self.game_state.rect)
 
     if not size:
       size = (100,100)
@@ -39,10 +34,9 @@ class Gameobject(animation.Animation):
 
     self.rect = pygame.Rect(position, size)
 
-    self.game_state = config.game_state
-
     self.delete = False
-    self.object_type = self.Type.INACTIVE
+    self.dead = False
+    self.inactive = True
 
   # Move object according to speed and direction, within boundary
   def move(self):

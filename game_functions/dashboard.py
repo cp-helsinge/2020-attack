@@ -20,7 +20,7 @@ class Dashboard:
     self.game_state = game_state
 
     # Set dashboard dimensions
-    height = game_state.screen_height // 15
+    height = self.game_state.screen_height // 15
     self.rect = pygame.Rect(0, game_state.screen_height - height, game_state.screen_width, height)
 
     # Create a background image template
@@ -84,11 +84,11 @@ class Dashboard:
     surface.blit( text, text_rect )
 
     # Paint health in the center of the dashboard
-    if self.game_state.player_health > 0:
+    if self.game_state.player.health > 0:
       hb_rect = pygame.Rect(self.health_bar_rect)
-      hb_rect.width = (self.health_bar_rect.width * min(self.game_state.player_health, 100)) // 100 
-      pygame.draw.rect(surface,(200,0,0),hb_rect)
-
+      hb_rect.width = (self.health_bar_rect.width * min(self.game_state.player.health, 100)) // 100 
+      pygame.draw.rect(surface,(255,10,10),hb_rect)
+ 
     # Paint level middle right of dashboard
     text = self.font.render(
       "Level: " + str(self.game_state.level) +" ",

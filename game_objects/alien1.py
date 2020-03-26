@@ -10,7 +10,7 @@
 
 ============================================================================"""
 import pygame
-from game_functions import animation, gameobject
+from game_functions import gameobject
 
 class Alien1(gameobject.Gameobject):
   # Variables to store animations and sounds common to all Alien1 object
@@ -31,9 +31,11 @@ class Alien1(gameobject.Gameobject):
       Alien1.loaded = True # Indicate that all common external attributes are loaded
 
     # Inherit from game object class
-    gameobject.Gameobject.__init__(self, boundary, position, Alien1.size, speed, direction)
-    self.object_type = self.Type.ENEMY
+    gameobject.Gameobject.__init__(self, boundary, position, self.sprite.size, speed, direction)
+    self.health=100
     print("Alian at",self.rect)
+    print(self.__class__)
+    print(self.__class__.__name__)
 
   # Draw on game surface
   def draw(self, surface):
@@ -60,6 +62,13 @@ class Alien1(gameobject.Gameobject):
 
   # When hit or hitting something
   def hit(self, object_type):
-    if object_type == self.Type.PLAYER or object_type == self.Type.FRIEND:
+    if object_type == 'Player':
+      self.health-=99
+
+    if object_type == 'Shot':
+      self.health -= 50
+
+    # Check if i'm dead
+    if self.health <=0:  
       self.delete = True
-      self.game_state.score += 100
+      self.game_state.score += 50

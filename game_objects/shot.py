@@ -10,7 +10,7 @@
 
 ============================================================================"""
 import pygame
-from game_functions import animation, gameobject
+from game_functions import gameobject
 
 class Shot(gameobject.Gameobject):
   # Variables to store animations and sounds common to all Shot object
@@ -26,12 +26,12 @@ class Shot(gameobject.Gameobject):
     print("init shot")
     # Load animations and sounds first time this class is used
     if not Shot.loaded:
-      Shot.sprite = self.Animate("shotX.png",) 
+      Shot.sprite = self.Animate("shot.png",) 
       Shot.loaded = True # Indicate that all common external attributes are loaded
 
     # Inherit from game object class
-    gameobject.Gameobject.__init__(self, boundary, position,None, speed, direction)
-    self.object_type = self.Type.SHOT
+    gameobject.Gameobject.__init__(self, boundary, position,self.sprite.size, speed, direction)
+
     # Adjust position to be centered on top of position
     self.rect.midbottom = position
     
@@ -53,5 +53,4 @@ class Shot(gameobject.Gameobject):
 
   # When hit or hitting something
   def hit(self, object_type):
-    if object_type == self.Type.ENEMY:
-      self.delete = True
+    self.delete = True
