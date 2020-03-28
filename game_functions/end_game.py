@@ -15,7 +15,6 @@ class EndGame:
     self.in_progress = False
     
   def set(self, completed = False):
-    print("Game over. Completet:",completed, self.game_state.count)
     self.game_state.suspended = True
     self.game_state.game_over = True
     self.in_progress = True
