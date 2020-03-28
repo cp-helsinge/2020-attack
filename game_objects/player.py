@@ -28,7 +28,7 @@ class Player(gameobject.Gameobject):
     print("init Player")
     # Load animations and sounds first time this class is used
     if not Player.loaded:
-      Player.size = (50,50)
+      Player.size = (80,80)
       Player.sprite = self.Animate("a1a1_rocket2.png", (100,100), Player.size) # sprite map
       Player.loaded = True # Indicate that all common external attributes are loaded
 
@@ -37,7 +37,7 @@ class Player(gameobject.Gameobject):
     self.fire_rate = fire_rate
     self.last_shot = 0
     self.health = 100
-
+    
     # Make this object accessable to other objects
     self.game_state.player = self
 
@@ -85,7 +85,10 @@ class Player(gameobject.Gameobject):
     print("I was hit by",object_type)
     if object_type == 'Shot':
       self.health -= 15
-    if object_type == 'Bomd':
+    elif object_type == 'Bomd':
       self.health -= 40
-    if object_type == 'Alien1':
+    elif object_type == 'Alien1':
       self.health -= 70
+
+    if self.health <= 0:
+      self.dead = self.delete = self.inactive = True

@@ -22,7 +22,7 @@ class Alien1(gameobject.Gameobject):
   sound_shoot = None
   count = 0
 
-  # Initialize Alien1 
+  # === Initialize Alien1 ===
   def __init__(self, boundary = None, position = None, direction = 0, speed = 1):
     print("init alien")
     # Load animations and sounds first time this class is used
@@ -38,8 +38,9 @@ class Alien1(gameobject.Gameobject):
     # Inherit from game object class
     gameobject.Gameobject.__init__(self, boundary, position, self.sprite.size, speed, direction)
     self.health = 100
+
  
-  # Draw on game surface
+  # === Draw on game surface ===
   def draw(self, surface):
     # Flip image when direction is left
     if self.direction > 90 and self.direction < 270 :
@@ -51,13 +52,13 @@ class Alien1(gameobject.Gameobject):
     if self.health > 0:
       pygame.draw.line(
         surface,
-        (100-self.health, self.health, 0),
+        (200-self.health, self.health * 2, 0),
         (self.rect.x, self.rect.y),
         (self.rect.x + self.rect.width * self.health / 100, self.rect.y)
         ,(3)
       )
 
-  # Movement
+  # === Movement ===
   def update(self, scroll):
     if scroll[0] or scroll[1]:
       self.boundary.move(scroll)
@@ -72,7 +73,7 @@ class Alien1(gameobject.Gameobject):
     # Move sprite according to speed and direction
     self.move()
 
-  # When hit or hitting something
+  # === When hit or hitting something ===
   def hit(self, object_type):
     if object_type.startswith('Player'):
       self.health -= 100

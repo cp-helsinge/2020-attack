@@ -20,23 +20,28 @@ class Shot(gameobject.Gameobject):
   sprit_shot = None
   sound_die = None
   sound_shoot = None
+  count = 0
 
   # Initialize Shot 
   def __init__(self, boundary = None, position = None, direction = 90, speed = 10):
     # Load animations and sounds first time this class is used
     if not Shot.loaded:
-      Shot.sprite = self.Animate("shot.png",) 
+      Shot.sprite = self.Animate("photon_torpedo_NX1.png",(128,128),(50,50)) 
       Shot.loaded = True # Indicate that all common external attributes are loaded
+      Shot.count += 1
 
     # Inherit from game object class
     gameobject.Gameobject.__init__(self, boundary, position,self.sprite.size, speed, direction)
     
     # Adjust position to be centered on top of position
     self.rect.midbottom = position
-    
+
+  def __del__(self):
+    Shot.count -= 1
+
   # Draw on game surface
   def draw(self, surface):
-    surface.blit(self.sprite.get_surface(),self.rect)
+    surface.blit(self.sprite.get_surface(Shot.count),self.rect)
     
   # Movement
   def update(self, scroll):
@@ -49,7 +54,7 @@ class Shot(gameobject.Gameobject):
       self.delete = True
 
     self.move()
-    self.speed += 1
+    self.speed += 0.4
 
   # When hit or hitting something
   def hit(self, object_type):

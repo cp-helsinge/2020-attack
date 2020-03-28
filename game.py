@@ -24,11 +24,9 @@ from collections import defaultdict
 import config
 
 # Import game classes
-#from common import globals, common, animation, dashboard, player_input, level_controle, end_game, tech_screen
-from game_functions import dashboard, player_input, level_controle, end_game, tech_screen, gameobject
-# from game_attributes import background, frame
+from game_functions import dashboard, player_input, level_controle, tech_screen, gameobject, end_game
 
-game_name = 'Alien Attack'
+game_name = 'Alien Attack CP-20'
 game_speed = 1
 game_objects_from = 'game_objects' # Used to import game objects dynamically as the from part
 
@@ -84,12 +82,13 @@ class Game(player_input.PlayerInput):
     self.level = 1
     self.score = 0
     self.player = None
-    self.suspend = False
     self.frame_start = 0
     self.level_time = 0
     self.frame_rate = config.frame_rate
     self.game_speed = game_speed
     self.fullscreen = False
+    self.game_over = False
+    self.suspended = False
 
     # Set up game screen
     pygame.init()
@@ -120,8 +119,8 @@ class Game(player_input.PlayerInput):
     
     # Add functionality
     self.tech_screen = tech_screen.TechScreen(self)
-    #self.end_game = end_game.EndGame(game_variable)   
     self.level_controle = level_controle.LevelControle(self)
+    self.end_game = end_game.EndGame(self)
 
     # Make game states globally available
     config.game_state = self
@@ -177,13 +176,14 @@ class Game(player_input.PlayerInput):
 
   def start(self):
     # Set game variables to start values.
+    self.game_over = False
+    self.suspended = False
     self.level_controle.set(1)
     self.loop()
 
   # This is the main game loop
   def loop(self):
     self.resize()
-
     self.reset_player_input()
 
     # Start using pygame loop timing (Frame rate)
@@ -196,77 +196,84 @@ class Game(player_input.PlayerInput):
       # Get player input
       self.update_player_input()
 
-      scroll = (0,1)
       self.canvas.fill((0,0,70))
       
       # == move all objects ==
+      scroll = (0,1)
+
       for game_obj in self.game_objects.list:
         if callable(getattr(game_obj, 'update', None)):
           game_obj.update(scroll)
 
-      # == Collission check ==
-      # change to self.collidable_object.list
-      # Check for collissions with all objects, that has a defined rectangle. Execpt dead and deleted objects.
+      if not self.suspended:
+        
+        # == Collission check ==
+        # change to self.collidable_object.list
+        # Check for collissions with all objects, that has a defined rectangle. Execpt dead and deleted objects.
 
-      # Loop through all active objects
-      for i in range(0, len(self.game_objects.list) ):
-        # Skip objects that are not active game objects
-        if not self.__obj_active(self.game_objects.list[i]): continue
-
-        # Loop through the rest of the list 
-        for ii in range(i+1, len(self.game_objects.list) ):
+        # Loop through all active objects
+        for i in range(0, len(self.game_objects.list) ):
           # Skip objects that are not active game objects
-          if not self.__obj_active(self.game_objects.list[ii]): continue
+          if not self.__obj_active(self.game_objects.list[i]): continue
 
-          # Compare rectangle of all other objects
-          if self.game_objects.list[i].rect.colliderect(self.game_objects.list[ii].rect):
+          # Loop through the rest of the list 
+          for ii in range(i+1, len(self.game_objects.list) ):
+            # Skip objects that are not active game objects
+            if not self.__obj_active(self.game_objects.list[ii]): continue
 
-            # Tell 1st. object that it has been hit by a 2nd. object class
-            if getattr(self.game_objects.list[i], 'hit', False):
-              self.game_objects.list[i].hit(self.game_objects.list[ii].__class__.__name__)
-            # Tell 2nd. object that it has been hit by a 1st. object class
-            if getattr(self.game_objects.list[ii], 'hit', False):
-              self.game_objects.list[ii].hit(self.game_objects.list[i].__class__.__name__)
+            # Compare rectangle of all other objects
+            if self.game_objects.list[i].rect.colliderect(self.game_objects.list[ii].rect):
 
-      # == Paint on screen ==
-      # Make a counter of game object class names
-      self.count = defaultdict(int)
+              # Tell 1st. object that it has been hit by a 2nd. object class
+              if getattr(self.game_objects.list[i], 'hit', False):
+                self.game_objects.list[i].hit(self.game_objects.list[ii].__class__.__name__)
+              # Tell 2nd. object that it has been hit by a 1st. object class
+              if getattr(self.game_objects.list[ii], 'hit', False):
+                self.game_objects.list[ii].hit(self.game_objects.list[i].__class__.__name__)
 
+        # == Paint on screen ==
+        # Make a counter of game object class names
+        self.count = defaultdict(int)
+
+        for game_obj in self.game_objects.list:
+          # Count number of ocurences of each Class
+          self.count[game_obj.__class__.__name__] += 1 
+          
+          # Count Player
+          if game_obj.__class__.__name__.startswith('Player'):
+            self.count['player_items'] += 1
+
+          if game_obj.__class__.__name__.startswith('Alien'):
+            self.count['alien_items'] += 1
+        
+        # Check for level end
+        self.level_controle.check()
+   
+      # == Display level and end game graphics ==
+      else: 
+        if self.game_over:  
+          self.end_game.draw(self.canvas)
+        else:
+          self.level_controle.draw(self.canvas)
+
+      # == Delete obsolite objects ==
       for game_obj in self.game_objects.list:
-        # Draw objects
-        if callable(getattr(game_obj, 'draw', None)):
-          game_obj.draw(self.canvas)
-
         # Remove deleted objects
         if getattr(game_obj, 'delete', False):
           self.game_objects.list.remove(game_obj)
 
-        # Count number of ocurences of each Class
-        self.count[game_obj.__class__.__name__] += 1 
-        # Count Player
-        if game_obj.__class__.__name__.startswith('Player'):
-          self.count['player_items'] += 1
-
-        if game_obj.__class__.__name__.startswith('Alien'):
-          self.count['Alien_items'] += 1
-      
-      # Draw basic game interface
-      self.dashboard.draw(self.canvas)
-
       # Draw tech screen
       if self.tech_screen_on:
         self.tech_screen.draw(self.canvas)
+    
+      # Draw basic game interface
+      self.dashboard.draw(self.canvas)
 
-      # End level or game ?
-      if self.count['player_items'] <= 0:
-        print("Game ended")
-        # self.end_game.set()
-        self.stop = True
-
-      # Next leven?
-      elif self.count['alien_items'] <= 0:
-        # self.level_controle.next()
-        pass
+      # Draw all game objects
+      for game_obj in self.game_objects.list:
+        # Draw objects
+        if callable(getattr(game_obj, 'draw', None)):
+          game_obj.draw(self.canvas)
 
       # scale and show the new frame on screen
       self.screen.blit(pygame.transform.scale(self.canvas, self.screen.get_size()),(0,0))

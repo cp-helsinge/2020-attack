@@ -79,7 +79,7 @@ class PlayerInput:
       elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:  
         self.toggle_fullscreen()
 
-      elif not self.suspend:
+      else:
         # Other keys, while pressed 
         if event.type == pygame.KEYDOWN and event.key in key_bind:
           self.key[key_bind[event.key]] = True

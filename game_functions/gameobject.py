@@ -11,8 +11,11 @@ import random
 from game_functions import animation
 import config
 
-class Gameobject(animation.Animation):
-  
+class Gameobject():
+  class Animate(animation.Animation):
+    def __init__(self, name, frame_size = None, size = None, frame_rate = None, loop = -1):
+      animation.Animation.__init__(self, name, frame_size, size, frame_rate, loop)
+
   def __init__(self, boundary = None, position=None, size=None, speed=1, direction=0):
     self.game_state = config.game_state
 
@@ -37,6 +40,7 @@ class Gameobject(animation.Animation):
     self.delete = False
     self.dead = False
     self.inactive = False
+   
 
   # Move object according to speed and direction, within boundary
   def move(self):

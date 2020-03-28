@@ -8,19 +8,31 @@
 ============================================================================"""
 import pygame
 import os
+import sys
 
-from game_functions import end_game, animation
+from game_functions import animation
 from game_attributes import story
 
 import config
-
-
 
 class LevelControle:
   def __init__(self, game_state):
     self.game_state = game_state
     self.music = False
     self.active = False
+
+  def check(self):
+    # Player dead
+    if self.game_state.count['player_items'] <= 0:
+      self.game_state.end_game.set()
+
+    # Alens dead
+    elif self.game_state.count['alien_items'] <= 0:
+      # End of game
+      if len(story.level) > self.game_state.level + 1:
+        self.next()
+      else:  
+        self.game_state.end_game.set(True)
 
   def add(self, 
     movie = False,
@@ -61,37 +73,35 @@ class LevelControle:
 
     # Load game game_objectss for the new level
     print("=== Loading level",self.game_state.level,"===")
-    if len(story.level) > self.game_state.level:
-      # Empty game game_objects list
-      self.game_state.game_objects.list = []
+    # Empty game game_objects list
+    self.game_state.game_objects.list = []
 
-      # Loop through list of game game_objects on this level
-      for obj in story.level[self.game_state.level]:
-        # Load pseudo classes
-        if obj['class_name'] == 'next_level':
-          self.add(**parameters)
-        elif obj['class_name'] == 'music': 
-          self.music = parameters
-        # Load in-game game_objectss  
-        else:
-          self.game_state.game_objects.add(obj)
+    # Loop through list of game game_objects on this level
+    for obj in story.level[self.game_state.level]:
+      # Load pseudo classes
+      if obj['class_name'] == 'next_level':
+        self.add(**parameters)
+      elif obj['class_name'] == 'music': 
+        self.music = parameters
+      # Load in-game game_objectss  
+      else:
+        self.game_state.game_objects.add(obj)
 
-      # run next level graphics
-      if self.active:
-        self.play_new_level_effect() 
+    # run next level graphics
+    if self.active:
+      self.play_new_level_effect() 
 
-      # Start music for next level
-      if self.music:
-        pygame.mixer.music.play(loops=-1)
+    # Start music for next level
+    if self.music:
+      pygame.mixer.music.play(loops=-1)
 
-      # Reset play time for level
-      self.game_state.level_time = pygame.time.get_ticks() 
-
-    else:  
-      self.game_state.stop = True
-      # globals.game.end_game.set()
-
+    # Reset play time for level
+    self.game_state.level_time = pygame.time.get_ticks() 
     
+    if not self.game_state.player:
+      print("Story board error in level", self.game_state.level," No player object!")
+      sys.exit(1)
+   
   def next(self):
     self.set()
 
