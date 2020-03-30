@@ -8,10 +8,13 @@
 import pygame
 import math
 import random
-from game_functions import animation
+from game_functions import animation, object_types
 import config
 
-class Gameobject():
+class Gameobject:
+  class Type(object_types.ObjectType):
+    pass
+  
   class Animate(animation.Animation):
     def __init__(self, name, frame_size = None, size = None, frame_rate = None, loop = -1):
       animation.Animation.__init__(self, name, frame_size, size, frame_rate, loop)
@@ -37,11 +40,15 @@ class Gameobject():
 
     self.rect = pygame.Rect(position, size)
 
-    self.delete = False
-    self.dead = False
     self.inactive = False
-   
+    self.delete = False
 
+    self.inventory = {}
+    self.armor = 1
+    self.health = 100
+    self.impact_power = 100
+    self.type = self.Type.NEUTRAL
+    
   # Move object according to speed and direction, within boundary
   def move(self):
     radie = -math.radians(self.direction)
@@ -75,5 +82,5 @@ class Gameobject():
     return touching
 
   # Return true at random, on avarage at <freq> times pr. second
-  def random_frequency(freq):
+  def random_frequency(self, freq):
     return random.randint(0, config.frame_rate // freq ) == 0

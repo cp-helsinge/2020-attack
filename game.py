@@ -24,11 +24,17 @@ from collections import defaultdict
 import config
 
 # Import game classes
-from game_functions import dashboard, player_input, level_controle, tech_screen, gameobject, end_game
+from game_functions import dashboard, player_input, level_controle, tech_screen, gameobject, end_game, object_types, common
 
 game_name = 'Alien Attack CP-20'
 game_speed = 1
 game_objects_from = 'game_objects' # Used to import game objects dynamically as the from part
+
+
+# to common
+# CamelCase to under_score
+# cc2us(str) og us2cc(str)
+
 
 class GameObjects:
   def __init__(self):
@@ -36,22 +42,22 @@ class GameObjects:
     # List og game object for current level
     self.list = []
 
-    # Make list of game objects
+    # Make list of file names in game objects
     self.class_list = {}
     for file in glob.glob(os.path.join(config.game_obj_path,"*.py")):
       # Extract the file name, without extension and in lower case 
-      name = os.path.splitext(os.path.basename(file))[0].capitalize()
-      
+      name = os.path.splitext(os.path.basename(file))[0]
       # Ignore private and protected files
       if name.startswith("_"): continue
 
-      # Import classes      
-      if not name in self.class_list:
-        print("..loading",name)
+      cc_name = common.sn2cc(name)
+      # Import each file and itas primary class     
+      if not cc_name in self.class_list:
+        print("..loading",name +"."+cc_name)
         # from <game_objects_from> import <name>
-        cls = __import__(game_objects_from, None, None, [name.lower()], 0)
+        cls = __import__(game_objects_from, None, None, [name], 0)
         # class = <name>.<Name>
-        self.class_list[name] = getattr( getattr(cls,name.lower()),name )
+        self.class_list[cc_name] = getattr( getattr(cls,name), cc_name )
 
         #except Exception as err:
         #  print("Unable to load game object in", name + ".py", err)
@@ -74,9 +80,13 @@ class GameObjects:
       self.list.append(obj)
     except Exception as err:
       print("Error when creating game object", name, ": \"", err, "\"\n  Unable to create object with parameters:", obj_description)
+      print("Loaded classes are:", enumerate(self.class_list))
       sys.exit(1)  
 
 class Game(player_input.PlayerInput):
+  class Type(object_types.ObjectType):
+    pass
+    
   # Constructor
   def __init__(self):
     self.level = 1
@@ -210,36 +220,36 @@ class Game(player_input.PlayerInput):
         # Loop through all active objects
         for pos, obj1 in enumerate(self.game_objects.list):
           # Skip objects that are not active game objects
-          if obj1.dead or obj1.delete or obj1.inactive: continue
+          if obj1.delete or obj1.inactive: continue
           # Loop through the rest of the list 
 
           for i in range(pos+1, len(self.game_objects.list) ):
             obj2 = self.game_objects.list[i]
             # Skip objects that are not active game objects
-            if obj2.dead or obj2.delete or obj2.inactive: continue
+            if  obj2.delete or obj2.inactive: continue
 
             # Compare rectangles of objects
             if obj1.rect.colliderect(obj2.rect):
               # Tell 1st. object that it has been hit by a 2nd. object class
               if getattr(obj1, 'hit', False):
-                obj1.hit(obj2.__class__.__name__)
+                obj1.hit(obj2)
               # Tell 2nd. object that it has been hit by a 1st. object class
               if getattr(obj2, 'hit', False):
-                obj2.hit(obj1.__class__.__name__)
+                obj2.hit(obj1)
 
         # Count game objects
         self.count = defaultdict(int)
         for game_obj in self.game_objects.list:
-          if game_obj.dead or game_obj.delete or game_obj.inactive: continue
+          if game_obj.delete or game_obj.inactive: continue
 
           # Count number of ocurences of each Class
           self.count[game_obj.__class__.__name__] += 1 
           
           # Count Player
-          if game_obj.__class__.__name__.startswith('Player'):
+          if game_obj.type == self.Type.PLAYER:
             self.count['player_items'] += 1
 
-          if game_obj.__class__.__name__.startswith('Alien'):
+          if game_obj.type == self.Type.CG_OPPONENT:
             self.count['alien_items'] += 1
         
         # Check for level end

@@ -10,6 +10,7 @@
 
 ============================================================================"""
 import pygame
+import math
 from game_functions import gameobject
 
 class Alien1(gameobject.Gameobject):
@@ -37,9 +38,40 @@ class Alien1(gameobject.Gameobject):
 
     # Inherit from game object class
     gameobject.Gameobject.__init__(self, boundary, position, self.sprite.size, speed, direction)
-    self.health = 100
 
- 
+    # Set charakteristica other than default
+    self.type = self.Type.CG_OPPONENT
+    self.impact_power = 50
+
+  # === Movement ===
+  def update(self, scroll):
+    if scroll[0] or scroll[1]:
+      self.boundary.move(scroll)
+      self.rect.move(scroll)
+
+    # test if out of boundary and deflect sprite by mirroring direction
+    if self.touch_boundary():
+      self.mirror_direction()
+
+    # Move in circles
+    self.direction += 3
+    # Move sprite according to speed and direction
+    self.move()
+
+    # Shoot at player at random interval
+    if self.random_frequency(0.1):
+      # Direct shot at player
+      target = self.game_state.player.rect.center
+
+      # Place shot under alien ship
+      self.game_state.game_objects.add({
+        'class_name': 'ShotAlien1',
+        'position': self.rect.midbottom,
+        'boundary': None,
+        'speed': 5,
+        'direction': math.degrees(math.atan2( target[0] - self.rect.x, target[1] - self.rect.y )) -90
+      })
+
   # === Draw on game surface ===
   def draw(self, surface):
     # Flip image when direction is left
@@ -58,28 +90,12 @@ class Alien1(gameobject.Gameobject):
         ,(3)
       )
 
-  # === Movement ===
-  def update(self, scroll):
-    if scroll[0] or scroll[1]:
-      self.boundary.move(scroll)
-      self.rect.move(scroll)
-
-    # test if out of boundary and deflect sprite by mirroring direction
-    if self.touch_boundary():
-      self.mirror_direction()
-
-    # Move in circles
-    self.direction += 3
-    # Move sprite according to speed and direction
-    self.move()
-
   # === When hit or hitting something ===
-  def hit(self, object_type):
-    if object_type.startswith('Player'):
-      self.health -= 100
+  def hit(self, obj):
 
-    if object_type.startswith('Shot'):
-      self.health -= 10
+    if obj.type == self.Type.PLAYER:
+      print("Alien hit by",obj.__class__.__name__)
+      self.health -= obj.impact_power
 
     # Check if i'm dead
     if self.health <=0:  

@@ -36,7 +36,10 @@ class Player(gameobject.Gameobject):
     gameobject.Gameobject.__init__(self, boundary, position, self.sprite.size, speed)
     self.fire_rate = fire_rate
     self.last_shot = 0
-    self.health = 100
+
+    # Set charakteristica other than default
+    self.type = self.Type.PLAYER
+    self.impact_power = 100
     
     # Make this object accessable to other objects
     self.game_state.player = self
@@ -81,14 +84,12 @@ class Player(gameobject.Gameobject):
       })
 
   # When hit or hitting something
-  def hit(self, object_type):
-    print("I was hit by",object_type)
-    if object_type == 'Shot':
-      self.health -= 15
-    elif object_type == 'Bomd':
-      self.health -= 40
-    elif object_type == 'Alien1':
-      self.health -= 70
+  def hit(self, obj):
+    print("I was hit by",obj.type,obj.__class__.__name__,obj.impact_power)
+    if obj.type == self.Type.CG_OPPONENT:
+      self.health -= max( obj.impact_power + self.armor, 0)
 
     if self.health <= 0:
-      self.dead = self.delete = self.inactive = True
+      self.inactive = True
+
+      #Change sprite to wreck
