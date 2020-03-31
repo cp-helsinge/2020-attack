@@ -6,7 +6,6 @@ Rect(left, top, width, height)
 ============================================================================"""
 import pygame
 
-game_name = 'Alien Attack'
 number_of_cities = 5
 screen_width = 1000
 screen_height = 700

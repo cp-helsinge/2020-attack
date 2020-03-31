@@ -22,17 +22,48 @@ import traceback
 
 # Import game classes
 from common import globals, common, animation, dashboard, player_input, level_controle, end_game, tech_screen
-from game_objects import *
-dir()
+from game_objects import alien, bomb, background, city, enemy_shot, player, shot, story, setting
+
+class GameObject():
+  def __init__(self):
+    self.list = []
+    # Link a game object type to the actual object class definition
+    self.class_list = dict(
+      alien = alien.Alien,
+      bomb = bomb.Bomb,
+      background = background.Background,
+      city = city.City,
+      player = player.Player,
+      shot = shot.Shot,
+      enemy_shot = enemy_shot.EnemyShot,
+    )
+
+  def add(self, object_type, parameters):  
+    try:
+      self.list.append( {
+          'type' : object_type,
+          'obj'  : self.class_list[object_type]( **parameters) 
+        }
+      )
+    except Exception as err:
+      print(
+        "Error in story board, when creating",
+        object_type,
+        ":",err,
+        parameters
+      ) 
+      #traceback.print_stack()
+      #self.__del__()
+      sys.exit(1)  
+
 
 class Game:
-  # Constructor
   def __init__(self):
     pygame.init()
     try:
       pygame.mixer.init()
     except:
-      print("Pygame Sound mixer failed to initialize")
+      pass
 
     self.window = pygame.display.set_mode(
       (
@@ -41,12 +72,12 @@ class Game:
       ) 
        #, RESIZABLE | SCALED | FULLSCREEN
     )
-   # pygame.display.set_caption(game_objects.settings.game_name)
+    pygame.display.set_caption('Alien Attack')
     pygame.mouse.set_visible(False)
 
     self.dashboard = dashboard.Dashboard()
     self.rect = pygame.Rect(0,0,setting.screen_width,setting.screen_height - self.dashboard.rect[3]) 
-    #elf.object = GameObject()
+    self.object = GameObject()
     self.player_input = player_input.PlayerInput()
     self.tech_screen = tech_screen.TechScreen()
     self.level = 1
@@ -64,8 +95,7 @@ class Game:
     
     # Start using pygame loop timing (Frame rate)
     self.clock = pygame.time.Clock()
-
-  # Destructor  
+    
   def __del__(self):
     pygame.display.quit()
     pygame.quit()
@@ -74,18 +104,11 @@ class Game:
   def __obj_active(self, obj):
     return not getattr( obj, 'delete', False) and not getattr( obj, 'dead', False) and getattr(obj, 'rect', False) 
 
-  def start(self):
-    self.loop()
 
   # This is the main game loop
   def loop(self):
     print("Game started")
-    
-    # Make a variable that can be changed inside a function (By referance)
-    score_change = [False]
-    
     while not self.player_input.stop:
-      # Store the time that this frame starts
       self.frame_start = pygame.time.get_ticks()
   
       # Get player input
@@ -97,9 +120,6 @@ class Game:
           game_obj['obj'].update()
 
       # change to self.collidable_object.list
-
-      # Make a variable that can be changed inside a function (By referance)
-      score_change[0] = False
       # Check for collissions with all objects, that has a defined rectangle. Execpt dead and deleted objects.
       for i in range(0, len(self.object.list) ):
         if not self.object.list[i]['type'] == 'background' and self.__obj_active(self.object.list[i]['obj']):
@@ -107,17 +127,15 @@ class Game:
             if self.__obj_active(self.object.list[i]['obj']) and self.object.list[i]['obj'].rect.colliderect(self.object.list[ii]['obj'].rect):
               # print(i,"hitting",ii)
               if getattr(self.object.list[i]['obj'], 'hit', False):
-                self.object.list[i]['obj'].hit(self.object.list[ii]['type'],score_change)
+                self.object.list[i]['obj'].hit(self.object.list[ii]['type'])
               if getattr(self.object.list[ii]['obj'], 'hit', False):
-                self.object.list[ii]['obj'].hit(self.object.list[i]['type'],score_change)
-      if score_change: 
-        self.score += score_change[0];
-
+                self.object.list[ii]['obj'].hit(self.object.list[i]['type'])
+      
       # Paint collidable ojects and clean up
       count = {'alien': 0, 'player': 0, 'city':0}
       for game_obj in self.object.list:
         if callable(getattr(game_obj['obj'], 'draw', None)):
-          game_obj['obj'].draw(self.window)
+          game_obj['obj'].draw()
 
         # Remove objects marked for deletion
         if getattr(game_obj['obj'], 'delete', False):
