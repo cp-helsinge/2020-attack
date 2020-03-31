@@ -24,13 +24,20 @@
 ============================================================================"""
 import sys
 import os
-
 from PyQt5 import uic, QtCore, QtWidgets, QtGui
-#from PyQt5.QtWidgets import (QWidget, QListWidget, QStackedWidget, QApplication,
-#                             QHBoxLayout, QListWidgetItem, QLabel)
+import game
+import config
 
-from common import globals, common, animation, game
-from game_objects import setting
+config.root_path     = os.path.join(os.path.dirname(__file__))       # Root of this package
+config.qt_path       = os.path.join(config.root_path,'qt')           # root of QT application files
+config.game_obj_path = os.path.join(config.root_path,'game_objects') # Game program objects
+config.html_path     = os.path.join(config.root_path,'qt','html')    # QT HTML pages
+config.gfx_path      = os.path.join(config.root_path,'gfx')          # Graphic art and sprites
+config.sound_path    = os.path.join(config.root_path,'sound')        # sound effects and music
+
+config.screen_width  = 1000
+config.screen_height = 700
+
 
 # Create a widget, using a HTML file (located in the html_path.
 # The  widget can only interpret simple HTML. It uses a subset of HTML 3.2 and 4. And css 2.1
@@ -43,13 +50,13 @@ class SimpleHTMLPage:
         # Enable external links to be opened in the system browser
         self.widget.setOpenExternalLinks(True)
         # Load the HTML, markdown or text file
-        self.widget.setSource(QtCore.QUrl().fromLocalFile(os.path.join(html_path,url)))
+        self.widget.setSource(QtCore.QUrl().fromLocalFile(os.path.join(config.html_path,url)))
 
 
 class MainPage():
     def __init__(self, navigate):
         # Load a UI resource file
-        self.widget = uic.loadUi(os.path.join(qt_path,'main_page.ui'))
+        self.widget = uic.loadUi(os.path.join(config.qt_path,'main_page.ui'))
 
         # Attach action to buttons
         self.widget.credits_button.clicked.connect(lambda: navigate("credits_page"))
@@ -122,24 +129,20 @@ class MainWindow(QtWidgets.QWidget):
         # Start game
         elif page_name == 'play':
             self.hide()
-            globals.game = game.Game()
-            globals.game.level_controle.set(1)
-            globals.game.loop()
-            del globals.game
+            current_game = game.Game()
+            current_game.start()
+            current_game.loop()
+            del current_game
             self.show()
             self.back_button.hide()
 
-# Set some global variables
-globals.root_path = root_path = os.path.join(os.path.dirname(__file__)) # Root of this package
-globals.qt_path   = qt_path   = os.path.join(root_path,'qt')            # root of QT application files
-globals.game_path = game_path = os.path.join(root_path,'game_objects')  # Game program objects
-globals.html_path = html_path = os.path.join(root_path,'qt','html')     # QT HTML pages
-globals.gfx_path  = gfx_path  = os.path.join(root_path,'gfx')           # Graphic art and sprites
-globals.sound_path  = sound_path  = os.path.join(root_path,'sound')     # sound effects and music
-
-
 # Start application
-globals.app = app = QtWidgets.QApplication(sys.argv)
-globals.window = window = MainWindow()
+app = QtWidgets.QApplication(sys.argv)
+window = MainWindow()
+
+config.window        = window
+config.app           = app
+
 app.exec_()
+
 
